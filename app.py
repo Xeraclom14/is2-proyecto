@@ -1,18 +1,33 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
+from flask_mysqldb import MySQL
+from numpy import insert
 
 app = Flask(__name__)
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'encuestas'
+mysql = MySQL(app)
 
 @app.route('/')
 def Index():
     return "Hola."
 
 @app.route('/edit/<id>')
-def edit_form(id):
+def edit(id):
     return "Editando encuesta " + id + "."
 
-@app.route('/create')
+@app.route('/create', methods=['GET','POST'])
 def create():
-    return render_template('creation.html')
+    if request.method == 'POST':
+        cur = mysql.connection.cursor()
+        cur.execute('INSERT INTO encuesta (id_encuestador, titulo) VALUES (1 , %s);', request.form['titulo'])
+        mysql.connection.commit()
+        print(request.form['titulo'])
+        return render_template('creation.html')
+    else:
+        return render_template('creation.html')
 
 @app.route('/stats/<id>')
 def stats(id):
