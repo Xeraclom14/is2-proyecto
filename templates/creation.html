@@ -1,0 +1,21 @@
+{% extends './base.html' %}
+
+{% block title %}New form{% endblock %}
+
+{% block body %}
+<center>
+    <div class="col-lg-6">
+        <h1 class="form-label mt-4">Crear Encuesta</h1>
+        <div class="form-group">
+            <label for="exampleInputEmail1" class="form-label mt-4">Titulo de la Encuesta</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Titulo">
+            <label for="exampleInputEmail1" class="form-label mt-4">Numero de Preguntas</label>
+            <input type="number" min="1" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="1">
+        </div>
+
+        <div class="form-label mt-4">
+            <button type="button" class="btn btn-primary">CREAR</button>
+        </div>
+    </div>
+</center>
+{% endblock %}
