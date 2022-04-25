@@ -15,7 +15,7 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 #Nombre de la BD
-app.config['MYSQL_DB'] = 'encuestas'
+app.config['MYSQL_DB'] = 'is2_proyecto'
 mysql = MySQL(app)
 
 
@@ -53,6 +53,10 @@ def stats(id):
 @app.route('/form/<id>')
 def form(id):
     return "Respndiendo encuesta con ID " + id + "."
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 if __name__ == '__main__':
     app.run(port = 5000, debug = True)
