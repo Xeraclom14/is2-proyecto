@@ -29,6 +29,12 @@ button:hover {
   opacity: 0.8;
 }
 
+.loginbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #3652f4;
+}
+
 .cancelbtn {
   width: auto;
   padding: 10px 18px;
@@ -68,18 +74,18 @@ span.psw {
 </head>
 <body>
 
-<h2>Login Form</h2>
+<h2>Inicio de Sesión</h2>
 
 <form action="localhost:5000" method="post">
 
   <div class="container">
-    <label for="uname"><b>Nombre Usuario</b></label>
-    <input type="text" placeholder="Nombre Usuario" name="uname" required>
+    <label for="uname"><b>Correo Electrónico</b></label>
+    <input type="text" placeholder="Correo Electrónico" name="uname" required>
 
     <label for="psw"><b>Contraseña</b></label>
     <input type="password" placeholder="Contraseña" name="psw" required>
         
-    <button type="submit">Iniciar Sesión</button>
+    <button type="submit" class ="loginbtn">Iniciar Sesión</button>
     <label>
       <input type="checkbox" checked="checked" name="remember"> Recuérdame
     </label>
@@ -87,9 +93,19 @@ span.psw {
 
   <div class="container" style="background-color:#f1f1f1">
 
-    <a href="/"> Cancel </a>
-    <button type="button" class="cancelbtn" href="/">Cancelar</button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
+    <button id="myButton" class="cancelbtn" >Cancelar</button>
+
+    <script type="text/javascript">
+        document.getElementById("myButton").onclick = function () {
+            location.href = "/asd";
+        };
+    </script>
+    
+
+
+    <!--<span class="psw">Forgot <a href="#">password?</a></span>-->
+    
+
   </div>
 
 
