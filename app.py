@@ -1,7 +1,6 @@
 from multiprocessing.sharedctypes import Value
 from flask import Flask, render_template, request, redirect, url_for
 from flask_mysqldb import MySQL
-from numpy import insert
 
 app = Flask(__name__)
 
@@ -25,7 +24,7 @@ def Index():
     cur = mysql.connection.cursor()
     cur.execute("INSERT INTO `encuestador`(`ap_pat`, `ap_mat`, `prim_nom`,`seg_nom`,`email`) VALUES ('V','C','J','A','j@gmail.com')")
     mysql.connection.commit()
-    return "Encuestador 1 creado"
+    return "Encuestador j@gmail.com creado"
 
 @app.route('/edit/<id>')
 def edit(id):
@@ -35,6 +34,11 @@ def edit(id):
 def create():
     if request.method == 'POST':
         if(request.form['titulo'] != ""):
+            categorias =  request.form['categoria'].upper().split(',')
+            for categoria in categorias:
+                categoria = categoria.rstrip()
+                categoria = categoria.lstrip()
+                print(categoria)
             cur = mysql.connection.cursor()
             cur.execute("INSERT INTO encuesta (id_encuestador, titulo) VALUES (%s , %s);", (e_id, request.form['titulo']))
             mysql.connection.commit()
