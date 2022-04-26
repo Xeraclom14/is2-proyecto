@@ -37,11 +37,11 @@ def edit(id):
 @app.route('/delete/<id>')
 def delete(id):
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM encuesta WHERE id_encuesta = %s;",(id,))
+    cur.execute("SELECT titulo FROM encuesta WHERE id_encuesta = %s;",(id,))
     datos = cur.fetchall()
     cur.execute("DELETE FROM encuesta WHERE id_encuesta = %s;", (id,))
     mysql.connection.commit()
-    flash("Encuesta \"" + datos[0][2] +"\" eliminada exitosamente.")
+    flash("Encuesta \"" + datos[0][0] +"\" eliminada exitosamente.")
     return redirect(url_for("forms"))
 
 @app.route('/create', methods=['GET','POST'])
