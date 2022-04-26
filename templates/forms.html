@@ -1,0 +1,20 @@
+{% extends './base.html' %}
+
+{% block title %}Forms{% endblock %}
+
+{% block body %}
+<center>
+    <form class="col-lg-6">
+        <h1 class="form-label mt-4">Encuestas</h1>
+        {% for form in forms %}
+        <div class="card bg-light mb-3">
+            <div class="card-header" style="text-align: left;">{{ form.2 }}</div>
+            <div class="card-body">
+                <a href="edit/{{ form.0 }}" class="mt-2 btn btn-primary">EDIT</a>
+                <a href="delete/{{ form.0 }}" class="mt-2 btn btn-danger">DELETE</a>
+            </div>
+        </div>
+        {% endfor %}
+    </form>
+</center>
+{% endblock %}

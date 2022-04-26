@@ -30,19 +30,28 @@ def Index():
 def edit(id):
     return "Editando encuesta " + id + "."
 
+@app.route('/delete/<id>')
+def delete(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM encuesta WHERE id_encuesta = %s;", (id,))
+    mysql.connection.commit()
+    return redirect(url_for("forms"))
+
 @app.route('/create', methods=['GET','POST'])
 def create():
     if request.method == 'POST':
         if(request.form['titulo'] != ""):
-            categorias =  request.form['categoria'].upper().split(',')
-            for categoria in categorias:
-                categoria = categoria.rstrip()
-                categoria = categoria.lstrip()
-                print(categoria)
+            #TEXTO LIMPIO DE CATEGORIAS
+            #categorias =  request.form['categoria'].upper().split(',')
+            #for categoria in categorias:
+            #    categoria = categoria.rstrip()
+            #    categoria = categoria.lstrip()
+            #    print(categoria)
             cur = mysql.connection.cursor()
             cur.execute("INSERT INTO encuesta (id_encuestador, titulo) VALUES (%s , %s);", (e_id, request.form['titulo']))
             mysql.connection.commit()
-            print(request.form['titulo'])
+            #print(request.form['titulo'])
+            return redirect(url_for("forms"))
         else:
             print("Ingerese un valor valido")
         #redirigir para borrar el formulario de la memoria (no se envia nuevamente si se recarga la pagina)
@@ -57,6 +66,14 @@ def stats(id):
 @app.route('/form/<id>')
 def form(id):
     return "Respndiendo encuesta con ID " + id + "."
+
+@app.route('/forms')
+def forms():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM encuesta")
+    datos = cur.fetchall()
+    print(datos)
+    return render_template('forms.html', forms = datos)
 
 if __name__ == '__main__':
     app.run(port = 5000, debug = True)
