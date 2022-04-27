@@ -9,5 +9,6 @@ def forms():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM encuesta")
     datos = cur.fetchall()
+    mysql.connection.commit()
     #print(datos)
     return render_template('forms.html', forms = datos)

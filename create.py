@@ -1,6 +1,5 @@
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
-import uuid
 
 from __main__ import app
 from __main__ import mysql
@@ -10,17 +9,16 @@ from __main__ import e_id
 def create():
     if request.method == 'POST':
         if(request.form['titulo'] != ""):
-            uid = uuid.uuid1()
             cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO encuesta (id_encuesta ,id_encuestador, titulo) VALUES (%s, %s , %s);", (uid.hex, e_id, request.form['titulo']))
+            cur.execute("INSERT INTO encuesta (id_encuestador, titulo) VALUES (%s , %s);", (e_id, request.form['titulo'],))
             mysql.connection.commit()
 
             ### TEXTO LIMPIO DE CATEGORIAS
-            categorias =  request.form['categoria'].upper().split(',')
-            for categoria in categorias:
-                categoria = categoria.rstrip()
-                categoria = categoria.lstrip()
-                print(categoria)
+            #categorias =  request.form['categoria'].upper().split(',')
+            #for categoria in categorias:
+            #    categoria = categoria.rstrip()
+            #    categoria = categoria.lstrip()
+            #    print(categoria)
 
             #print(request.form['titulo'])
             flash("Encuesta \"" + request.form['titulo'] + "\" ingresada correctamente")
