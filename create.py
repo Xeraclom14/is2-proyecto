@@ -10,9 +10,9 @@ def create():
     if request.method == 'POST':
         if(request.form['titulo'] != ""):
             cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO encuesta (id_encuesta, id_encuestador, titulo) VALUES (1, %s , %s);", (e_id, request.form['titulo'],))
+            cur.execute("INSERT INTO encuesta (id_encuestador, titulo) VALUES (%s , %s);", (e_id, request.form['titulo'],))
             mysql.connection.commit()
-
+            
             ### TEXTO LIMPIO DE CATEGORIAS
             #categorias =  request.form['categoria'].upper().split(',')
             #for categoria in categorias:

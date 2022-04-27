@@ -12,7 +12,6 @@ def delete(id):
     cur.execute("SELECT titulo FROM encuesta WHERE id_encuesta = %s;",(id,))
     datos = cur.fetchall()
     cur.execute("DELETE FROM encuesta WHERE id_encuesta = %s;", (id,))
-    print("DELETE FROM encuesta WHERE id_encuesta = " + id+".")
     mysql.connection.commit()
     flash("Encuesta \"" + datos[0][0] +"\" eliminada exitosamente.")
     return redirect(url_for("forms"))
