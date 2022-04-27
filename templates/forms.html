@@ -2,6 +2,7 @@
 
 {% block title %}Forms{% endblock %}
 
+
 {% block body %}
 <center>
 
@@ -15,21 +16,21 @@
 {%      endfor %}
 {%  endif %}
 {% endwith %}
-    
+
     <form class="col-lg-6">
         <h1 class="form-label mt-4">Encuestas</h1>
-        <a href="create" class="mt-2 btn btn-info">Nueva Encuesta</a>
+        <a href="create" class="mt-2 btn btn-outline-info">Nueva Encuesta</a>
         <p></p>
         {% for form in forms %}
         <div class="card bg-light mb-3">
             <div class="card-header" style="text-align: left;">{{ form.2 }}</div>
             <div class="card-body">
                 <div style="text-align: left;">N° Preguntas : ?</div>
-                <a href="edit/{{ form.0 }}" class="mt-2 btn btn-primary">EDIT</a>
-                <a href="delete/{{ form.0 }}" class="mt-2 btn btn-danger">DELETE</a>
+                <a href="edit/{{ form.0 }}" class="mt-2 btn btn-outline-primary">EDIT</a>
+                <a href="delete/{{ form.0 }}" class="mt-2 btn btn-outline-danger">DELETE</a>
             </div>
         </div>
         {% endfor %}
     </form>
 </center>
-{% endblock %} 
+{% endblock %}

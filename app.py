@@ -27,14 +27,13 @@ mysql = MySQL(app)
 
 app.secret_key = 'mysecretkey'
 
-#crea un usuario en ala base de datos
+###crea un usuario en ala base de datos
 @app.route('/')
 def Index():
-    cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO `Encuestador`(`ap_pat`, `ap_mat`, `prim_nom`,`seg_nom`,`email`,`password`) VALUES ('V','C','J','A','j@gmail.com','asd')")
-    mysql.connection.commit()
-    return "Encuestador j@gmail.com creado"
-    #return "INDEX"
+    #cur = mysql.connection.cursor()
+    #cur.execute("INSERT INTO `encuestador`(`ap_pat`, `ap_mat`, `prim_nom`,`seg_nom`,`email`) VALUES ('V','C','J','A','j@gmail.com')")
+    #mysql.connection.commit()
+    return "INDEX"
 
 @app.route('/edit/<id>')
 def edit(id):
@@ -54,6 +53,7 @@ def delete(id):
 def create():
     if request.method == 'POST':
         if(request.form['titulo'] != ""):
+            ### TEXTO LIMPIO DE CATEGORIAS
             #categorias =  request.form['categoria'].upper().split(',')
             #for categoria in categorias:
             #    categoria = categoria.rstrip()
@@ -63,10 +63,11 @@ def create():
             cur.execute("INSERT INTO Encuesta (id_encuesta, id_encuestador, titulo) VALUES (1, %s , %s);", (e_id, request.form['titulo']))
             mysql.connection.commit()
             #print(request.form['titulo'])
+            flash("Encuesta \"" + request.form['titulo'] + "\" ingresada correctamente")
             return redirect(url_for("forms"))
         else:
             print("Ingerese un valor valido")
-        #redirigir para borrar el formulario de la memoria (no se envia nuevamente si se recarga la pagina)
+        ### redirigir para borrar el formulario de la memoria (no se envia nuevamente si se recarga la pagina)
         return redirect(url_for("create"))
     else:
         return render_template('creation.html')
@@ -87,9 +88,11 @@ def forms():
     #print(datos)
     return render_template('forms.html', forms = datos)
 
-#@app.route('/login')
-#def login():
-#    return render_template('login.html')
+
+
+@app.route('/funciona')
+def funciona():
+    return render_template('funciona.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def logeo():
@@ -125,9 +128,8 @@ def logeo():
 
     return render_template('login.html', msg='')
 
-@app.route('/funciona')
-def funciona():
-    return render_template('funciona.html')
-
 if __name__ == '__main__':
-    app.run(port = 5000, debug = True)      
+    app.run(port = 5000, debug = True)
+
+
+
