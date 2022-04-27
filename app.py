@@ -1,4 +1,3 @@
-from plistlib import UID
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 import uuid
