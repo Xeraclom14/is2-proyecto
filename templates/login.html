@@ -1,90 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends './base.html' %}
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {font-family: Arial, Helvetica, sans-serif;}
-form {border: 3px solid #f1f1f1;}
+{% block title %}Login{% endblock %}
 
-input[type=text], input[type=password] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
+{% block body %}
+<center>
 
-button:hover {
-  opacity: 0.8;
-}
-
-.loginbtn {
-  width: auto;
-  padding: 10px 18px;
-  background-color: #3652f4;
-}
-
-.cancelbtn {
-  width: auto;
-  padding: 10px 18px;
-  background-color: #f44336;
-}
-
-.container {
-  padding: 16px;
-}
-
-span.psw {
-  float: right;
-  padding-top: 16px;
-}
-
-</style>
-</head>
-
-
-<body>
-
-<h2>Inicio de Sesión</h2>
-
-<!-- Técnicamente, la query sería
-  SELECT id_encuestador FROM Encuestador WHERE email = uname AND contraseña = psw
-  eso debe retornar solo UN VALOR, y si dicho valor existe, acceder-->
-
-<form action="localhost:5000" method="post">
-
-  <div class="container">
-    <label for="uname"><b>Correo Electrónico</b></label>
-    <input type="text" placeholder="Correo Electrónico" name="uname" required>
-
-    <label for="psw"><b>Contraseña</b></label>
-    <input type="password" placeholder="Contraseña" name="psw" required>
-        
-    <button type="submit" class ="loginbtn">Iniciar Sesión</button>
-    
-    <label>
-      <input type="checkbox" checked="checked" name="remember"> Recuérdame
-    </label>
-  </div>
-
-  <div class="container" style="background-color:#f1f1f1">
-
-    <!-- Retorna a la página principal-->
-    <button id="myButton" class="cancelbtn" >Cancelar</button>
-    <script type="text/javascript">
-        document.getElementById("myButton").onclick = function () {
-            location.href = "/";
-        };
-    </script>
-    
-    <!-- Retornaría a una pagina relacionada a recuperar la pass-->
-    <span class="psw">¿Contraseña <a href="#">olvidada?</a></span>
+  {% with messages = get_flashed_messages() %}
+  {%  if messages %}
+  {%      for message in messages %}
+      <div class="alert alert-dismissible alert-info col-lg-6">
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          {{message}}.
+      </div>
+  {%      endfor %}
+  {%  endif %}
+  {% endwith %}
   
-  </div>
-
-</form>
-
-</body>
-</html>
+      <form class="col-lg-6">
+          <h1 class="form-label mt-4">Iniciar Sesión</h1>
+          <p></p>
+          <div class="card bg-light mb-3">
+              <div class="card-body">
+                  <div style="text-align: left;">Nombre Usuario:</div>
+                  <input type="email" class="form-control" id="correocito" aria-describedby="emailHelp" placeholder="Correo Electrónico">
+                  <div style="text-align: left;">Contraseña:</div>
+                  <input type="password" class="form-control" id="passwordcita" placeholder="Contraseña">
+                  <p></p>
+                  <a href="/" class="mt-2 btn btn-outline-info">Iniciar Sesión</a>
+                  <a href="/" class="mt-2 btn btn-outline-info">Regresar</a>
+              </div>
+          </div>
+      </form>
+  </center>
+  {% endblock %}
