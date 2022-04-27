@@ -1,7 +1,7 @@
-from multiprocessing.sharedctypes import Value
-from select import select
+from plistlib import UID
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
+import uuid
 
 app = Flask(__name__)
 
@@ -15,11 +15,11 @@ app.config['MYSQL_HOST'] = 'localhost'
 #app.config['MYSQL_USER'] = 'root'
 #app.config['MYSQL_PASSWORD'] = ''
 
-app.config['MYSQL_USER'] = 'rhoda437'
-app.config['MYSQL_PASSWORD'] = 'PassAuxParaProyectoIS2$'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
 
 ###Nombre de la BD
-app.config['MYSQL_DB'] = 'encuestas'
+app.config['MYSQL_DB'] = 'is2_proyecto'
 mysql = MySQL(app)
 
 ###datos de sesión
@@ -52,6 +52,7 @@ def delete(id):
 def create():
     if request.method == 'POST':
         if(request.form['titulo'] != ""):
+            uid = uuid.uuid1()
             ### TEXTO LIMPIO DE CATEGORIAS
             #categorias =  request.form['categoria'].upper().split(',')
             #for categoria in categorias:
@@ -59,7 +60,7 @@ def create():
             #    categoria = categoria.lstrip()
             #    print(categoria)
             cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO encuesta (id_encuestador, titulo) VALUES (%s , %s);", (e_id, request.form['titulo']))
+            cur.execute("INSERT INTO encuesta (id_encuesta ,id_encuestador, titulo) VALUES (%s, %s , %s);", (uid, e_id, request.form['titulo']))
             mysql.connection.commit()
             #print(request.form['titulo'])
             flash("Encuesta \"" + request.form['titulo'] + "\" ingresada correctamente")
