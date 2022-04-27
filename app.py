@@ -32,7 +32,7 @@ import edit
 import form
 import forms
 import index
-import logeo
+import login
 import stats
 
 if __name__ == '__main__':

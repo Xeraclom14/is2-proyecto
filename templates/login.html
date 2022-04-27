@@ -1,6 +1,6 @@
 {% extends './base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Inicio Sesión{% endblock %}
 
 {% block body %}
 <center>
@@ -16,18 +16,18 @@
   {%  endif %}
   {% endwith %}
   
-      <form class="col-lg-6">
+  <form class="col-lg-6" action="/login" method ="POST">
           <h1 class="form-label mt-4">Iniciar Sesión</h1>
           <p></p>
           <div class="card bg-light mb-3">
               <div class="card-body">
-                  <div style="text-align: left;">Nombre Usuario:</div>
-                  <input type="email" class="form-control" id="correocito" aria-describedby="emailHelp" placeholder="Correo Electrónico">
+                  <div style="text-align: left;">Correo Usuario:</div>
+                  <input type="email" class="form-control" name="correocito" aria-describedby="emailHelp" placeholder="Correo Electrónico">
                   <div style="text-align: left;">Contraseña:</div>
-                  <input type="password" class="form-control" id="passwordcita" placeholder="Contraseña">
+                  <input type="password" class="form-control" name="passwordcita" placeholder="Contraseña">
                   <p></p>
-                  <a href="/" class="mt-2 btn btn-outline-info">Iniciar Sesión</a>
-                  <a href="/" class="mt-2 btn btn-outline-info">Regresar</a>
+                  <button type="submit" class="mt-4 btn btn-primary">Iniciar Sesión</button>
+                  <a href="/" class="mt-4 btn btn-outline-info">Regresar</a>
               </div>
           </div>
       </form>
