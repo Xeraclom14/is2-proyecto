@@ -14,8 +14,8 @@ app.config['MYSQL_HOST'] = 'localhost'
 #app.config['MYSQL_USER'] = 'root'
 #app.config['MYSQL_PASSWORD'] = ''
 
-app.config['MYSQL_USER'] = 'rhoda437'
-app.config['MYSQL_PASSWORD'] = 'PassAuxParaProyectoIS2$'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
 
 ###Nombre de la BD
 app.config['MYSQL_DB'] = 'is2_proyecto'
