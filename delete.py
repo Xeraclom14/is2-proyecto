@@ -11,6 +11,8 @@ def delete(id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT titulo FROM encuesta WHERE id_encuesta = %s;",(id,))
     datos = cur.fetchall()
+    cur.execute("DELETE FROM pregunta WHERE id_encuesta = %s;", (id,))
+    mysql.connection.commit()
     cur.execute("DELETE FROM encuesta WHERE id_encuesta = %s;", (id,))
     mysql.connection.commit()
     flash("Encuesta \"" + datos[0][0] +"\" eliminada exitosamente.")

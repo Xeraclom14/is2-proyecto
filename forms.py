@@ -21,5 +21,10 @@ def forms():
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM encuesta")
         datos = cur.fetchall()
+        encuestas = []
+        for encuesta in datos:
+            cur.execute("SELECT COUNT(id_pregunta) From pregunta WHERE id_Encuesta =%s;", (encuesta[0],))
+            num_preguntas = cur.fetchall()
+            encuestas.append([encuesta[0], num_preguntas[0][0], encuesta[2]])
         mysql.connection.commit()
-        return render_template('forms.html', forms = datos)
+        return render_template('forms.html', forms = encuestas)
