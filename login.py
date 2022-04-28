@@ -22,7 +22,7 @@ def login():
                 return redirect(url_for("login"))
 
 
-            flash("Bienvenido, " + account[0][0] + "")
+            flash("Bienvenido, " + account[0] + "")
             return redirect(url_for("forms"))
         else:
             flash("Por favor, rellene los campos")
