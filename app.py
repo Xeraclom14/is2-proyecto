@@ -26,7 +26,6 @@ app.secret_key = 'mysecretkey'
 
 
 ###crea un usuario en ala base de datos
-import create
 import delete
 import edit
 import form
