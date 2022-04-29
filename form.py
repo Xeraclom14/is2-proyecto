@@ -7,7 +7,6 @@ from __main__ import e_id
 
 @app.route('/form/<id>', methods=['GET','POST'])
 def form(id):
-
     #Inserción
     if request.method == 'POST':
         #if(request.form['algo'] != ""):
@@ -23,6 +22,10 @@ def form(id):
     #Visualización
     else:
         cur = mysql.connection.cursor()
+
+        #Encontrar el nombre de la encuesta en db
+        cur.execute("SELECT titulo FROM encuesta WHERE id_encuesta = " + id)
+        nombre_encuesta = cur.fetchall()
         
         #Retirar las preguntas asociadas a la encuesta
         cur.execute("SELECT * FROM pregunta WHERE id_encuesta = " + id)
@@ -34,14 +37,13 @@ def form(id):
         for pregunta in datos:
             cur.execute("SELECT * FROM respuesta WHERE id_pregunta  =%s;", (pregunta[0],))
             respuestas = cur.fetchall()
-            #print(num_preguntas)
-            #Valores de Pregunta: 
+            #Valores de Pregunta:
             # [0] = id_pregunta
             # [1] = id_encuesta 
             # [2] = tipo_pregunta
             # [3] = obligatoria
             # [4] = texto_pregunta
-            #esto recibiría el id_pregunta, id_encuesta, respuestas y el texto.
-            preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[4]])
+            #esto recibiría el id_pregunta, id_encuesta, respuestas, tipo y el texto.
+            preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[2], pregunta[4]])
         mysql.connection.commit()
-        return render_template('form.html', form = preguntas)
+        return render_template('form.html', form = preguntas, titulo = nombre_encuesta[0][0])
