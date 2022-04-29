@@ -19,12 +19,12 @@ def forms():
         return redirect(url_for("forms"))
     else:
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM encuesta")
+        cur.execute("SELECT * FROM encuesta ORDER BY fecha DESC;")
         datos = cur.fetchall()
         encuestas = []
         for encuesta in datos:
             cur.execute("SELECT COUNT(id_pregunta) From pregunta WHERE id_Encuesta =%s;", (encuesta[0],))
             num_preguntas = cur.fetchall()
-            encuestas.append([encuesta[0], num_preguntas[0][0], encuesta[2]])
+            encuestas.append([encuesta[0], num_preguntas[0][0], encuesta[2], encuesta[3]])
         mysql.connection.commit()
         return render_template('forms.html', forms = encuestas)
