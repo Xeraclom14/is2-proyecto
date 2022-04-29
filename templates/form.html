@@ -62,6 +62,9 @@
             <div class="card-header" style="text-align: left;">ID_Pregunta: {{question.0}}</div>
             <div class="card-body">
                 <div style="text-align: left;">Texto: {{question.3}}</div>
+                {% for respuesta in question.2 %}
+                <p> {{respuesta.2}} </p>
+                {% endfor %}
 
                 <!-- Para editar y borrar preguntas -->
                 

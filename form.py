@@ -32,8 +32,8 @@ def form(id):
         
         #por cada pregunta...
         for pregunta in datos:
-            cur.execute("SELECT COUNT(id_pregunta) FROM pregunta WHERE id_Encuesta =%s;", (pregunta[1],))
-            num_preguntas = cur.fetchall()
+            cur.execute("SELECT * FROM respuesta WHERE id_pregunta  =%s;", (pregunta[0],))
+            respuestas = cur.fetchall()
             #print(num_preguntas)
             #Valores de Pregunta: 
             # [0] = id_pregunta
@@ -41,7 +41,7 @@ def form(id):
             # [2] = tipo_pregunta
             # [3] = obligatoria
             # [4] = texto_pregunta
-            #esto recibiría el id_pregunta, id_encuesta, algo?, y el texto.
-            preguntas.append([pregunta[0], pregunta[1], num_preguntas[0][0], pregunta[4]])
+            #esto recibiría el id_pregunta, id_encuesta, respuestas y el texto.
+            preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[4]])
         mysql.connection.commit()
         return render_template('form.html', form = preguntas)
