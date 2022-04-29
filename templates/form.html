@@ -67,13 +67,14 @@
             <div class="card-body" style="text-align: left;">
                 <div style="text-align: right;" class="text-muted">ID: {{question.0}}</div>
                 <!-- cambia la presentacion dependiendo del tipo de pregunta -->
+                
                 <!-- Pregunta texto -->
                 {% if question.3 == 0 %}
-                <input type="text" id="name" name="name" required minlength="4" maxlength="50" size="100">
+                <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
                 {%  endif %}
 
+
                 <!-- Pregunta alternaiva -->
-                
                 {% if question.3 == 1 %}
 
                 {% for respuesta in question.2 %}
