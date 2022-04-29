@@ -67,7 +67,7 @@
             <div class="card-body" style="text-align: left;">
                 <div style="text-align: right;" class="text-muted">ID: {{question.0}}</div>
                 <!-- cambia la presentacion dependiendo del tipo de pregunta -->
-                
+
                 <!-- Pregunta texto -->
                 {% if question.3 == 0 %}
                 <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
@@ -111,5 +111,6 @@
         </div>
     </fieldset>
     {% endfor %}
+    <button type="button" class="btn btn-outline-primary mt-2">Enviar</button>
 </center>
 {% endblock %}
