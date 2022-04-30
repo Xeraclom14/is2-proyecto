@@ -1,3 +1,4 @@
+import string
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 
@@ -9,10 +10,19 @@ from __main__ import e_id
 def edit(id):
     if request.method == 'POST':
         if(request.form['pregunta'] != ""):
+            tipo_pregunta = -1;
+            if request.form.get('D'):
+                tipo_pregunta = 0
+            elif  request.form.get('S'):
+                tipo_pregunta = 2
+            else :
+                tipo_pregunta = 1
             cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO pregunta (id_encuesta, texto_pregunta) VALUES (%s , %s);", (id, request.form['pregunta'],))
+            cur.execute("INSERT INTO pregunta (id_encuesta, tipo_pregunta ,texto_pregunta) VALUES (%s , %s, %s);", (id , tipo_pregunta ,request.form['pregunta'],))
             mysql.connection.commit()
-            flash("Pregunta ingresada correctamente")
+            flash("Pregunta ingresada correctamente.")
+        else:
+            flash("Ingerese un valor valido.")
         return redirect(request.referrer) #refresh
 
     #Visualización

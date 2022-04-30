@@ -16,7 +16,7 @@ def forms():
         else:
             flash("Ingerese un valor valido.")
         ### redirigir para borrar el formulario de la memoria (no se envia nuevamente si se recarga la pagina)
-        return redirect(url_for("forms"))
+        return redirect(request.referrer)
     else:
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM encuesta ORDER BY fecha DESC;")

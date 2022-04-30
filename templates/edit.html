@@ -11,7 +11,7 @@
 {%      for message in messages %}
     <div class="alert alert-dismissible alert-primary col-lg-4">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        {{message}}.
+        {{message}}
     </div>
 {%      endfor %}
 {%  endif %}
@@ -20,12 +20,13 @@
 
     <p></p>
     <form class="col-lg-5" action="/edit/{{id}}" method ="POST">
-        <h1 class="form-label mt-4">Preguntas</h1>
         <h6 style="text-align: left;" class="mt-2"><small>Nueva pregunta</small></h6>
         <input type="text" class="form-control" name="pregunta" placeholder="Pregunta">
-        <button type="submit" class="mt-2 btn btn-dark">CREAR</button>
+        <input type="submit" name="D" value="Desarrollo" class="mt-2 btn btn-dark">
+        <input type="submit" name="S" value="S.Multiple" class="mt-2 btn btn-dark">
+        <input type="submit" name="A" value="Alternativa" class="mt-2 btn btn-dark">
     </form>
-
+    <p></p>
     <!-- question({id_pregunta, id_encuesta, respuestas, tipo, texto})-->
 
     <!-- Esto es para ver las preguntas dado un id de encuesta -->
@@ -40,7 +41,7 @@
 
                 <!-- Pregunta texto -->
                 {% if question.3 == 0 %}
-                <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                <textarea class="form-control" id="exampleTextarea" rows="1"></textarea>
                 {%  endif %}
 
 
@@ -81,6 +82,5 @@
         </div>
     </fieldset>
     {% endfor %}
-    <a href="/forms" class="mt-2 btn btn-primary">Enviar</a>
 </center>
 {% endblock %}
