@@ -12,9 +12,9 @@ def forms():
             cur = mysql.connection.cursor()
             cur.execute("INSERT INTO encuesta (id_encuestador, titulo) VALUES (%s , %s);", (e_id, request.form['titulo'],))
             mysql.connection.commit()
-            flash("Encuesta \"" + request.form['titulo'] + "\" ingresada correctamente")
+            flash("Encuesta \"" + request.form['titulo'] + "\" ingresada correctamente.")
         else:
-            flash("Ingerese un valor valido")
+            flash("Ingerese un valor valido.")
         ### redirigir para borrar el formulario de la memoria (no se envia nuevamente si se recarga la pagina)
         return redirect(url_for("forms"))
     else:

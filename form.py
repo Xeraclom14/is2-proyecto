@@ -7,6 +7,12 @@ from __main__ import e_id
 
 @app.route('/form/<id>', methods=['GET','POST'])
 def form(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT COUNT(titulo) FROM encuesta WHERE id_encuesta = " + id)
+    ver = cur.fetchall()
+    if(ver[0][0] == 0):
+        flash("Encuesta no Encontrada.") 
+        return redirect(url_for("forms"))
     #Inserción
     if request.method == 'POST':
         #if(request.form['algo'] != ""):
@@ -21,8 +27,6 @@ def form(id):
 
     #Visualización
     else:
-        cur = mysql.connection.cursor()
-
         #Encontrar el nombre de la encuesta en db
         cur.execute("SELECT titulo FROM encuesta WHERE id_encuesta = " + id)
         nombre_encuesta = cur.fetchall()
