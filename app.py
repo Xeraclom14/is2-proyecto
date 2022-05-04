@@ -1,6 +1,9 @@
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
+from flask import send_from_directory
 from flask_mysqldb import MySQL
 import uuid
+import os
+from flask_login import LoginManager
 
 app = Flask(__name__)
 
@@ -23,6 +26,15 @@ mysql = MySQL(app)
 
 ###datos de sesión
 app.secret_key = 'mysecretkey'
+
+#funcionalidad de sesión
+#login_manager = LoginManager()
+#login_manager.init_app(app)
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 ###crea un usuario en ala base de datos
