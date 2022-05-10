@@ -34,56 +34,55 @@
     <!-- Esto es para ver las preguntas dado un id de encuesta -->
     <!-- Para cada pregunta -->
     {% for question in form %}
-    <fieldset class="form-group">
-        <div class="card bg-light mb-3 col-lg-6">
-            <div class="card-header" style="text-align: left;"> {{question.4}}</div>
-            <div class="card-body" style="text-align: left;">
-                <!-- <div style="text-align: right;" class="text-muted">ID: {{question.0}}</div> -->
-                <!-- cambia la presentacion dependiendo del tipo de pregunta -->
-                <!-- Pregunta texto -->
-                {% if question.3 == 0 %}
-                {% endif %}
+    <div class="card bg-light mb-3 col-lg-6">
+        <div class="card-header" style="text-align: left;"> {{question.4}}</div>
+        <div class="card-body" style="text-align: left;">
+            <!-- <div style="text-align: right;" class="text-muted">ID: {{question.0}}</div> -->
+            <!-- cambia la presentacion dependiendo del tipo de pregunta -->
+            <!-- Pregunta texto -->
+            {% if question.3 == 0 %}
+            {% endif %}
 
 
-                <!-- Pregunta alternaiva -->
-                {% if question.3 == 1 %}
+            <!-- Pregunta alternaiva -->
+            {% if question.3 == 1 %}
 
-                <!--  Formulario para agregar alternativas -->
-                <form action="/new_alternativa/{{id}}/{{question.0}}" method="POST">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-sm" name="alternativa"
-                            placeholder="Selección">
-                        <button type="submit" class="btn btn-primary btn-primary-sm" type="button">AGREGAR</button>
-                    </div>
-                </form>
-
-                {% for respuesta in question.2 %}
-                <form>
+            <!--  Formulario para agregar alternativas -->
+            <form action="/new_alternativa/{{id}}/{{question.0}}" method="POST">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control form-control-sm" name="alternativa" placeholder="Selección">
+                    <button type="submit" class="btn btn-primary btn-primary-sm" type="button">AGREGAR</button>
+                </div>
+            </form>
+            <form>
+                <fieldset class="form-group">
+                    {% for respuesta in question.2 %}
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
                             {{respuesta.2}}
                         </label>
                     </div>
-                </form>
-                {% endfor %}
+                    {% endfor %}
+                </fieldset>
+            </form>
+            {% endif %}
 
-                {% endif %}
+            <!-- Pregunta s.multiple -->
+            {% if question.3 == 2 %}
 
-                <!-- Pregunta s.multiple -->
-                {% if question.3 == 2 %}
+            <!--  Formulario para agregar alternativas -->
+            <form action="/new_alternativa/{{id}}/{{question.0}}" method="POST">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control form-control-sm" name="alternativa"
+                        placeholder="Alternativa">
+                    <button type="submit" class="btn btn-primary btn-primary-sm" type="button">AGREGAR</button>
+                </div>
+            </form>
 
-                <!--  Formulario para agregar alternativas -->
-                <form action="/new_alternativa/{{id}}/{{question.0}}" method="POST">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-sm" name="alternativa"
-                            placeholder="Alternativa">
-                        <button type="submit" class="btn btn-primary btn-primary-sm" type="button">AGREGAR</button>
-                    </div>
-                </form>
-
-                {% for respuesta in question.2 %}
-                <form>
+            <form>
+                <fieldset class="form-group">
+                    {% for respuesta in question.2 %}
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1"
@@ -91,19 +90,18 @@
                             {{respuesta.2}}
                         </label>
                     </div>
-                </form>
-                {% endfor %}
+                    {% endfor %}
+                </fieldset>
+            </form>
+            {% endif %}
 
-                {% endif %}
-
-                <!-- Para editar y borrar preguntas 
+            <!-- Para editar y borrar preguntas 
                 NO COMPLETADOS
                 <a href="edit/{{ question.0 }}" class="mt-2 btn btn-primary">EDIT</a>
                 <a href="delete/{{ question.0 }}" class="mt-2 btn btn-danger">DELETE</a>
                 -->
-            </div>
         </div>
-    </fieldset>
+    </div>
     {% endfor %}
 </center>
 {% endblock %}
