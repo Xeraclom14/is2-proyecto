@@ -2,9 +2,25 @@ import string
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 
-from __main__ import app
-from __main__ import mysql
-from __main__ import e_id
+from __main__ import app, mysql, e_id
+
+@app.route('/new_alternativa/<id>/<id_pregunta>', methods=['GET','POST'])
+def edit_pregunta(id,id_pregunta):
+    if request.method == 'POST':
+        if(request.form['alternativa']!=""):
+            print(request.form['alternativa'])
+            cur = mysql.connection.cursor()
+            cur.execute("INSERT INTO respuesta (id_pregunta, texto_respuesta) VALUES (%s , %s);", (id_pregunta ,request.form['alternativa'],))
+            mysql.connection.commit()
+            return redirect(request.referrer)
+        else:
+            flash("Ingerese un valor valido.")
+            return redirect("/edit/" + id)
+    return redirect("/edit/" + id)
+
+@app.route('/delete_alternativa/<id>/<id_pregunta>')
+def delete_alternativa(id,id_pregunta):
+    return redirect("/edit/" + id)
 
 @app.route('/edit/<id>', methods=['GET','POST'])
 def edit(id):

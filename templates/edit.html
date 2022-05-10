@@ -6,25 +6,27 @@
 {% block body %}
 
 <center>
-{% with messages = get_flashed_messages() %}
-{%  if messages %}
-{%      for message in messages %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
     <div class="alert alert-dismissible alert-primary col-lg-4">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         {{message}}
     </div>
-{%      endfor %}
-{%  endif %}
-{% endwith %}
-<h1 class="form-label mt-4">{{titulo}}</h1>  
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <h1 class="form-label mt-4">{{titulo}}</h1>
 
     <p></p>
-    <form class="col-lg-5" action="/edit/{{id}}" method ="POST">
+    <form class="col-lg-6" action="/edit/{{id}}" method="POST">
         <h6 style="text-align: left;" class="mt-2"><small>Nueva pregunta</small></h6>
-        <input type="text" class="form-control" name="pregunta" placeholder="Pregunta">
-        <input type="submit" name="D" value="Desarrollo" class="mt-2 btn btn-dark">
-        <input type="submit" name="S" value="Alternativa" class="mt-2 btn btn-dark">
-        <input type="submit" name="A" value="S.Multiple" class="mt-2 btn btn-dark">
+        <div class="input-group">
+            <input type="text" class="form-control form-control-sm" name="pregunta" placeholder="Pregunta">
+            <input type="submit" name="S" value="Alternativa" class="btn btn-primary h">
+            <input type="submit" name="A" value="S.Multiple" class="btn btn-primary">
+            <input type="submit" name="D" value="Desarrollo" class=" btn btn-primary disabled">
+        </div>
     </form>
     <p></p>
     <!-- question({id_pregunta, id_encuesta, respuestas, tipo, texto})-->
@@ -36,42 +38,63 @@
         <div class="card bg-light mb-3 col-lg-6">
             <div class="card-header" style="text-align: left;"> {{question.4}}</div>
             <div class="card-body" style="text-align: left;">
-                <div style="text-align: right;" class="text-muted">ID: {{question.0}}</div>
+                <!-- <div style="text-align: right;" class="text-muted">ID: {{question.0}}</div> -->
                 <!-- cambia la presentacion dependiendo del tipo de pregunta -->
-
                 <!-- Pregunta texto -->
                 {% if question.3 == 0 %}
-                <textarea class="form-control" id="exampleTextarea" rows="1"></textarea>
-                {%  endif %}
+                {% endif %}
 
 
                 <!-- Pregunta alternaiva -->
                 {% if question.3 == 1 %}
 
+                <!--  Formulario para agregar alternativas -->
+                <form action="/new_alternativa/{{id}}/{{question.0}}" method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-sm" name="alternativa"
+                            placeholder="Selección">
+                        <button type="submit" class="btn btn-primary btn-primary-sm" type="button">AGREGAR</button>
+                    </div>
+                </form>
+
                 {% for respuesta in question.2 %}
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                    {{respuesta.2}}
-                    </label>
-                </div>
+                <form>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            {{respuesta.2}}
+                        </label>
+                    </div>
+                </form>
                 {% endfor %}
 
-                {%  endif %}
+                {% endif %}
 
                 <!-- Pregunta s.multiple -->
                 {% if question.3 == 2 %}
 
+                <!--  Formulario para agregar alternativas -->
+                <form action="/new_alternativa/{{id}}/{{question.0}}" method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-sm" name="alternativa"
+                            placeholder="Alternativa">
+                        <button type="submit" class="btn btn-primary btn-primary-sm" type="button">AGREGAR</button>
+                    </div>
+                </form>
+
                 {% for respuesta in question.2 %}
-                <div class="form-check">
-                    <label class="form-check-label">
-                      <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1">
-                      {{respuesta.2}}
-                    </label>
-                </div>
+                <form>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1"
+                                value="option1">
+                            {{respuesta.2}}
+                        </label>
+                    </div>
+                </form>
                 {% endfor %}
 
-                {%  endif %}
+                {% endif %}
 
                 <!-- Para editar y borrar preguntas 
                 NO COMPLETADOS
