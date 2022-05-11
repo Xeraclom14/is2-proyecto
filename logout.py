@@ -12,4 +12,4 @@ def logout():
    #session.pop('username', None)
    session.clear()
    # Redirect to login page
-   return redirect(url_for('login'))
+   return redirect(url_for('Index'))

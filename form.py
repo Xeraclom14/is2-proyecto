@@ -50,4 +50,4 @@ def form(id):
             #esto recibiría el id_pregunta, id_encuesta, respuestas, tipo y el texto.
             preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[2], pregunta[4]])
         mysql.connection.commit()
-        return render_template('form.html', form = preguntas, titulo = nombre_encuesta[0][0])
+        return render_template('/encuestadores/form.html', form = preguntas, titulo = nombre_encuesta[0][0])

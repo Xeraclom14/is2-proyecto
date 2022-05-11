@@ -29,4 +29,4 @@ def forms():
             num_respuestas = cur.fetchall()
             encuestas.append([encuesta[0], num_preguntas[0][0], encuesta[2], encuesta[3], num_respuestas[0][0]])
         mysql.connection.commit()
-        return render_template('forms.html', forms = encuestas)
+        return render_template('encuestadores/forms.html', forms = encuestas)

@@ -14,7 +14,7 @@ def Index():
         #hay alguien conectado.
         #que sucede si es un encuestador?
         if(tiposesion == "encuestador"):
-                return render_template('otroindex.html', username=session['username'])
+                return render_template('encuestadores/index.html', username=session['username'])
         return render_template("logeado!")
 
     #si no, no hay problema.
