@@ -15,13 +15,14 @@ def login():
             cur = mysql.connection.cursor() 
             
             #seleccionar cuenta
-            cur.execute("SELECT prim_nom, password FROM encuestador WHERE"
+            cur.execute("SELECT * FROM encuestador WHERE"
             +" email = %s AND password = %s;",
             (request.form['correocito'], request.form['passwordcita'],))
+
+            #ORDEN: ID, Ap1, Ap2, No1, No2, mail, pass
             
             #filtrar por una (no deberia ser necesario?)
             account = cur.fetchone()
-            #print(account)
 
             #Si algún dato es incorrecto, sea nombre o contraseña.
             if account is None:
@@ -34,12 +35,14 @@ def login():
 
             #Si fue exitoso...
             if account:
-                flash("Bienvenido, " + account[0])
-
+                flash("Bienvenido, " + account[3])
+                
                 #cosas de flask
                 session['loggedin'] = True
-                session['id'] = account[0]
-                session['username'] = account[1]
+                session['username'] = account[3]
+                session['password'] = account[6]
+                session['mail'] = account[5]
+                session['type'] = "encuestador"
                 return redirect(url_for("forms"))
         
         #Si no ingresaste nada.

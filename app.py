@@ -37,6 +37,11 @@ app.secret_key = 'ffc5c7a327818c3193a6b640'
 #def load_user(user_id):
 #    return User.get(user_id)
 
+#@app.before_request
+#def make_session_permanent():
+#    session.permanent = False
+
+
 
 @app.route('/favicon.ico')
 def favicon():

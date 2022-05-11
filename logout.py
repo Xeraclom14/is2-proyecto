@@ -7,8 +7,9 @@ from __main__ import mysql
 @app.route('/logout')
 def logout():
     # Remove session data, this will log the user out
-   session.pop('loggedin', None)
-   session.pop('id', None)
-   session.pop('username', None)
+   #session.pop('loggedin', None)
+   #session.pop('id', None)
+   #session.pop('username', None)
+   session.clear()
    # Redirect to login page
    return redirect(url_for('login'))
