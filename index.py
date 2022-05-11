@@ -6,4 +6,9 @@ from __main__ import mysql
 
 @app.route('/')
 def Index():
+    if 'loggedin' in session:
+        #hay alguien conectado.
+        return render_template('otroindex.html', username=session['username'])
+
+    #si no, no hay problema.
     return render_template('index.html')

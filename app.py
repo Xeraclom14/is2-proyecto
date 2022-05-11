@@ -1,3 +1,4 @@
+from attr import asdict
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask import send_from_directory
 from flask_mysqldb import MySQL
@@ -25,11 +26,17 @@ app.config['MYSQL_DB'] = 'is2_proyecto'
 mysql = MySQL(app)
 
 ###datos de sesión
-app.secret_key = 'mysecretkey'
+#La clave secreta, esto es importante.
+app.secret_key = 'ffc5c7a327818c3193a6b640'
 
 #funcionalidad de sesión
 #login_manager = LoginManager()
 #login_manager.init_app(app)
+
+#@login_manager.user_loader
+#def load_user(user_id):
+#    return User.get(user_id)
+
 
 @app.route('/favicon.ico')
 def favicon():
@@ -45,6 +52,7 @@ import forms
 import index
 import login
 import stats
+import logout
 
 if __name__ == '__main__':
     app.run(port = 5000, debug = True)

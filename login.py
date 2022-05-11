@@ -32,9 +32,15 @@ def login():
             #if(request.form['passwordcita']!=account[1]):
             #    flash("Contraseña incorrecta")
 
-            #Si fue exitoso.
-            flash("Bienvenido, " + account[0])
-            return redirect(url_for("forms"))
+            #Si fue exitoso...
+            if account:
+                flash("Bienvenido, " + account[0])
+
+                #cosas de flask
+                session['loggedin'] = True
+                session['id'] = account[0]
+                session['username'] = account[1]
+                return redirect(url_for("forms"))
         
         #Si no ingresaste nada.
         else:
