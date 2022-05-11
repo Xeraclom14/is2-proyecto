@@ -35,14 +35,17 @@
     <!-- Para cada pregunta -->
     {% for question in form %}
     <div class="card bg-light mb-3 col-lg-6">
-        <div class="card-header" style="text-align: left;"> {{question.4}}</div>
+        <div class="card-header" style="text-align: left;">
+            <a href="/delete_pregunta/{{id}}/{{question.0}}" class="btn btn-danger btn-sm rounded-pill">×</a>
+            {{question.4}}
+        </div>
         <div class="card-body" style="text-align: left;">
             <!-- <div style="text-align: right;" class="text-muted">ID: {{question.0}}</div> -->
             <!-- cambia la presentacion dependiendo del tipo de pregunta -->
             <!-- Pregunta texto -->
             {% if question.3 == 0 %}
+            <textarea class="form-control" id="exampleTextarea" rows="1"></textarea>
             {% endif %}
-
 
             <!-- Pregunta alternaiva -->
             {% if question.3 == 1 %}
@@ -54,13 +57,18 @@
                     <button type="submit" class="btn btn-primary btn-primary-sm" type="button">AGREGAR</button>
                 </div>
             </form>
+
+            <!-- visualizar las respuestas -->
             <form>
                 <fieldset class="form-group">
                     {% for respuesta in question.2 %}
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
+                            <a href="/delete_alternativa/{{id}}/{{respuesta.0}}"
+                                class="btn btn-danger btn-sm rounded-pill">×</a>
                             {{respuesta.2}}
+
                         </label>
                     </div>
                     {% endfor %}
@@ -80,14 +88,20 @@
                 </div>
             </form>
 
+            <!-- visualizar las respuestas -->
             <form>
                 <fieldset class="form-group">
+
                     {% for respuesta in question.2 %}
+
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1"
                                 value="option1">
+                            <a href="/delete_alternativa/{{id}}/{{respuesta.0}}"
+                                class="btn btn-danger btn-sm rounded-pill">×</a>
                             {{respuesta.2}}
+
                         </label>
                     </div>
                     {% endfor %}

@@ -18,8 +18,27 @@ def edit_pregunta(id,id_pregunta):
             return redirect("/edit/" + id)
     return redirect("/edit/" + id)
 
-@app.route('/delete_alternativa/<id>/<id_pregunta>')
-def delete_alternativa(id,id_pregunta):
+@app.route('/delete_alternativa/<id>/<id_alternativa>')
+def delete_alternativa(id,id_alternativa):
+    cur = mysql.connection.cursor()
+    
+    #borrar la respuesta
+    cur.execute("DELETE FROM respuesta WHERE id_respuesta = %s;", (id_alternativa,))
+    mysql.connection.commit()
+
+    return redirect("/edit/" + id)
+
+@app.route('/delete_pregunta/<id>/<id_pregunta>')
+def delete_pregunta(id,id_pregunta):
+    cur = mysql.connection.cursor()
+
+    #borrar todas las respuestas vinculados a la pregunta
+    cur.execute("DELETE FROM respuesta WHERE id_pregunta = %s;", (id_pregunta,))
+    mysql.connection.commit()
+    
+    #eliminar la pregunta
+    cur.execute("DELETE FROM pregunta WHERE id_pregunta = %s;", (id_pregunta,))
+    mysql.connection.commit()
     return redirect("/edit/" + id)
 
 @app.route('/edit/<id>', methods=['GET','POST'])
