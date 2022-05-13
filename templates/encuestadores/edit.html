@@ -117,5 +117,12 @@
         </div>
     </div>
     {% endfor %}
+    <div>
+        <a href="/forms" class="mt-2 btn btn-primary">VOLVER</a>
+
+        <form action="/cerrar_encuesta/{{id}}">
+            <button class="mt-2 btn btn-primary">CERRAR ENCUESTA</button>
+        </form>
+    </div>
 </center>
 {% endblock %}

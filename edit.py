@@ -88,3 +88,10 @@ def edit(id):
             preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[2], pregunta[4]])
         mysql.connection.commit()
         return render_template('/encuestadores/edit.html', form = preguntas, titulo = nombre_encuesta[0][0], id = id)
+
+@app.route('/cerrar_encuesta/<id>')
+def cerrar_encuesta(id):
+    
+    flash("Se esta cerrando la encuesta " + id + ".")
+
+    return redirect("/edit/" + id)
