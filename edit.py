@@ -89,9 +89,16 @@ def edit(id):
         mysql.connection.commit()
         return render_template('/encuestadores/edit.html', form = preguntas, titulo = nombre_encuesta[0][0], id = id)
 
-@app.route('/cerrar_encuesta/<id>')
+@app.route('/cerrar_encuesta/<id>', methods=['GET','POST'])
 def cerrar_encuesta(id):
     
-    flash("Se esta cerrando la encuesta " + id + ".")
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE encuesta SET cerrada = '1' WHERE encuesta.id_encuesta = " + id)
 
-    return redirect("/edit/" + id)
+    cur.execute("SELECT titulo FROM encuesta WHERE id_encuesta = " + id)
+    nombre_encuesta = cur.fetchall()
+
+    mysql.connection.commit()
+    flash("Se ha cerrado la encuesta " + nombre_encuesta[0][0] + ".")
+
+    return redirect("/forms")

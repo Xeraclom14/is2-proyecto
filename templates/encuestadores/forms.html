@@ -26,13 +26,21 @@
     <p></p>
     {% for form in forms %}
         <div class="card bg-light mb-3 col-lg-6">
-            <div class="card-header" style="text-align: left;">{{ form.2 }}</div>
+            <div class="card-header" style="text-align: left;">
+                {{ form.2 }}
+                <b>{% if form.5 == 1 %} (CERRADA) {% endif %}</b>
+            </div>
+
             <div class="card-body">
                 <div class="text-muted" style="text-align: right;">{{form.3}}</div>
                 <div style="text-align: left;">N° Preguntas : {{form.1}}</div>
                 <div style="text-align: left;">Respuestas: {{form.4}}</div>
                 <a href="form/{{ form.0 }}" class="mt-2 btn btn btn-success">VER</a>
+                {% if form.5 == 0 %}
                 <a href="edit/{{ form.0 }}" class="mt-2 btn btn-primary">EDITAR</a>
+                {% else %}
+                <a href="edit/{{ form.0 }}" class="mt-2 btn btn-primary disabled">EDITAR</a>
+                {% endif %}
                 <a href="delete/{{ form.0 }}" class="mt-2 btn btn-danger">ELIMINAR</a>
             </div>
         </div>
