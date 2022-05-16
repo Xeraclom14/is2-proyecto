@@ -1,4 +1,3 @@
-from attr import asdict
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask import send_from_directory
 from flask_mysqldb import MySQL
@@ -50,15 +49,15 @@ def favicon():
 
 
 ###crea un usuario en ala base de datos
-import delete
-import edit
-import form
-import forms
-import index
-import login
-import stats
-import logout
-import register
+import src.delete
+import src.edit
+import src.form
+import src.forms
+import src.index
+import src.login
+import src.stats
+import src.logout
+import src.register
 
 if __name__ == '__main__':
     app.run(port = 5000, debug = True)
