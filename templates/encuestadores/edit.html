@@ -17,15 +17,16 @@
     {% endif %}
     {% endwith %}
 
-    <p></p>
+    <!-- TITULO-->
     <fieldset class="form-group">
-        <form class="col-lg-6" action="/edit_titulo/{{id}}" method="POST">
+        <form class="col-lg-10 mt-2" action="/edit_titulo/{{id}}" method="POST">
             <input type="text" class="form-control-plaintext form-control-lg h1" name="titulo" value="{{titulo}}"
                 style="text-align: center; font-size:44px">
             <input type="submit" class="btn btn-sm  btn-success rounded-pill" value="+">
         </form>
     </fieldset>
 
+    <!-- Agregar nueva pregunta-->
     <p></p>
     <fieldset class="form-group">
         <form class="col-lg-6" action="/edit/{{id}}" method="POST">
@@ -44,10 +45,20 @@
     <!-- Para cada pregunta -->
     {% for question in form %}
     <div class="card bg-light mb-3 col-lg-6">
-        <div class="card-header" style="text-align: left;">
-            <a href="/delete_pregunta/{{id}}/{{question.0}}" class="btn btn-danger btn-sm rounded-pill">×</a>
-            {{question.4}}
-        </div>
+
+        <!-- texto de la pregunta-->
+        <fieldset class="form-group">
+            <div class="card-header" style="text-align: left;">
+                <form action="/edit_pregunta/{{id}}/{{question.0}}" method="POST">
+                    <div class="input-group">
+                        <a href="/delete_pregunta/{{id}}/{{question.0}}" class="btn btn-danger btn-sm">x</a>
+                        <input type="text" style="border: 0;" class="form-control form-control-sm" name="pregunta" value="{{question.4}}">
+                        <button type="submit" class="btn btn-sm  btn-success">+</button>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
         <div class="card-body" style="text-align: left;">
             <!-- <div style="text-align: right;" class="text-muted">ID: {{question.0}}</div> -->
             <!-- cambia la presentacion dependiendo del tipo de pregunta -->

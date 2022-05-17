@@ -10,6 +10,16 @@ def edit_alternativa(id,id_pregunta,id_respuesta):
 
 @app.route('/edit_pregunta/<id>/<id_pregunta>', methods=['GET','POST'])
 def edit_pregunta(id,id_pregunta):
+    if request.method == 'POST':
+        if(request.form['pregunta']!=""):
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE pregunta SET texto_pregunta = %s WHERE pregunta.id_pregunta = %s;", (request.form['pregunta'],id_pregunta,))
+            mysql.connection.commit()
+            flash("Pregunta actualizada.")
+            return redirect("/edit/" + id)
+        else:
+            flash("Ingerese un valor valido.")
+            return redirect("/edit/" + id)
     return redirect("/edit/" + id)
 
 @app.route('/edit_titulo/<id>', methods=['GET','POST'])

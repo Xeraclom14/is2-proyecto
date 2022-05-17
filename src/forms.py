@@ -10,7 +10,7 @@ def forms():
     if request.method == 'POST':
         if(request.form['titulo'] != ""):
             cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO encuesta (id_encuestador, titulo) VALUES (%s , %s);", (e_id, request.form['titulo'],))
+            cur.execute("INSERT INTO encuesta (id_encuestador, titulo, cerrada) VALUES (%s , %s, 0);", (e_id, request.form['titulo'],))
             mysql.connection.commit()
             flash("Encuesta \"" + request.form['titulo'] + "\" ingresada correctamente.")
         else:
