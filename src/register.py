@@ -10,10 +10,12 @@ def register():
     if request.method == 'POST': 
        
        #Correo y contraseña insertados.
-       if(request.form['prim_nom'] != "" and request.form['ap_pat'] != "" and request.form['email'] != "" and request.form['password'] != ""):
+       if(request.form['prim_nom'] != "" and request.form['seg_nom'] != "" and request.form['ap_pat'] != "" and request.form['ap_mat'] != "" and request.form['email'] != "" and request.form['password'] != ""):
        
             nombre = request.form['prim_nom']
+            nombre2 = request.form['seg_nom']
             apellido = request.form['ap_pat']
+            apellido2 = request.form['ap_mat']
             email = request.form['email']
             password = request.form['password']
 
@@ -27,8 +29,8 @@ def register():
 
             #Si el correo no existe entonces te deja registrarte.   
             if account is None: 
-               cur.execute('INSERT INTO encuestado (prim_nom,ap_pat,email,password) VALUES (%s, %s, %s, %s)'
-               ,(nombre,apellido,email,password))   
+               cur.execute('INSERT INTO encuestado (prim_nom,seg_nom,ap_pat,ap_mat,email,password) VALUES (%s, %s, %s, %s, %s, %s)'
+               ,(nombre,nombre2,apellido,apellido2,email,password))   
                mysql.connection.commit()
 
                flash("Registrado exitosamente")
