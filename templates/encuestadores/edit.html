@@ -19,10 +19,12 @@
 
     <!-- TITULO-->
     <fieldset class="form-group">
-        <form class="col-lg-10 mt-2" action="/edit_titulo/{{id}}" method="POST">
-            <input type="text" class="form-control-plaintext form-control-lg h1" name="titulo" value="{{titulo}}"
-                style="text-align: center; font-size:44px">
-            <input type="submit" class="btn btn-sm  btn-success rounded-pill" value="+">
+        <form class="col-lg-11 mt-2" action="/edit_titulo/{{id}}" method="POST">
+            <div class="input-group">
+                <input type="text" class="form-control form-control-lg" name="titulo" value="{{titulo}}"
+                    style="text-align: center; font-size:44px; border: 0; font-weight: bold;">
+                <input type="submit" class="btn btn-sm  btn-success" value="+">
+            </div>
         </form>
     </fieldset>
 
@@ -52,7 +54,8 @@
                 <form action="/edit_pregunta/{{id}}/{{question.0}}" method="POST">
                     <div class="input-group">
                         <a href="/delete_pregunta/{{id}}/{{question.0}}" class="btn btn-danger btn-sm">x</a>
-                        <input type="text" style="border: 0;" class="form-control form-control-sm" name="pregunta" value="{{question.4}}">
+                        <input type="text" style="border: 0;" class="form-control form-control-sm" name="pregunta"
+                            value="{{question.4}}">
                         <button type="submit" class="btn btn-sm  btn-success">+</button>
                     </div>
                 </form>
