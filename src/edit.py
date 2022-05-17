@@ -4,8 +4,31 @@ from flask_mysqldb import MySQL
 
 from __main__ import app, mysql, e_id
 
-@app.route('/new_alternativa/<id>/<id_pregunta>', methods=['GET','POST'])
+@app.route('/edit_alternativa/<id>/<id_pregunta>/<id_respuesta>', methods=['GET','POST'])
+def edit_alternativa(id,id_pregunta,id_respuesta):
+    return redirect("/edit/" + id)
+
+@app.route('/edit_pregunta/<id>/<id_pregunta>', methods=['GET','POST'])
 def edit_pregunta(id,id_pregunta):
+    return redirect("/edit/" + id)
+
+@app.route('/edit_titulo/<id>', methods=['GET','POST'])
+def edit_titulo(id):
+    if request.method == 'POST':
+        if(request.form['titulo']!=""):
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE encuesta SET titulo = %s WHERE encuesta.id_encuesta = %s;", (request.form['titulo'],id,))
+            mysql.connection.commit()
+            flash("Título actualizado.")
+            return redirect("/edit/" + id)
+        else:
+            flash("Ingerese un valor valido.")
+            return redirect("/edit/" + id)
+    return redirect("/edit/" + id)
+
+
+@app.route('/new_alternativa/<id>/<id_pregunta>', methods=['GET','POST'])
+def new_alternativa(id,id_pregunta):
     if request.method == 'POST':
         if(request.form['alternativa']!=""):
             print(request.form['alternativa'])
