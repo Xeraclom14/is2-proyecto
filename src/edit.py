@@ -76,6 +76,17 @@ def delete_pregunta(id,id_pregunta):
 
 @app.route('/edit/<id>', methods=['GET','POST'])
 def edit(id):
+
+    #Prohibido acceder a personas que no están registradas.
+    if 'loggedin' not in session:
+        return(render_template("403.html"))
+
+    tiposesion = session['type']
+
+    #Los encuestados tampoco deberían editar las encuestas.
+    if(tiposesion == "encuestado"):
+        return(render_template("403.html"))
+
     if request.method == 'POST':
         if(request.form['pregunta'] != ""):
             tipo_pregunta = -1;

@@ -7,6 +7,17 @@ from __main__ import e_id
 
 @app.route('/forms', methods=['GET','POST'])
 def forms():
+
+    #Prohibido acceder a personas que no están registradas
+    if 'loggedin' not in session:
+        return(render_template("403.html"))
+
+    tiposesion = session['type']
+
+    #Hay que tener un forms para encuestados
+    if(tiposesion == "encuestado"):
+        return(render_template("encuestados/forms.html"))
+
     if request.method == 'POST':
         if(request.form['titulo'] != ""):
             cur = mysql.connection.cursor()

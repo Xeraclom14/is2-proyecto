@@ -7,6 +7,11 @@ from __main__ import mysql
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
+    #por qué irías a logearte, si ya hay una cuenta?
+    if 'loggedin' in session:
+        return(render_template("403.html"))
+
     if request.method == 'POST':
         #Correo y contraseña insertados.
         if(request.form['correocito'] != "" and request.form['passwordcita'] != ""):
@@ -26,8 +31,28 @@ def login():
 
             #Si algún dato es incorrecto, sea nombre o contraseña.
             if account is None:
-                flash("Datos Incorrectos")
-                return redirect(url_for("login"))
+
+                #No es un encuestador al menos, pero falta ver si es un encuestado.
+                cur.execute("SELECT * FROM encuestado WHERE"
+                +" email = %s AND password = %s;",
+                (request.form['correocito'], request.form['passwordcita'],))
+                account = cur.fetchone()
+
+                #si aun asi no está en la BD
+                if account is None:
+                    flash("Datos Incorrectos")
+                    return redirect(url_for("login"))
+                if account:
+                    flash("Bienvenido, " + account[3])
+                    
+                    #cosas de flask
+                    session['loggedin'] = True
+                    session['username'] = account[3]
+                    session['password'] = account[6]
+                    session['mail'] = account[5]
+                    session['type'] = "encuestado"
+                    return redirect(url_for("Index"))
+                
 
             #No sirve.
             #if(request.form['passwordcita']!=account[1]):

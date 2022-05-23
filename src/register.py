@@ -7,6 +7,11 @@ from __main__ import mysql
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+
+   #por qué te registrarías, si ya hay una cuenta?
+    if 'loggedin' in session:
+        return(render_template("403.html"))
+
     if request.method == 'POST': 
        
        #Correo y contraseña insertados.
@@ -25,7 +30,6 @@ def register():
             #Esto es para verificar si el correo ya existe. 
             cur.execute("SELECT * FROM encuestado WHERE email LIKE %s",[email])
             account = cur.fetchone()
-
 
             #Si el correo no existe entonces te deja registrarte.   
             if account is None: 
