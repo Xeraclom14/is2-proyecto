@@ -51,6 +51,7 @@ def login():
                     session['password'] = account[6]
                     session['mail'] = account[5]
                     session['type'] = "encuestado"
+                    #session['id'] = account[0]
                     return redirect(url_for("Index"))
                 
 
@@ -68,6 +69,8 @@ def login():
                 session['password'] = account[6]
                 session['mail'] = account[5]
                 session['type'] = "encuestador"
+                session['id'] = account[0]
+
                 return redirect(url_for("forms"))
         
         #Si no ingresaste nada.

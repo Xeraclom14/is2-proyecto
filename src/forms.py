@@ -3,7 +3,7 @@ from flask_mysqldb import MySQL
 
 from __main__ import app
 from __main__ import mysql
-from __main__ import e_id
+
 
 @app.route('/forms', methods=['GET','POST'])
 def forms():
@@ -13,6 +13,8 @@ def forms():
         return(render_template("403.html"))
 
     tiposesion = session['type']
+
+    e_id = session['id']
 
     #Hay que tener un forms para encuestados
     if(tiposesion == "encuestado"):
