@@ -58,6 +58,7 @@ import src.login
 import src.stats
 import src.logout
 import src.register
+import src.loginadmin
 
 if __name__ == '__main__':
     app.run(port = 5000, debug = True)
