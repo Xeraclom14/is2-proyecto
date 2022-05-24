@@ -32,7 +32,7 @@ def forms():
         return redirect(request.referrer)
     else:
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM encuesta ORDER BY fecha DESC;")
+        cur.execute("SELECT * FROM encuesta WHERE id_encuestador = %s ORDER BY fecha DESC;",(e_id,))
         datos = cur.fetchall()
         encuestas = []
         for encuesta in datos:

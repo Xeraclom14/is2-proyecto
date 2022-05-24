@@ -53,9 +53,10 @@
             <div class="card-header" style="text-align: left;">
                 <form action="/edit_pregunta/{{id}}/{{question.0}}" method="POST">
                     <div class="input-group">
+
+                        <input type="text" style="border: 0; background-color:transparent"
+                            class="form-control form-control-sm" name="pregunta" value="{{question.4}}">
                         <a href="/delete_pregunta/{{id}}/{{question.0}}" class="btn btn-danger btn-sm">x</a>
-                        <input type="text" style="border: 0;" class="form-control form-control-sm" name="pregunta"
-                            value="{{question.4}}">
                         <button type="submit" class="btn btn-sm  btn-success">+</button>
                     </div>
                 </form>
@@ -70,66 +71,60 @@
             <textarea class="form-control" id="exampleTextarea" rows="1"></textarea>
             {% endif %}
 
-            <!-- Pregunta alternaiva -->
+            <!-- Pregunta s.multiple -->
             {% if question.3 == 1 %}
 
+            <!-- visualizar las respuestas -->
+
+            {% for respuesta in question.2 %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" disabled="">
+                <form action="/edit_respuesta/{{id}}/{{question.0}}/{{respuesta.0}}" method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" style="border: 0; background-color:transparent"
+                            class="form-control form-control-sm" name="respuesta" value="{{respuesta.2}}">
+                        <a href="/delete_alternativa/{{id}}/{{respuesta.0}}" class="btn btn-danger btn-sm">x</a>
+                        <input type="submit" class="btn btn-success btn-sm  " value="+">
+                    </div>
+                </form>
+            </div>
+            {% endfor %}
             <!--  Formulario para agregar alternativas -->
             <form action="/new_alternativa/{{id}}/{{question.0}}" method="POST">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control form-control-sm" name="alternativa" placeholder="Selección">
-                    <button type="submit" class="btn btn-primary btn-primary-sm" type="button">AGREGAR</button>
+                    <input type="text" style="border: 0;" class="form-control form-control-sm" name="alternativa"
+                        placeholder="Nueva selección">
+                    <input type="submit" class="btn btn-sm btn-primary" type="button" value="+">
                 </div>
-            </form>
-
-            <!-- visualizar las respuestas -->
-            <form>
-                <fieldset class="form-group">
-                    {% for respuesta in question.2 %}
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            <a href="/delete_alternativa/{{id}}/{{respuesta.0}}"
-                                class="btn btn-danger btn-sm rounded-pill">×</a>
-                            {{respuesta.2}}
-
-                        </label>
-                    </div>
-                    {% endfor %}
-                </fieldset>
             </form>
             {% endif %}
 
-            <!-- Pregunta s.multiple -->
+            <!-- Pregunta alternaiva -->
             {% if question.3 == 2 %}
+            <!-- visualizar las respuestas -->
 
+            {% for respuesta in question.2 %}
+            <div class="form-check">
+                <input type="radio" class="form-check-input" disabled="">
+                <form action="/edit_respuesta/{{id}}/{{question.0}}/{{respuesta.0}}" method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" style="border: 0; background-color:transparent"
+                            class="form-control form-control-sm" name="respuesta" value="{{respuesta.2}}">
+                        <a href="/delete_alternativa/{{id}}/{{respuesta.0}}" class="btn btn-danger btn-sm">x</a>
+                        <input type="submit" class="btn btn-sm  btn-success" value="+">
+                    </div>
+                </form>
+            </div>
+            {% endfor %}
             <!--  Formulario para agregar alternativas -->
             <form action="/new_alternativa/{{id}}/{{question.0}}" method="POST">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control form-control-sm" name="alternativa"
-                        placeholder="Alternativa">
-                    <button type="submit" class="btn btn-primary btn-primary-sm" type="button">AGREGAR</button>
+                    <input type="text" style="border: 0;" class="form-control form-control-sm" name="alternativa"
+                        placeholder="Nueva alternativa">
+                    <input type="submit" class="btn btn-sm btn-primary" type="button" value="+">
                 </div>
             </form>
 
-            <!-- visualizar las respuestas -->
-            <form>
-                <fieldset class="form-group">
-
-                    {% for respuesta in question.2 %}
-
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1"
-                                value="option1">
-                            <a href="/delete_alternativa/{{id}}/{{respuesta.0}}"
-                                class="btn btn-danger btn-sm rounded-pill">×</a>
-                            {{respuesta.2}}
-
-                        </label>
-                    </div>
-                    {% endfor %}
-                </fieldset>
-            </form>
             {% endif %}
 
             <!-- Para editar y borrar preguntas 
@@ -141,10 +136,8 @@
     </div>
     {% endfor %}
     <div>
-        <a href="/forms" class="mt-2 btn btn-primary">VOLVER</a>
-
         <form action="/cerrar_encuesta/{{id}}" method="POST">
-            <button class="mt-2 btn btn-primary">CERRAR ENCUESTA</button>
+            <button class="mt-2 btn btn-warning">CERRAR ENCUESTA</button>
         </form>
     </div>
     <p></p>

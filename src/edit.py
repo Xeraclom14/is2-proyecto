@@ -4,8 +4,18 @@ from flask_mysqldb import MySQL
 
 from __main__ import app, mysql, e_id
 
-@app.route('/edit_alternativa/<id>/<id_pregunta>/<id_respuesta>', methods=['GET','POST'])
-def edit_alternativa(id,id_pregunta,id_respuesta):
+@app.route('/edit_respuesta/<id>/<id_pregunta>/<id_respuesta>', methods=['GET','POST'])
+def edit_respuesta(id,id_pregunta,id_respuesta):
+    if request.method == 'POST':
+        if(request.form['respuesta']!=""):
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE respuesta SET texto_respuesta = %s WHERE respuesta.id_respuesta = %s;", (request.form['respuesta'],id_respuesta,))
+            mysql.connection.commit()
+            flash("Pregunta actualizada.")
+            return redirect("/edit/" + id)
+        else:
+            flash("Ingerese un valor valido.")
+            return redirect("/edit/" + id)
     return redirect("/edit/" + id)
 
 @app.route('/edit_pregunta/<id>/<id_pregunta>', methods=['GET','POST'])
@@ -58,7 +68,7 @@ def delete_alternativa(id,id_alternativa):
     #borrar la respuesta
     cur.execute("DELETE FROM respuesta WHERE id_respuesta = %s;", (id_alternativa,))
     mysql.connection.commit()
-
+    flash("Respuesta eliminada.")
     return redirect("/edit/" + id)
 
 @app.route('/delete_pregunta/<id>/<id_pregunta>')
@@ -72,6 +82,7 @@ def delete_pregunta(id,id_pregunta):
     #eliminar la pregunta
     cur.execute("DELETE FROM pregunta WHERE id_pregunta = %s;", (id_pregunta,))
     mysql.connection.commit()
+    flash("Pregunta eliminada.")
     return redirect("/edit/" + id)
 
 @app.route('/edit/<id>', methods=['GET','POST'])
