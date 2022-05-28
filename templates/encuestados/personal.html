@@ -1,0 +1,20 @@
+{% extends './navbars/baseencuestado.html' %}
+
+{% block title %}Página Personal{% endblock %}
+
+{% block body %}
+<center>
+    ¡Bienvenido, {{ nombre }}! Esta es tu página personal.<br>
+    Acá deberías poder cambiar tus preferencias y ver tus encuestas respondidas.<br>
+    No podrás ver tus respuestas, por motivos de seguridad.<br><br>
+    <h1>Encuestas contestadas</h1> <br>
+
+    {% for form in forms %}
+        <div class="card bg-light mb-3 col-lg-6">
+            <div class="card-body">
+                <div class="text" style="text-align: center;">{{form.0}}</div>
+            </div>
+        </div>
+    {% endfor %}
+</center>
+    {% endblock %}

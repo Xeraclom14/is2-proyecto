@@ -50,7 +50,7 @@ def login():
                 session['password'] = account[6]
                 session['mail'] = account[5]
                 session['type'] = "encuestado"
-                #session['id'] = account[0]
+                session['id'] = account[0]
                 return redirect(url_for("Index"))
         
         #Si no ingresaste nada.
