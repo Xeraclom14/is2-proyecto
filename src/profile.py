@@ -47,5 +47,24 @@ def profile(id):
         else:
             return render_template("/encuestados/tercero.html")
     
-    return "imposible"
+    return render_template("/encuestados/403.html")
     
+
+#Para que funcione el navbar.
+@app.route('/profile', methods=['GET','POST'])
+def profileinicio():
+
+    if 'loggedin' not in session:
+        return(render_template("403.html"))
+    
+    tiposesion = session['type']
+    e_id = session['id']
+
+    #ya veremo
+    if tiposesion == 'encuestador':
+        return "Ya veremos."
+
+    if tiposesion == 'encuestado':
+        return redirect(url_for("profile", id=e_id ))
+
+    return render_template("/encuestados/403.html")

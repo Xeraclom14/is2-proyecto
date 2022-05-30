@@ -4,6 +4,7 @@ from flask_mysqldb import MySQL
 from __main__ import app
 from __main__ import mysql
 
+
 @app.route('/')
 def Index():
     if 'loggedin' in session:
