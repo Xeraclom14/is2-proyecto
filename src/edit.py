@@ -190,7 +190,11 @@ def edit(id):
 
 @app.route('/cerrar_encuesta/<id>', methods=['GET','POST'])
 def cerrar_encuesta(id):
-    
+    # verificar
+    if not verificar(id):
+        flash("Usted no puede Cerrar esta encuesta.")
+        return redirect(url_for("forms"))
+        
     cur = mysql.connection.cursor()
     cur.execute("UPDATE encuesta SET cerrada = '1' WHERE encuesta.id_encuesta = " + id)
 
