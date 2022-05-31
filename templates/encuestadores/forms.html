@@ -5,18 +5,18 @@
 {% block body %}
 
 <center>
-{% with messages = get_flashed_messages() %}
-{%  if messages %}
-{%      for message in messages %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
     <div class="alert alert-dismissible alert-primary col-lg-4">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         {{message}}
     </div>
-{%      endfor %}
-{%  endif %}
-{% endwith %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
-    <form class="col-lg-5" action="/forms" method ="POST">
+    <form class="col-lg-5" action="/forms" method="POST">
         <h1 class="form-label mt-4">Encuestas</h1>
         <h6 style="text-align: left;" class="mt-2"><small>Nueva Encuesta</small></h6>
         <input type="text" class="form-control" name="titulo" placeholder="Titulo">
@@ -25,25 +25,30 @@
     </form>
     <p></p>
     {% for form in forms %}
-        <div class="card bg-light mb-3 col-lg-6">
-            <div class="card-header" style="text-align: left;">
-                {{ form.2 }}
-                <b>{% if form.5 == 1 %} (CERRADA) {% endif %}</b>
-            </div>
-
-            <div class="card-body">
-                <div class="text-muted" style="text-align: right;">{{form.3}}</div>
-                <div style="text-align: left;">N° Preguntas : {{form.1}}</div>
-                <div style="text-align: left;">Respuestas: {{form.4}}</div>
-                <a href="form/{{ form.0 }}" class="mt-2 btn btn btn-success">VER</a>
-                {% if form.5 == 0 %}
-                <a href="edit/{{ form.0 }}" class="mt-2 btn btn-primary">EDITAR</a>
-                {% else %}
-                <a href="edit/{{ form.0 }}" class="mt-2 btn btn-primary disabled">EDITAR</a>
-                {% endif %}
-                <a href="delete/{{ form.0 }}" class="mt-2 btn btn-danger">ELIMINAR</a>
-            </div>
+    <div class="card bg-light mb-3 col-lg-6">
+        <div class="card-header" style="text-align: left;">
+            {{ form.2 }}
+            <b>{% if form.5 == 1 %} (CERRADA) {% endif %}</b>
         </div>
+        <div class="card-body">
+            <div class="text-muted" style="text-align: right;">{{form.3}}</div>
+            <div style="text-align: left;">N° Preguntas : {{form.1}}</div>
+            <div style="text-align: left;">Respuestas: {{form.4}}</div>
+            <a href="form/{{ form.0 }}" class="mt-2 btn btn btn-success">VER</a>
+            {% if form.5 == 0 %}
+            <a href="edit/{{ form.0 }}" class="mt-2 btn btn-primary">EDITAR</a>
+            {% else %}
+            <a href="edit/{{ form.0 }}" class="mt-2 btn btn-primary disabled">EDITAR</a>
+            {% endif %}
+            <a href="delete/{{ form.0 }}" class="mt-2 btn btn-danger">ELIMINAR</a>
+            <button onclick="copy_link({{form.0}})" class="mt-2 btn btn-info">Link</button>
+            <script>
+                function copy_link(id) {
+                    navigator.clipboard.writeText("http://127.0.0.1:5000/form/" + id);
+                }
+            </script>
+        </div>
+    </div>
     {% endfor %}
 </center>
 {% endblock %}
