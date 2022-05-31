@@ -25,10 +25,34 @@ def profile(id):
         #es EL encuestado
         if idint == e_id:
             
-
-            #Función para recibir todas las encuestas contestadas
             cur = mysql.connection.cursor()
 
+            #Función para recibir las preferencias de una persona.
+            cur.execute("SELECT DISTINCT categoria.nombre FROM categoria "
+            + "JOIN encuestadocategoria on categoria.id_categoria = encuestadocategoria.id_categoria "
+            + "AND encuestadocategoria.id_encuestado = %s"
+            + "JOIN encuestado ON encuestado.id_encuestado = %s",(id,id))
+            
+            datardos = cur.fetchall()
+            categorias = []
+            for categoria in datardos:
+                categorias.append([categoria[0]])
+            mysql.connection.commit()
+
+            #SELECT categoria.nombre FROM categoria 
+            #JOIN encuestadocategoria ON categoria.id_categoria = encuestadocategoria.id_categoria
+            #AND encuestadocategoria.id_encuestado = 1
+            #JOIN encuestado ON encuestado.id_encuestado = 1;
+
+            #Función para agregarle una preferencia a una persona.
+
+            #cur.execute("INSERT INTO encuestadoencuesta "
+            #+ "VALUES %s, %s ",(id,"algo"))
+            #mysql.connection.commit()
+
+            
+
+            #Función para recibir todas las encuestas contestadas
             #que mal.
             #Distinct me permite evitar duplicados, pero algo está mal, porque no debería usarlo.
             cur.execute("SELECT DISTINCT encuesta.titulo, encuestado.prim_nom FROM encuesta "
@@ -41,7 +65,7 @@ def profile(id):
             mysql.connection.commit()
 
             return render_template("/encuestados/personal.html",
-            nombre = session['username'], forms = encuestas)
+            nombre = session['username'], forms = encuestas, categorias = categorias)
 
         #es un tercero
         else:

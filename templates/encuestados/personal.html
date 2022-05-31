@@ -3,18 +3,112 @@
 {% block title %}Página Personal{% endblock %}
 
 {% block body %}
-<center>
-    ¡Bienvenido, {{ nombre }}! Esta es tu página personal.<br>
-    Acá deberías poder cambiar tus preferencias y ver tus encuestas respondidas.<br>
-    No podrás ver tus respuestas, por motivos de seguridad.<br><br>
-    <h1>Encuestas contestadas</h1> <br>
 
-    {% for form in forms %}
-        <div class="card bg-light mb-3 col-lg-6">
-            <div class="card-body">
-                <div class="text" style="text-align: center;">{{form.0}}</div>
+<style>
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.box .row {
+  border: 1px dotted grey;
+}
+
+.box .row.content {
+  flex: 1 1 auto;
+  /* The above is shorthand for:
+  flex-grow: 1,
+  flex-shrink: 1,
+  flex-basis: auto
+  */
+}
+.split {
+        height: 100%;
+        width: 50%;
+        position: relative;
+        z-index: 1;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    .left {
+        left: 0;
+        background-color: #111;
+    }
+
+    .right {
+        right: 0;
+        background-color: red;
+    }
+
+    .centered {
+        position: relative;
+        top: 5px;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        text-align: center;
+    }
+    .box .row.footer {
+  flex: 0 1 40px;
+}
+
+</style>
+
+<div class="box">
+    <div class="row content">
+      <p>
+        ¡Bienvenido, {{ nombre }}! Esta es tu página personal.<br>
+        Acá deberías poder cambiar tus preferencias y ver tus encuestas respondidas.<br>
+        No podrás ver tus respuestas, por motivos de seguridad.<br>
+
+        
+        <div class="split left">
+            <div class="centered">
+                <div class="card bg-light mb-3" style="position:relative; width: 100%; height: 100%;">
+                    <div class="card-body">
+                        <div class="card-header">Preferencias</div>
+                        <div class="card bg-light mb-3 col-lg-12">
+                            {% for categoria in categorias %}
+                            <div class="card-body">
+                                <div class="text" style="text-align: center;">{{categoria.0}}</div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    {% endfor %}
-</center>
-    {% endblock %}
+
+        <div class="split right">
+            <div class="centered">
+                <div class="card bg-light mb-3" style="position:relative; width: 100%; height: 100%;">
+                    <div class="card-body">
+                        <div class="card-header">Encuestas Contestadas</div>
+                        <div class="card bg-light mb-3 col-lg-12">
+    
+                            {% for form in forms %}
+                            <div class="text" style="text-align: center;">{{form.0}}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row footer">
+            <p><b>footer</b> (fixed height)</p>
+          </div>
+        
+      </p>
+    </div>
+  </div>
+
+{%endblock%}

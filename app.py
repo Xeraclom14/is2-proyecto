@@ -41,7 +41,6 @@ app.secret_key = 'ffc5c7a327818c3193a6b640'
 #    session.permanent = False
 
 
-
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),

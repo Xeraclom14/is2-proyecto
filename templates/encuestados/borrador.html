@@ -1,0 +1,123 @@
+{% extends './navbars/baseencuestado.html' %}
+
+{% block title %}Página Personal{% endblock %}
+
+
+{% block body %}
+
+<style>
+    .split {
+        height: 100%;
+        width: 50%;
+        position: fixed;
+        z-index: 1;
+        top: 140px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    .left {
+        left: 0;
+        background-color: #111;
+    }
+
+    .right {
+        right: 0;
+        background-color: red;
+    }
+
+    .centered {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .intro {
+        background-color: blueviolet;
+        position: relative;
+        top: 50px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        border: 1px solid #000;
+        float:none;
+    }
+</style>
+
+<!--Sección de Bienvenida.-->
+<div class="intro">
+    ¡Bienvenido, {{ nombre }}! Esta es tu página personal.<br>
+    Acá deberías poder cambiar tus preferencias y ver tus encuestas respondidas.<br>
+    No podrás ver tus respuestas, por motivos de seguridad.<br>
+
+    <div class="split left">
+        <div class="centered">
+            <div class="card bg-light mb-3" style="position:relative; width: 100%; height: 100%;">
+                <div class="card-body">
+                    <div class="card-header">Preferencias</div>
+                    <div class="card bg-light mb-3 col-lg-12">
+                        {% for categoria in categorias %}
+                        <div class="card-body">
+                            <div class="text" style="text-align: center;">{{categoria.0}}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    
+        <div class="split right">
+            <div class="centered">
+                <div class="card bg-light mb-3" style="position:relative; width: 100%; height: 100%;">
+                    <div class="card-body">
+                        <div class="card-header">Encuestas Contestadas</div>
+                        <div class="card bg-light mb-3 col-lg-12">
+    
+                            {% for form in forms %}
+                            <div class="text" style="text-align: center;">{{form.0}}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+</div>
+
+<!--
+<div class="split left">
+    <div class="centered">
+        <div class="card bg-light mb-3" style="position:relative; width: 100%; height: 100%;">
+            <div class="card-body">
+                <div class="card-header">Preferencias</div>
+                <div class="card bg-light mb-3 col-lg-12">
+                    {% for categoria in categorias %}
+                    <div class="card-body">
+                        <div class="text" style="text-align: center;">{{categoria.0}}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="split right">
+        <div class="centered">
+            <div class="card bg-light mb-3" style="position:relative; width: 100%; height: 100%;">
+                <div class="card-body">
+                    <div class="card-header">Encuestas Contestadas</div>
+                    <div class="card bg-light mb-3 col-lg-12">
+
+                        {% for form in forms %}
+                        <div class="text" style="text-align: center;">{{form.0}}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+-->
+    {% endblock %}

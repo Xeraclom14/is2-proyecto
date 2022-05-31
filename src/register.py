@@ -29,6 +29,7 @@ def register():
 
             #Esto es para verificar si el correo ya existe. 
             cur.execute("SELECT * FROM encuestado WHERE email LIKE %s",[email])
+
             account = cur.fetchone()
 
             #Si el correo no existe entonces te deja registrarte.   
