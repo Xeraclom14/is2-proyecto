@@ -3,7 +3,6 @@ from flask_mysqldb import MySQL
 
 from __main__ import app
 from __main__ import mysql
-from __main__ import e_id
 
 @app.route('/form/<id>', methods=['GET','POST'])
 def form(id):
