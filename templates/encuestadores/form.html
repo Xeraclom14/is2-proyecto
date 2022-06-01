@@ -13,48 +13,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         {{message}}.
     </div>
-{%      endfor %}
-{%  endif %}
+{% endfor %}
+{% endif %}
 {% endwith %}
-    <!--
-    <h1 class="form-label mt-4">Creación de Preguntas</h1>
-    
-    <label for="tipopregunta">Escoge un tipo de pregunta:</label>
-
-    <select name="tipopregunta" id="tipopregunta">
-        <option value="alternativa">Alternativas</option>
-
-        <option value="texto">Texto</option>
-
-        <option value="smultiple">S.Múltiple</option>
-        
-    </select>
-    -->
-    <!-- Acá empiezan los códigos para CREAR preguntas 
-    <form class="col-lg-5" action="/form" method ="POST">
-        <h6 style="text-align: left;" class="mt-2"><small>Pregunta de Texto</small></h6>
-        <input type="text" class="form-control" name="titulo" placeholder="Pregunta">
-        <button type="submit" class="mt-2 btn btn-dark">CREAR</button>
-    </form>
-
-    <form class="col-lg-5" action="/form" method ="POST">
-        <h6 style="text-align: left;" class="mt-2"><small>Pregunta de Alternativas</small></h6>
-        <input type="text" class="form-control" name="titulo" placeholder="Titulo">
-        <input type="text" class="form-control mt-2" name="categoria" placeholder="respuesta1, respuesta2, ... ">
-        <button type="submit" class="mt-2 btn btn-dark">CREAR</button>
-    </form>
-
-    <form class="col-lg-5" action="/form" method ="POST">
-        <h6 style="text-align: left;" class="mt-2"><small>Pregunta de Selección Múltiple</small></h6>
-        <input type="text" class="form-control" name="titulo" placeholder="Pregunta">
-        <input type="text" class="form-control mt-2" name="categoria" placeholder="respuesta1, respuesta2, ... ">
-        <button type="submit" class="mt-2 btn btn-dark">CREAR</button>
-    </form>
-    -->
 
 <h1 class="form-label mt-4">{{titulo}}</h1>  
-
-    <p></p>
 
     <!-- question({id_pregunta, id_encuesta, respuestas, tipo, texto})-->
 
@@ -62,6 +25,8 @@
     <!-- Para cada pregunta -->
     {% for question in form %}
     <fieldset class="form-group">
+      <form>
+
         <div class="card bg-light mb-3 col-lg-6">
             <div class="card-header" style="text-align: left;"> {{question.4}}</div>
             <div class="card-body" style="text-align: left;">
@@ -98,19 +63,16 @@
                       {{respuesta.2}}
                     </label>
                 </div>
+      </form>
                 {% endfor %}
 
-                {%  endif %}
+                {% endif %}
 
-                <!-- Para editar y borrar preguntas 
-                NO COMPLETADOS
-                <a href="edit/{{ question.0 }}" class="mt-2 btn btn-primary">EDIT</a>
-                <a href="delete/{{ question.0 }}" class="mt-2 btn btn-danger">DELETE</a>
-                -->
             </div>
         </div>
     </fieldset>
+
     {% endfor %}
-    <a href="/forms" class="mt-2 btn btn-primary">Enviar</a>
+    <a href="/forms" class="mt-2 btn btn-primary">Enviar encuesta</a>
 </center>
 {% endblock %}
