@@ -98,6 +98,16 @@ def edit(id):
     if(tiposesion == "encuestado"):
         return(render_template("403.html"))
 
+    #Si la encuesta esta cerrada, no se debe poder editar.
+    cur = mysql.connection.cursor()
+
+    cur.execute("SELECT cerrada FROM encuesta WHERE id_encuesta = " + id)
+    cerrada = cur.fetchall()
+    mysql.connection.commit()
+
+    if(cerrada[0][0] == 1):
+        return(render_template("403.html"))
+
     if request.method == 'POST':
         if(request.form['pregunta'] != ""):
             tipo_pregunta = -1;
@@ -142,6 +152,7 @@ def edit(id):
             #esto recibiría el id_pregunta, id_encuesta, respuestas, tipo y el texto.
             preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[2], pregunta[4]])
         mysql.connection.commit()
+        
         return render_template('/encuestadores/edit.html', form = preguntas, titulo = nombre_encuesta[0][0], id = id)
 
 @app.route('/cerrar_encuesta/<id>', methods=['GET','POST'])
