@@ -1,9 +1,7 @@
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
-import uuid
 
-from __main__ import app
-from __main__ import mysql
+from __main__ import app, mysql
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

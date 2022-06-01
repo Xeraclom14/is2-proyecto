@@ -1,12 +1,7 @@
-from ctypes import sizeof
-from itertools import count
-from queue import Empty
-from turtle import shapesize
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 
-from __main__ import app
-from __main__ import mysql
+from __main__ import app, mysql
 
 @app.route('/delete/<id>')
 def delete(id):

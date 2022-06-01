@@ -1,4 +1,3 @@
-import string
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 
@@ -194,7 +193,7 @@ def cerrar_encuesta(id):
     if not verificar(id):
         flash("Usted no puede Cerrar esta encuesta.")
         return redirect(url_for("forms"))
-        
+
     cur = mysql.connection.cursor()
     cur.execute("UPDATE encuesta SET cerrada = '1' WHERE encuesta.id_encuesta = " + id)
 
