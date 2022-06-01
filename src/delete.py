@@ -38,6 +38,10 @@ def delete(id):
     cur.execute("DELETE FROM pregunta WHERE id_encuesta = %s;", (id,))
     mysql.connection.commit()
 
+    #eliminar las referencias de categoria
+    cur.execute("DELETE FROM encuestacategoria WHERE id_encuesta = %s;", (id,))
+    mysql.connection.commit()
+
     #eliminar la encuesta
     cur.execute("DELETE FROM encuesta WHERE id_encuesta = %s;", (id,))
     mysql.connection.commit()
