@@ -136,6 +136,16 @@ def edit(id):
     #Los encuestados tampoco deberían editar las encuestas.
     if(tiposesion == "encuestado"):
         return(render_template("403.html"))
+
+    #Si la encuesta esta cerrada, no se debe poder editar.
+    cur = mysql.connection.cursor()
+
+    cur.execute("SELECT cerrada FROM encuesta WHERE id_encuesta = " + id)
+    cerrada = cur.fetchall()
+    mysql.connection.commit()
+
+    if(cerrada[0][0] == 1):
+        return(render_template("403.html"))
     
     # verificar
     if not verificar(id):
