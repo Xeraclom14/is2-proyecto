@@ -1,9 +1,7 @@
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 
-from __main__ import app
-from __main__ import mysql
-from __main__ import e_id
+from __main__ import app, mysql
 
 @app.route('/form/<id>', methods=['GET','POST'])
 def form(id):

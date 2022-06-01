@@ -9,7 +9,6 @@ app = Flask(__name__)
 
 ###encuestador id
 ###INSERT INTO `encuestador`(`ap_pat`, `ap_mat`, `prim_nom`,`seg_nom`,`email`) VALUES ('V','C','J','A','1')
-e_id = 1
 
 
 ###BD

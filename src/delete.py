@@ -1,15 +1,25 @@
-from itertools import count
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
-import uuid
 
-from __main__ import app
-from __main__ import mysql
+from __main__ import app, mysql
 
 @app.route('/delete/<id>')
 def delete(id):
-    ## almacenar nombre
+    if 'loggedin' not in session:
+        return(render_template("403.html"))
+
+    if session['type'] == "encuestado":
+        return(render_template("403.html"))
+
     cur = mysql.connection.cursor()
+    # verificar si es una encuesta valida
+    cur.execute("SELECT * FROM encuesta WHERE id_encuesta = %s AND id_encuestador = %s;",(id, session['id'],))
+    validar = cur.fetchall()
+    if validar == ():
+        flash("Se ha producido un error al intentar eliminar la encusta.")
+        return redirect(url_for("forms"))
+
+    # almacenar nombre
     cur.execute("SELECT titulo FROM encuesta WHERE id_encuesta = %s;",(id,))
     nombre = cur.fetchall()
 
@@ -28,8 +38,13 @@ def delete(id):
     cur.execute("DELETE FROM pregunta WHERE id_encuesta = %s;", (id,))
     mysql.connection.commit()
 
+    #eliminar las referencias de categoria
+    cur.execute("DELETE FROM encuestacategoria WHERE id_encuesta = %s;", (id,))
+    mysql.connection.commit()
+
     #eliminar la encuesta
     cur.execute("DELETE FROM encuesta WHERE id_encuesta = %s;", (id,))
     mysql.connection.commit()
     flash("Encuesta \"" + nombre[0][0] +"\" eliminada exitosamente.")
+
     return redirect(url_for("forms"))
