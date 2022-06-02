@@ -45,15 +45,14 @@ def profile(id):
 
             #Función para agregarle una preferencia a una persona.
 
-            #cur.execute("INSERT INTO encuestadoencuesta "
-            #+ "VALUES %s, %s ",(id,"algo"))
+            #cur.execute("INSERT INTO encuestadocategoria "
+            #+ "VALUES %s, %s ",(id,"numerocategoria"))
             #mysql.connection.commit()
-
             
-
             #Función para recibir todas las encuestas contestadas
             #que mal.
             #Distinct me permite evitar duplicados, pero algo está mal, porque no debería usarlo.
+            #Puede estar mala.
             cur.execute("SELECT DISTINCT encuesta.titulo, encuestado.prim_nom FROM encuesta "
             + "JOIN encuestadoencuesta ON encuesta.id_encuesta = encuestadoencuesta.id_encuesta "
             + "JOIN encuestado ON encuestado.id_encuestado = %s;",(id))
