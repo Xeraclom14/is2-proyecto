@@ -42,6 +42,8 @@ def login():
             if account:
                 flash("Bienvenido, " + account[3])
                     
+            #ORDEN: ID, Ap1, Ap2, No1, No2, mail, pass
+
                 #cosas de flask
                 session['loggedin'] = True
                 session['username'] = account[3]
@@ -49,6 +51,9 @@ def login():
                 session['mail'] = account[5]
                 session['type'] = "encuestado"
                 session['id'] = account[0]
+                session['ap1'] = account[1]
+                session['ap2'] = account[2]
+                session['username2'] = account[4]
                 return redirect(url_for("Index", ident=account[0]))
         
         #Si no ingresaste nada.

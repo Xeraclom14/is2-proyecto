@@ -63,8 +63,16 @@ def profile(id):
                 encuestas.append([encuesta[0]])
             mysql.connection.commit()
 
+            #Para los datos de la persona.
+            dpers = []
+            dpers.append(session['username'])
+            dpers.append(session['username2'])
+            dpers.append(session['ap1'])
+            dpers.append(session['ap2'])
+            dpers.append(session['mail'])
+
             return render_template("/encuestados/personal.html",
-            nombre = session['username'], forms = encuestas, categorias = categorias)
+            dpers = dpers, forms = encuestas, categorias = categorias)
 
         #es un tercero
         else:
