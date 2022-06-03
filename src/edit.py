@@ -204,13 +204,36 @@ def cerrar_encuesta(id):
         flash("Usted no puede Cerrar esta encuesta.")
         return redirect(url_for("forms"))
 
-    cur = mysql.connection.cursor()
-    cur.execute("UPDATE encuesta SET cerrada = '1' WHERE encuesta.id_encuesta = " + id)
 
+    # Nombre de la encuesta
+    cur = mysql.connection.cursor()
     cur.execute("SELECT titulo FROM encuesta WHERE id_encuesta = " + id)
     nombre_encuesta = cur.fetchall()
 
+    #Retirar las preguntas asociadas a la encuesta
+
+    cur.execute("SELECT * FROM pregunta WHERE id_encuesta = " + id)
+    datos = cur.fetchall()
+
+    if len(datos) == 0:
+        flash("Error: La encuesta no contiene preguntas.")
+        mysql.connection.commit()
+        return redirect(request.referrer) #refresh
+
+    #por cada pregunta...
+    for pregunta in datos:
+        cur.execute("SELECT * FROM respuesta WHERE id_pregunta  =%s;", (pregunta[0],))
+        respuestas = cur.fetchall()
+
+        if len(respuestas) == 0:
+            flash("Error: La pregunta '" + pregunta[4] + "' no contiene respuestas.")
+            mysql.connection.commit()
+            return redirect(request.referrer) #refresh
+
+    #En caso de no haber fallo, cerramos la encuesta
+    cur.execute("UPDATE encuesta SET cerrada = '1' WHERE encuesta.id_encuesta = " + id)
     mysql.connection.commit()
+
     flash("Se ha cerrado la encuesta " + nombre_encuesta[0][0] + ".")
 
     return redirect("/forms")
