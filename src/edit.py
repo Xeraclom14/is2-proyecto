@@ -225,8 +225,8 @@ def cerrar_encuesta(id):
         cur.execute("SELECT * FROM respuesta WHERE id_pregunta  =%s;", (pregunta[0],))
         respuestas = cur.fetchall()
 
-        if len(respuestas) == 0:
-            flash("Error: La pregunta '" + pregunta[4] + "' no contiene respuestas.")
+        if pregunta[2] != 0 and len(respuestas) < 2:
+            flash("Error: La pregunta '" + pregunta[4] + "' debe contener almenos 2 respuestas.")
             mysql.connection.commit()
             return redirect(request.referrer) #refresh
 
