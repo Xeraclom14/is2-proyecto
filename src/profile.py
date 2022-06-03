@@ -38,12 +38,29 @@ def profile(id):
                 categorias.append([categoria[0]])
             mysql.connection.commit()
 
-            #SELECT categoria.nombre FROM categoria 
-            #JOIN encuestadocategoria ON categoria.id_categoria = encuestadocategoria.id_categoria
-            #AND encuestadocategoria.id_encuestado = 1
-            #JOIN encuestado ON encuestado.id_encuestado = 1;
+            #Este apartado para hacer la función de agregar una preferencia a una persona.
 
-            #Función para agregarle una preferencia a una persona.
+            #SELECT DISTINCT categoria.* FROM categoria, encuestado
+            #WHERE categoria.id_categoria NOT IN
+            #(SELECT encuestadocategoria.id_categoria FROM encuestadocategoria, encuestado
+            #WHERE encuestadocategoria.id_encuestado = encuestado.id_encuestado 
+            #AND encuestado.id_encuestado = 1)
+
+            #Pero primero que nada, debo hacer otra que me de las NO preferencias de este.
+            cur.execute("SELECT DISTINCT categoria.* FROM categoria, encuestado "
+            + "WHERE categoria.id_categoria NOT IN "
+            + "(SELECT encuestadocategoria.id_categoria FROM encuestadocategoria, encuestado "
+            + "WHERE encuestadocategoria.id_encuestado = encuestado.id_encuestado "
+            + "AND encuestado.id_encuestado = %s);",(id))
+
+            masdatardos = cur.fetchall()
+            nopreferidas = []
+            for nopref in masdatardos:
+                nopreferidas.append([nopref])
+            mysql.connection.commit()
+
+            #Ahora debo hacer una consulta pa sacar el resultado seleccionado.
+            #cur.execute("SELECT id_categoria FROM categoria WHERE nombre = %s",("algo"))
 
             #cur.execute("INSERT INTO encuestadocategoria "
             #+ "VALUES %s, %s ",(id,"numerocategoria"))
@@ -70,8 +87,12 @@ def profile(id):
             dpers.append(session['ap2'])
             dpers.append(session['mail'])
 
+            #Se ha seleccionado una preferencia a agregar
+            #Y se ha hecho click en el botón de enviar.
+
             return render_template("/encuestados/personal.html",
-            dpers = dpers, forms = encuestas, categorias = categorias)
+            dpers = dpers, forms = encuestas, categorias = categorias,
+            nopreferidas = nopreferidas)
 
         #es un tercero
         else:
@@ -95,6 +116,23 @@ def profileinicio():
         return "Ya veremos."
 
     if tiposesion == 'encuestado':
+
+        if request.method == 'POST':
+
+                if (request.form['nuevapref'] != ""):
+                    
+                    idcat = request.form['nuevapref']
+
+                    #regresar de inmediato si estás en "seleccionar categoria"
+                    if(idcat == 0): return redirect(url_for("profile", id=e_id ))
+
+                    #si no, agregar categoria.
+                    cur = mysql.connection.cursor()                
+                    cur.execute("INSERT INTO encuestadocategoria VALUES (%s, %s);",(e_id, idcat))
+                    mysql.connection.commit()
+
+                    return redirect(url_for("profile", id=e_id ))
+
         return redirect(url_for("profile", id=e_id ))
 
     return render_template("/encuestados/403.html")

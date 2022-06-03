@@ -22,7 +22,7 @@
 
   /* Esto provoca el scroll horizontal, pero está arreglado*/
   .box .row {
-    border: 1px dotted white;
+    border: 0px dotted white;
 
   }
 
@@ -40,7 +40,7 @@
   .box .row.footer {
     flex: 0 1 40px;
     text-align: center;
-    margin:auto;
+    margin: auto;
     list-style: none;
   }
 
@@ -86,6 +86,32 @@
       ¡Bienvenido! {{ dpers.0 }} {{ dpers.1 }} {{ dpers.2 }} {{ dpers.3 }}. Esta es tu página personal.<br>
       Acá deberías poder cambiar tus preferencias y ver tus encuestas respondidas.<br>
       No podrás ver tus respuestas, por motivos de seguridad.<br>
+      <br>
+      Utiliza este apartado para agregar una categoría nueva.
+
+      <!-- Acción -->
+      <form action="/profile" method="POST">
+
+        <!-- Combobox -->
+        <select class="form-select" name="nuevapref">
+
+          <!-- Opción Inicial-->
+          <option value = "0" selected>Seleccionar categoría</option>
+          
+          <!--Opciones Seleccionables-->
+          {% for nopref in nopreferidas %}
+          <div class="card-body">
+            <!-- 0.0: ID, 0.1: Etiqueta.-->
+            <option value="{{ nopref.0.0 }}" > {{nopref.0.1}} </option>
+          </div>
+          {% endfor %}
+        </select>
+
+        <!-- Botón para agregar una preferencia.-->
+        <button type="submit" class="mt-4 btn btn-primary">Agregar Preferencia</button>
+      </form>
+
+      
 
     <div class="split left">
       <div class="centered">
@@ -126,24 +152,27 @@
 
 </div>
 
-<div class = "row footer" >
+<div class="row footer">
+
+  <!--
 
   <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
       aria-expanded="false">Agregar nueva categoría</a>
-    <div class="dropdown-menu" >
-      <!-- Ese for debo cambiarlo, es testeo solamente.-->
-      <!-- El que salga arriba o abajo está definido por el navegador y no se puede cambiar.-->
-      {% for categoria in categorias %}
+
+    <div class="dropdown-menu">
+      {% for nopref in nopreferidas %}
       <div class="card-body">
-        <!--Debo tener las categorias que NO están incluidas en el encuestado.-->
-        <a class="dropdown-item" href="#">{{categoria.0}}</a>
+        <a class="dropdown-item">{{nopref.0}}</a>
       </div>
       {% endfor %}
     </div>
   </li>
+    -->
 
-  <button type="submit" class="mt-4 btn btn-primary">Agregar Preferencia</button>
+  
+
 </div>
 
 {%endblock%}
