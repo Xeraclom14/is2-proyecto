@@ -15,8 +15,12 @@
   {%      endfor %}
   {%  endif %}
   {% endwith %}
-  
+  {% if id_encuesta != None %}
+  <form class="col-lg-6" action="/login?id_encuesta={{id_encuesta}}" method ="POST">
+  {% endif %}
+  {% if id_encuesta == None %}
   <form class="col-lg-6" action="/login" method ="POST">
+  {% endif %}
           <h1 class="form-label mt-4">Iniciar Sesión</h1>
           <p></p>
           <div class="card bg-light mb-3">
@@ -29,7 +33,6 @@
                   <button type="submit" class="mt-4 btn btn-primary">Iniciar Sesión</button>
                   <a href="/" class="mt-4 btn btn-outline-info">Regresar</a>
                   <a href="/loginadmin" class="mt-4 btn btn-outline-dark">Soy Encuestador</a>
-
               </div>
           </div>
       </form>

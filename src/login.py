@@ -5,6 +5,8 @@ from __main__ import app, mysql
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    #extrae los argumentos de id_encuesta para redirigir (de ser necesario)
+    id_encuesta = request.args.get('id_encuesta')
 
     #por qué irías a logearte, si ya hay una cuenta?
     if 'loggedin' in session:
@@ -29,8 +31,9 @@ def login():
 
             #Si algún dato es incorrecto, sea nombre o contraseña.
             if account is None:
-
                 flash("Datos Incorrectos")
+                if id_encuesta != None:
+                    return redirect(url_for("login", id_encuesta = id_encuesta))
                 return redirect(url_for("login"))
                     
 
@@ -54,11 +57,15 @@ def login():
                 session['ap1'] = account[1]
                 session['ap2'] = account[2]
                 session['username2'] = account[4]
-                return redirect(url_for("Index", ident=account[0]))
+                if id_encuesta != None:
+                    return redirect("form/" + id_encuesta)
+                return redirect(url_for("Index")) #se usa ident???????????????
         
         #Si no ingresaste nada.
         else:
             flash("Por favor, rellene los campos")
+            if id_encuesta != None:
+                return redirect(url_for("login", id_encuesta = id_encuesta))
             return redirect(url_for("login"))
     else:
-        return render_template('login.html')
+        return render_template('login.html', id_encuesta = id_encuesta)

@@ -6,6 +6,12 @@ from __main__ import app, mysql
 @app.route('/form/<id>', methods=['GET','POST'])
 def form(id):
     cur = mysql.connection.cursor()
+    #Verificar logeo
+    if 'loggedin' not in session:
+        flash("Por Favor, inicie sesión antes de contestar")
+        return redirect(url_for("login", id_encuesta = id))
+
+    #Form
     cur.execute("SELECT COUNT(titulo) FROM encuesta WHERE id_encuesta = " + id)
     ver = cur.fetchall()
     if(ver[0][0] == 0):
