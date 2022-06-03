@@ -204,7 +204,6 @@ def cerrar_encuesta(id):
         flash("Usted no puede Cerrar esta encuesta.")
         return redirect(url_for("forms"))
 
-
     # Nombre de la encuesta
     cur = mysql.connection.cursor()
     cur.execute("SELECT titulo FROM encuesta WHERE id_encuesta = " + id)
@@ -234,6 +233,6 @@ def cerrar_encuesta(id):
     cur.execute("UPDATE encuesta SET cerrada = '1' WHERE encuesta.id_encuesta = " + id)
     mysql.connection.commit()
 
-    flash("Se ha cerrado la encuesta " + nombre_encuesta[0][0] + ".")
+    flash("Se ha cerrado la encuesta '" + nombre_encuesta[0][0] + "'.")
 
     return redirect("/forms")

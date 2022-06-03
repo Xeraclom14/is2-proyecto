@@ -136,9 +136,15 @@
     </div>
     {% endfor %}
     <div>
-        <form action="/cerrar_encuesta/{{id}}" method="POST">
-            <button class="mt-2 btn btn-warning">CERRAR ENCUESTA</button>
-        </form>
+        <a onclick="confirmar_cierre('¿Estás seguro de cerrar la encuesta?')" href="/cerrar_encuesta/{{id}}" class="mt-2 btn btn-warning">CERRAR ENCUESTA</a>
+        <script>
+            function confirmar_cierre(text){
+                var result = confirm(text)
+                if(result == false){
+                    event.preventDefault();
+                }
+            }
+        </script>
     </div>
     <p></p>
 </center>
