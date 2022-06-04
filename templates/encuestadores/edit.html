@@ -136,7 +136,7 @@
     </div>
     {% endfor %}
     <div>
-        <a onclick="confirmar_cierre('¿Estás seguro de cerrar la encuesta?')" href="/cerrar_encuesta/{{id}}" class="mt-2 btn btn-warning">CERRAR ENCUESTA</a>
+        <a onclick="confirmar_cierre('¿Estás seguro de cerrar la encuesta?\nNo se podrán realizar mas cambios.')" href="/cerrar_encuesta/{{id}}" class="mt-2 btn btn-warning">CERRAR ENCUESTA</a>
         <script>
             function confirmar_cierre(text){
                 var result = confirm(text)

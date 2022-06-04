@@ -1,7 +1,20 @@
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
+from flask_mail import Mail, Message
 
-from __main__ import app, mysql
+from __main__ import app, mysql, mail
+
+def verificar(id):
+    if 'loggedin' not in session:
+        return False
+    if session['type'] == "encuestado":
+        return False
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM encuesta WHERE id_encuesta = %s AND id_encuestador = %s;",(id, session['id'],))
+    validar = cur.fetchall()
+    if validar == ():
+        return False
+    return True
 
 @app.route('/form/<id>', methods=['GET','POST'])
 def form(id):
@@ -54,4 +67,56 @@ def form(id):
             #esto recibiría el id_pregunta, id_encuesta, respuestas, tipo y el texto.
             preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[2], pregunta[4]])
         mysql.connection.commit()
-        return render_template('/encuestadores/form.html', form = preguntas, titulo = nombre_encuesta[0][0])
+        return render_template('/encuestadores/form.html', form = preguntas, titulo = nombre_encuesta[0][0], id = id)
+
+@app.route('/enviar_encuesta/<id>', methods=['GET','POST'])
+def enviar_encuesta(id):
+    # verificar
+
+    if not verificar(id):
+        flash("Usted no puede enviar esta encuesta.")
+        return redirect(url_for("forms"))
+
+    # Verificar que la encuesta esta cerrada
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT cerrada FROM encuesta WHERE id_encuesta = " + id)
+    cerrada = cur.fetchall()
+    if cerrada[0][0] < 1:
+        flash("Error: La encuesta no esta cerrada")
+        mysql.connection.commit()
+        return redirect(request.referrer) #refresh
+
+    # Retirar las categorias asociadas a la encuesta
+    cur.execute("SELECT id_categoria FROM encuestacategoria WHERE id_encuesta = " + id)
+    categorias = cur.fetchall()
+
+    # Retirar encuestados cuya preferencia coincide con alguna categoria
+
+    encuestados = []
+
+    for categoria in categorias:
+        cur.execute("SELECT email, prim_nom FROM encuestado, encuestadocategoria WHERE encuestado.id_encuestado = encuestadocategoria.id_encuestado AND encuestadocategoria.id_categoria = " + str(categoria[0]))
+        resultados = cur.fetchall()
+        for encuestado in resultados:
+            encuestados.append(encuestado)
+    
+    mysql.connection.commit()
+
+    # Eliminar encuestados duplicados (al coincidir con mas de 1 categoria)
+    encuestados = list(dict.fromkeys(encuestados))
+
+    # Queda registrado en la consola a quien se envio la encuesta.
+    print(encuestados)
+
+    with mail.connect() as conn:
+        for encuestado in encuestados:
+            message = 'Has sido seleccionado para contestar una encuesta: (link)'
+            subject = "Hola, %s" % encuestado[1]
+            msg = Message(recipients=[encuestado[0]],
+                        body=message,
+                        subject=subject)
+    
+            conn.send(msg)
+
+    return redirect("/forms")
+    

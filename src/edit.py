@@ -214,16 +214,18 @@ def cerrar_encuesta(id):
     cur.execute("SELECT * FROM pregunta WHERE id_encuesta = " + id)
     datos = cur.fetchall()
 
+    #Checkear si la encuesta contiene preguntas
     if len(datos) == 0:
         flash("Error: La encuesta no contiene preguntas.")
         mysql.connection.commit()
         return redirect(request.referrer) #refresh
 
-    #por cada pregunta...
+    #Por cada pregunta...
     for pregunta in datos:
         cur.execute("SELECT * FROM respuesta WHERE id_pregunta  =%s;", (pregunta[0],))
         respuestas = cur.fetchall()
 
+        #Para preguntas de alternativas o s.multiple, se necesitan almenos 2 respuestas
         if pregunta[2] != 0 and len(respuestas) < 2:
             flash("Error: La pregunta '" + pregunta[4] + "' debe contener almenos 2 respuestas.")
             mysql.connection.commit()

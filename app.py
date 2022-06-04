@@ -1,8 +1,10 @@
 from flask import Flask, flash, render_template, request, redirect, url_for, flash, session
 from flask import send_from_directory
 from flask_mysqldb import MySQL
+from flask_mail import Mail
 import uuid
 import os
+import mail_config
 from flask_login import LoginManager
 
 app = Flask(__name__)
@@ -26,6 +28,16 @@ mysql = MySQL(app)
 ###datos de sesión
 #La clave secreta, esto es importante.
 app.secret_key = 'ffc5c7a327818c3193a6b640'
+
+###Mail de la aplicacion
+app.config['MAIL_SUPPRESS_SEND'] = False
+app.config['MAIL_DEFAULT_SENDER'] = mail_config.MAIL_USER
+app.config['MAIL_USERNAME'] = mail_config.MAIL_USER
+app.config['MAIL_PASSWORD'] = mail_config.MAIL_PASSWORD
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 #funcionalidad de sesión
 #login_manager = LoginManager()

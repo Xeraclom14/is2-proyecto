@@ -73,6 +73,14 @@
     </fieldset>
 
     {% endfor %}
-    <a href="/forms" class="mt-2 btn btn-primary">Enviar encuesta</a>
+    <a onclick="confirmar_enviar('¿Estás seguro de enviar la encuesta?')" href="/enviar_encuesta/{{id}}" class="mt-2 btn btn-primary">Enviar encuesta</a>
+    <script>
+        function confirmar_enviar(text){
+            var result = confirm(text)
+            if(result == false){
+                event.preventDefault();
+            }
+        }
+    </script>
 </center>
 {% endblock %}
