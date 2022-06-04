@@ -20,7 +20,6 @@ def forms():
         cur = mysql.connection.cursor()
         cur.execute('SELECT * FROM encuesta')
         data = cur.fetchall()
-        print (data)
         
         return render_template("encuestados/forms.html", encuestass = data)
 
