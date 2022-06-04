@@ -17,7 +17,12 @@ def forms():
 
     #Hay que tener un forms para encuestados
     if(tiposesion == "encuestado"):
-        return(render_template("encuestados/forms.html"))
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT * FROM encuesta')
+        data = cur.fetchall()
+        print (data)
+        
+        return render_template("encuestados/forms.html", encuestass = data)
 
     if request.method == 'POST':
         if(request.form['titulo'] != ""):
