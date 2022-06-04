@@ -3,5 +3,23 @@
 {% block title %}Forms{% endblock %}
 
 {% block body %}
-      En Construcción
-      {% endblock %}
+
+<center>
+      <h1 class="form-label mt-4">Encuestas</h1>
+ 
+      {% for encuesta in encuestass %}
+      <div class="card bg-light mb-3 col-lg-6">
+            <div class="card-header" style="text-align: left;">
+                  {{ encuesta.2 }}
+            </div>
+            <div style="text-align: left;">Fecha Creación : {{ encuesta.3 }}</div>
+            <div class="card-body">
+            
+            <!-- hay que cambiar la direccion de este boton -->
+            <a href="/forms" class="mt-2 btn btn btn-success">CONTESTAR</a> 
+            
+            </div>
+      </div>
+      {% endfor %}
+</center>
+{% endblock %}
