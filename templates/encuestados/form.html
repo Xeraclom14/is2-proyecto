@@ -1,0 +1,86 @@
+{% extends './navbars/baseencuestador.html' %}
+
+<!-- nombre de la encuesta en el title -->
+{% block title %}{{titulo}}{% endblock %}
+
+{% block body %}
+
+<center>
+{% with messages = get_flashed_messages() %}
+{%  if messages %}
+{%      for message in messages %}
+    <div class="alert alert-dismissible alert-primary col-lg-4">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        {{message}}.
+    </div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<h1 class="form-label mt-4">{{titulo}}</h1>  
+
+    <!-- question({id_pregunta, id_encuesta, respuestas, tipo, texto})-->
+
+    <!-- Esto es para ver las preguntas dado un id de encuesta -->
+    <!-- Para cada pregunta -->
+    {% for question in form %}
+    <fieldset class="form-group">
+      <form action="/form/guardar_respuestas" method="POST">
+
+        <div class="card bg-light mb-3 col-lg-6">
+            <div class="card-header" style="text-align: left;"> {{question.4}}</div>
+            <div class="card-body" style="text-align: left;">
+                <div style="text-align: right;" class="text-muted">ID: {{question.0}}</div>
+                <!-- cambia la presentacion dependiendo del tipo de pregunta -->
+
+                <!-- Pregunta texto -->
+                {% if question.3 == 0 %}
+                <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                {%  endif %}
+
+
+                <!-- Pregunta alternaiva -->
+                {% if question.3 == 1 %}
+
+                {% for respuesta in question.2 %}
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="alt" value="1" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    {{respuesta.2}}
+                    </label>
+                </div>
+                {% endfor %}
+
+                {%  endif %}
+
+                <!-- Pregunta s.multiple -->
+                {% if question.3 == 2 %}
+
+                {% for respuesta in question.2 %}
+                <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1">
+                      {{respuesta.2}}
+                    </label>
+                </div>
+      </form>
+                {% endfor %}
+
+                {% endif %}
+
+            </div>
+        </div>
+    </fieldset>
+
+    {% endfor %}
+    <a onclick="confirmar_enviar('¿Estás seguro de enviar la encuesta?')" href="/submit_respuestas/{{id}}" class="mt-2 btn btn-primary">Enviar encuesta</a>
+    <script>
+        function confirmar_enviar(text){
+            var result = confirm(text)
+            if(result == false){
+                event.preventDefault();
+            }
+        }
+    </script>
+</center>
+{% endblock %}

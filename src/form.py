@@ -120,3 +120,17 @@ def enviar_encuesta(id):
 
     return redirect("/forms")
     
+
+#almacenar respuesta
+@app.route('/guardar_respuestas/<id>', methods=['GET','POST'])
+def guardar_respuestas(id):
+    print(request.form.getlist('alt'))
+
+    return redirect("/forms")
+
+#Guardar respuesta subir
+@app.route('/submit_respuestas/<id>', methods=['GET','POST'])
+def submit_respuestas(id):
+    print(request.form.getlist('alt'))
+
+    return redirect("/forms")
