@@ -67,7 +67,10 @@ def form(id):
             #esto recibiría el id_pregunta, id_encuesta, respuestas, tipo y el texto.
             preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[2], pregunta[4]])
         mysql.connection.commit()
-        return render_template('/encuestadores/form.html', form = preguntas, titulo = nombre_encuesta[0][0], id = id)
+        if session['type'] == "encuestado":
+            return render_template('/encuestados/form.html', form = preguntas, titulo = nombre_encuesta[0][0], id = id)
+        else:
+            return render_template('/encuestadores/form.html', form = preguntas, titulo = nombre_encuesta[0][0], id = id)
 
 @app.route('/enviar_encuesta/<id>', methods=['GET','POST'])
 def enviar_encuesta(id):

@@ -23,6 +23,7 @@
 
     <!-- Esto es para ver las preguntas dado un id de encuesta -->
     <!-- Para cada pregunta -->
+    <form>
     {% for question in form %}
     <fieldset class="form-group">
       <form action="/form/guardar_respuestas" method="POST">
@@ -67,6 +68,7 @@
                 {% endfor %}
 
                 {% endif %}
+    </form>
 
             </div>
         </div>
