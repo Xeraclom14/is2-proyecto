@@ -12,6 +12,7 @@ def delete(id):
         return(render_template("403.html"))
 
     cur = mysql.connection.cursor()
+
     # verificar si es una encuesta valida
     cur.execute("SELECT * FROM encuesta WHERE id_encuesta = %s AND id_encuestador = %s;",(id, session['id'],))
     validar = cur.fetchall()
@@ -40,6 +41,10 @@ def delete(id):
 
     #eliminar las referencias de categoria
     cur.execute("DELETE FROM encuestacategoria WHERE id_encuesta = %s;", (id,))
+    mysql.connection.commit()
+
+    #eliminar las referencias de encuestado_encuesta
+    cur.execute("DELETE FROM encuestadoencuesta WHERE id_encuesta = %s;", (id,))
     mysql.connection.commit()
 
     #eliminar la encuesta
