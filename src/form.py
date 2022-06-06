@@ -113,7 +113,7 @@ def enviar_encuesta(id):
 
     with mail.connect() as conn:
         for encuestado in encuestados:
-            message = 'Has sido seleccionado para contestar una encuesta: (link)'
+            message = 'Has sido seleccionado para contestar una encuesta: http://127.0.0.1:5000/form/'+id
             subject = "Hola, %s" % encuestado[1]
             msg = Message(recipients=[encuestado[0]],
                         body=message,
