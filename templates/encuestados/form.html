@@ -18,7 +18,7 @@
 
     <h1 class="form-label mt-4">{{titulo}}</h1>
 
-    <form>
+    <form method="POST" action="/submit_respuestas/{{id}}">
         <!-- question({id_pregunta, id_encuesta, respuestas, tipo, texto})-->
         <!-- Esto es para ver las preguntas dado un id de encuesta -->
         <!-- Para cada pregunta -->
@@ -62,9 +62,8 @@
             </div>
         </fieldset>
         {% endfor %}
-
-        <a onclick="confirmar_enviar('¿Estás seguro de enviar la encuesta?')" href="/submit_respuestas/{{id}}"
-            class="mt-2 btn btn-primary">Enviar encuesta</a>
+        <input onclick="confirmar_enviar('¿Estás seguro de enviar la encuesta?')"  type="submit"
+            class="mt-2 btn btn-primary" value="Enviar encuesta">
         <script>
             function confirmar_enviar(text) {
                 var result = confirm(text)

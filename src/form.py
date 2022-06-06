@@ -123,17 +123,23 @@ def enviar_encuesta(id):
 
     return redirect("/forms")
     
-
-#almacenar respuesta
-@app.route('/guardar_respuestas/<id>', methods=['GET','POST'])
-def guardar_respuestas(id):
-    print(request.form.getlist('alt'))
-
-    return redirect("/forms")
-
 #Guardar respuesta subir
 @app.route('/submit_respuestas/<id>', methods=['GET','POST'])
 def submit_respuestas(id):
-    print(request.form.getlist('alt'))
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM pregunta WHERE id_encuesta = " + id)
+    datos = cur.fetchall()
+
+    #cur.execute("UPDATE respuesta SET contador_de_respuesta = 0")
+    #mysql.connection.commit()
+
+    for dato in datos:
+        alts = request.form.getlist(str(dato[0]))
+        for alt in alts:
+            cur.execute("UPDATE respuesta SET contador_de_respuesta = contador_de_respuesta + 1 WHERE id_respuesta = %s", (alt,))
+            mysql.connection.commit()
+    
+    cur.execute("INSERT INTO encuestadoencuesta VALUES (%s, %s)", (session['id'],id))
+    mysql.connection.commit()
 
     return redirect("/forms")
