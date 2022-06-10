@@ -32,8 +32,10 @@ def delete(id):
         #borrar todas las respuestas y desarrollos vinculados a una pregunta
         cur.execute("DELETE FROM respuesta WHERE id_pregunta = %s;", (pregunta[0],))
         mysql.connection.commit()
-        cur.execute("DELETE FROM desarrollo WHERE id_pregunta = %s;", (pregunta[0],))
-        mysql.connection.commit()
+
+        #No se haran respuestas de desarrollo por indicaciones del profesor
+        #cur.execute("DELETE FROM desarrollo WHERE id_pregunta = %s;", (pregunta[0],))
+        #mysql.connection.commit()
 
     #eliminar todas las preguntas vinculadas a la encuesta
     cur.execute("DELETE FROM pregunta WHERE id_encuesta = %s;", (id,))
