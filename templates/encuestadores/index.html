@@ -3,6 +3,8 @@
 {% block title %}Pagina Principal{% endblock %}
 
 {% block body %}
+{% with messages = get_flashed_messages() %}
+
       <div>
             Bienvenido, estás conectado como un encuestador.<br>
             <img src="/static/images/thumbs-up-192.png" width="auto" height="auto">

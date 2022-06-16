@@ -111,8 +111,6 @@
         <button type="submit" class="mt-4 btn btn-primary">Agregar Preferencia</button>
       </form>
 
-      
-
     <div class="split left">
       <div class="centered">
         <div class="card bg-light mb-3" style="position:relative; width: 100%; height: 100%;">
@@ -121,7 +119,9 @@
             <div class="card bg-light mb-3 col-lg-12">
               {% for categoria in categorias %}
               <div class="card-body">
-                <div class="text" style="text-align: center;">{{categoria.0}}</div>
+                <div class="text" style="text-align: center;">{{categoria.1}}
+                  <a href="/delete_cat/{{id}}/{{categoria.0}}" class="btn btn-danger btn-sm"
+                  data-bs-toggle="tooltip" title="Eliminar">X</a></div>
               </div>
               {% endfor %}
             </div>
@@ -138,7 +138,9 @@
             <div class="card-header">Encuestas Contestadas</div>
             <div class="card bg-light mb-3 col-lg-12">
               {% for form in forms %}
-              <div class="text" style="text-align: center;">{{form.0}}<br></div>
+              <div class="card-body">
+                <div class="text" style="text-align: center;">{{form.0}}<br></div>
+              </div>
             </div>
           </div>
           {% endfor %}

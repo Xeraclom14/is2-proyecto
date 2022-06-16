@@ -27,7 +27,7 @@ def profile(id):
             cur = mysql.connection.cursor()
 
             #Función para recibir las preferencias de una persona.
-            cur.execute("SELECT DISTINCT categoria.nombre FROM categoria "
+            cur.execute("SELECT DISTINCT categoria.id_categoria, categoria.nombre FROM categoria "
             + "JOIN encuestadocategoria on categoria.id_categoria = encuestadocategoria.id_categoria "
             + "AND encuestadocategoria.id_encuestado = %s"
             + "JOIN encuestado ON encuestado.id_encuestado = %s",(id,id))
@@ -35,16 +35,11 @@ def profile(id):
             datardos = cur.fetchall()
             categorias = []
             for categoria in datardos:
-                categorias.append([categoria[0]])
+                categorias.append([categoria[0],categoria[1]])
             mysql.connection.commit()
 
+            
             #Este apartado para hacer la función de agregar una preferencia a una persona.
-
-            #SELECT DISTINCT categoria.* FROM categoria, encuestado
-            #WHERE categoria.id_categoria NOT IN
-            #(SELECT encuestadocategoria.id_categoria FROM encuestadocategoria, encuestado
-            #WHERE encuestadocategoria.id_encuestado = encuestado.id_encuestado 
-            #AND encuestado.id_encuestado = 1)
 
             #Pero primero que nada, debo hacer otra que me de las NO preferencias de este.
             cur.execute("SELECT DISTINCT categoria.* FROM categoria, encuestado "
@@ -87,19 +82,19 @@ def profile(id):
             dpers.append(session['ap2'])
             dpers.append(session['mail'])
 
+            id = idint;
             #Se ha seleccionado una preferencia a agregar
             #Y se ha hecho click en el botón de enviar.
 
             return render_template("/encuestados/personal.html",
             dpers = dpers, forms = encuestas, categorias = categorias,
-            nopreferidas = nopreferidas)
+            nopreferidas = nopreferidas, id = id)
 
         #es un tercero
         else:
             return render_template("/encuestados/tercero.html")
     
     return render_template("/encuestados/403.html")
-    
 
 #Para que funcione el navbar.
 @app.route('/profile', methods=['GET','POST'])
@@ -111,9 +106,9 @@ def profileinicio():
     tiposesion = session['type']
     e_id = session['id']
 
-    #ya veremo
+    #Se ha optado por perfiles privados.
     if tiposesion == 'encuestador':
-        return "Ya veremos."
+        return render_template("/encuestados/403.html")
 
     if tiposesion == 'encuestado':
 
@@ -136,3 +131,29 @@ def profileinicio():
         return redirect(url_for("profile", id=e_id ))
 
     return render_template("/encuestados/403.html")
+
+
+@app.route('/delete_cat/<id>/<id_cat>')
+
+#no me está pescando id.
+def delete_cat(id,id_cat):
+    tiposesion = session['type']
+
+    # verificar
+    if tiposesion == 'encuestador':
+        return render_template("/encuestados/403.html")
+
+    if tiposesion == 'encuestado':
+
+        #borrar la relación usuario-preferencia
+        cur = mysql.connection.cursor()
+        cur.execute("DELETE FROM encuestadocategoria "
+        + "WHERE id_encuestado = %s AND id_categoria = %s;", (id,id_cat))
+        mysql.connection.commit()
+
+        #medio ambiente es "1"
+
+        return redirect(url_for("profile", id=id ))
+
+    return render_template("/encuestados/403.html")
+    
