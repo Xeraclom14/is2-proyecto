@@ -36,7 +36,9 @@
                 <input type="text" class="form-control form-control-sm" name="pregunta" placeholder="Nueva pregunta">
                 <input type="submit" name="S" value="Alternativa" class="btn btn-primary">
                 <input type="submit" name="A" value="S.Multiple" class="btn btn-primary">
+                <!-- Pregunta de desarrollo
                 <input type="submit" name="D" value="Desarrollo" class=" btn btn-primary disabled">
+                -->
             </div>
         </form>
     </fieldset>
@@ -47,17 +49,25 @@
     <!-- Para cada pregunta -->
     {% for question in form %}
     <div class="card bg-light mb-3 col-lg-6">
-
         <!-- texto de la pregunta-->
         <fieldset class="form-group">
             <div class="card-header" style="text-align: left;">
                 <form action="/edit_pregunta/{{id}}/{{question.0}}" method="POST">
                     <div class="input-group">
-
+                        {% if question.5 == 0 %}
+                        <a href="/required/{{id}}/{{question.0}}/{{question.5}}" class="btn btn-outline-success btn-sm"
+                            data-bs-toggle="tooltip" title="No obligatoria">-</a>
+                        {% endif %}
+                        {% if question.5 == 1 %}
+                        <a type="" href="/required/{{id}}/{{question.0}}/{{question.5}}"
+                            class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip" title="Obligatoria">*</a>
+                        {% endif %}
                         <input type="text" style="border: 0; background-color:transparent"
                             class="form-control form-control-sm" name="pregunta" value="{{question.4}}">
-                        <a href="/delete_pregunta/{{id}}/{{question.0}}" class="btn btn-danger btn-sm">x</a>
-                        <button type="submit" class="btn btn-sm  btn-success">+</button>
+                        <button type="submit" class="btn btn-sm  btn-success" data-bs-toggle="tooltip"
+                            title="Cambiar titulo">+</button>
+                        <a href="/delete_pregunta/{{id}}/{{question.0}}" class="btn btn-danger btn-sm"
+                            data-bs-toggle="tooltip" title="Eliminar">x</a>
                     </div>
                 </form>
             </div>
@@ -83,8 +93,8 @@
                     <div class="input-group mb-3">
                         <input type="text" style="border: 0; background-color:transparent"
                             class="form-control form-control-sm" name="respuesta" value="{{respuesta.2}}">
-                        <a href="/delete_alternativa/{{id}}/{{respuesta.0}}" class="btn btn-danger btn-sm">x</a>
                         <input type="submit" class="btn btn-success btn-sm  " value="+">
+                        <a href="/delete_alternativa/{{id}}/{{respuesta.0}}" class="btn btn-danger btn-sm">x</a>
                     </div>
                 </form>
             </div>
@@ -92,7 +102,7 @@
             <!--  Formulario para agregar alternativas -->
             <form action="/new_alternativa/{{id}}/{{question.0}}" method="POST">
                 <div class="input-group mb-3">
-                    <input type="text"  class="form-control form-control-sm" name="alternativa"
+                    <input type="text" class="form-control form-control-sm" name="alternativa"
                         placeholder="Nueva selección">
                     <input type="submit" class="btn btn-sm btn-primary" type="button" value="+">
                 </div>
@@ -110,8 +120,8 @@
                     <div class="input-group mb-3">
                         <input type="text" style="border: 0; background-color:transparent"
                             class="form-control form-control-sm" name="respuesta" value="{{respuesta.2}}">
-                        <a href="/delete_alternativa/{{id}}/{{respuesta.0}}" class="btn btn-danger btn-sm">x</a>
                         <input type="submit" class="btn btn-sm  btn-success" value="+">
+                        <a href="/delete_alternativa/{{id}}/{{respuesta.0}}" class="btn btn-danger btn-sm">x</a>
                     </div>
                 </form>
             </div>
@@ -136,11 +146,12 @@
     </div>
     {% endfor %}
     <div>
-        <a onclick="confirmar_cierre('¿Estás seguro de cerrar la encuesta?\nNo se podrán realizar mas cambios.')" href="/cerrar_encuesta/{{id}}" class="mt-2 btn btn-warning">CERRAR ENCUESTA</a>
+        <a onclick="confirmar_cierre('¿Estás seguro de cerrar la encuesta?\nNo se podrán realizar mas cambios.')"
+            href="/cerrar_encuesta/{{id}}" class="mt-2 btn btn-warning">CERRAR ENCUESTA</a>
         <script>
-            function confirmar_cierre(text){
+            function confirmar_cierre(text) {
                 var result = confirm(text)
-                if(result == false){
+                if (result == false) {
                     event.preventDefault();
                 }
             }

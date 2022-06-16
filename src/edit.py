@@ -15,6 +15,21 @@ def verificar(id):
         return False
     return True
 
+@app.route('/required/<id>/<id_pregunta>/<bool_pregunta>')
+def required(id, id_pregunta, bool_pregunta):
+    if not verificar(id):
+        flash("Usted no puede editar esta encuesta.")
+        return redirect(url_for("forms"))
+    cur = mysql.connection.cursor()
+    print(bool_pregunta)
+    if bool_pregunta == '1':
+        cur.execute("UPDATE pregunta SET obligatoria = %s WHERE id_pregunta = %s;", (0, id_pregunta,))
+    else:
+        cur.execute("UPDATE pregunta SET obligatoria = %s WHERE id_pregunta = %s;", (1, id_pregunta,))
+    mysql.connection.commit()
+    flash("Pregunta actualizada.")
+    return redirect("/edit/" + id)
+
 @app.route('/edit_respuesta/<id>/<id_pregunta>/<id_respuesta>', methods=['GET','POST'])
 def edit_respuesta(id,id_pregunta,id_respuesta):
     # verificar
@@ -192,8 +207,8 @@ def edit(id):
             # [2] = tipo_pregunta
             # [3] = obligatoria
             # [4] = texto_pregunta
-            #esto recibiría el id_pregunta, id_encuesta, respuestas, tipo y el texto.
-            preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[2], pregunta[4]])
+            #esto recibiría el id_pregunta, id_encuesta, respuestas, tipo y el texto y obligatoria
+            preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[2], pregunta[4], pregunta[3]])
         mysql.connection.commit()
         return render_template('/encuestadores/edit.html', form = preguntas, titulo = nombre_encuesta[0][0], id = id)
 

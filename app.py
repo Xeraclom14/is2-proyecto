@@ -2,7 +2,6 @@ from flask import Flask, flash, render_template, request, redirect, url_for, fla
 from flask import send_from_directory
 from flask_mysqldb import MySQL
 from flask_mail import Mail
-import uuid
 import os
 import mail_config
 from flask_login import LoginManager
