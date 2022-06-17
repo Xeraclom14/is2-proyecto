@@ -130,7 +130,7 @@ def profileinicio():
 
         return redirect(url_for("profile", id=e_id ))
 
-    return render_template("/encuestados/403.html")
+    return render_template("/403.html")
 
 
 @app.route('/delete_cat/<id>/<id_cat>')
@@ -138,22 +138,28 @@ def profileinicio():
 #no me está pescando id.
 def delete_cat(id,id_cat):
     tiposesion = session['type']
+    e_id = session['id']
 
     # verificar
     if tiposesion == 'encuestador':
-        return render_template("/encuestados/403.html")
+        return render_template("/403.html")
 
     if tiposesion == 'encuestado':
 
-        #borrar la relación usuario-preferencia
-        cur = mysql.connection.cursor()
-        cur.execute("DELETE FROM encuestadocategoria "
-        + "WHERE id_encuestado = %s AND id_categoria = %s;", (id,id_cat))
-        mysql.connection.commit()
+        #Solamente la misma persona debe borrar.
+        if id == e_id:
 
-        #medio ambiente es "1"
+            #borrar la relación usuario-preferencia
+            cur = mysql.connection.cursor()
+            cur.execute("DELETE FROM encuestadocategoria "
+            + "WHERE id_encuestado = %s AND id_categoria = %s;", (id,id_cat))
+            mysql.connection.commit()
+            #medio ambiente es "1"
 
-        return redirect(url_for("profile", id=id ))
+            return redirect(url_for("profile", id=id ))
 
-    return render_template("/encuestados/403.html")
+        return render_template("/403.html")
+        
+
+    return render_template("/403.html")
     
