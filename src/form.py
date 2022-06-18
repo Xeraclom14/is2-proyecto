@@ -21,14 +21,14 @@ def form(id):
     cur = mysql.connection.cursor()
     #Verificar logeo
     if 'loggedin' not in session:
-        flash("Por Favor, inicie sesión antes de contestar")
+        flash("secondary","Por Favor, inicie sesión antes de contestar")
         return redirect(url_for("login", id_encuesta = id))
 
     #Form
     cur.execute("SELECT COUNT(titulo) FROM encuesta WHERE id_encuesta = " + id)
     ver = cur.fetchall()
     if(ver[0][0] == 0):
-        flash("Encuesta no Encontrada.") 
+        flash("light","Encuesta no Encontrada.") 
         return redirect(url_for("forms"))
     #Inserción
     if request.method == 'POST':
@@ -77,7 +77,7 @@ def enviar_encuesta(id):
     # verificar
 
     if not verificar(id):
-        flash("Usted no puede enviar esta encuesta.")
+        flash("warning","Usted no puede enviar esta encuesta.")
         return redirect(url_for("forms"))
 
     # Verificar que la encuesta esta cerrada
@@ -85,7 +85,7 @@ def enviar_encuesta(id):
     cur.execute("SELECT cerrada FROM encuesta WHERE id_encuesta = " + id)
     cerrada = cur.fetchall()
     if cerrada[0][0] < 1:
-        flash("Error: La encuesta no esta cerrada")
+        flash("danger","Error: La encuesta no esta cerrada")
         mysql.connection.commit()
         return redirect(request.referrer) #refresh
 

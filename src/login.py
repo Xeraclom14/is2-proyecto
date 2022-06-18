@@ -31,7 +31,7 @@ def login():
 
             #Si algún dato es incorrecto, sea nombre o contraseña.
             if account is None:
-                flash("Datos Incorrectos")
+                flash("warning","Datos Incorrectos")
                 if id_encuesta != None:
                     return redirect(url_for("login", id_encuesta = id_encuesta))
                 return redirect(url_for("login"))
@@ -43,7 +43,7 @@ def login():
 
             #Si fue exitoso...
             if account:
-                flash("Bienvenido, " + account[3])
+                flash("primary","Bienvenido, " + account[3])
                     
             #ORDEN: ID, Ap1, Ap2, No1, No2, mail, pass
 
@@ -63,7 +63,7 @@ def login():
         
         #Si no ingresaste nada.
         else:
-            flash("Por favor, rellene los campos")
+            flash("warning","Por favor, rellene los campos")
             if id_encuesta != None:
                 return redirect(url_for("login", id_encuesta = id_encuesta))
             return redirect(url_for("login"))

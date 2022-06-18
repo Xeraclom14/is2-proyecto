@@ -14,16 +14,16 @@
   {% block navbar %}
   {% endblock %}
   <center>
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-  {% for message in messages %}
-  <div class="alert alert-dismissible alert-primary col-lg-4">
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    {{message}}
-  </div>
-  {% endfor %}
-  {% endif %}
-  {% endwith %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for message, category in messages %}
+    <div class="alert alert-dismissible alert-{{category}} col-lg-4">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
   </center>
   {% block body %}
   {% endblock %}

@@ -6,19 +6,7 @@
 {% block body %}
 
 <center>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-dismissible alert-primary col-lg-4">
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        {{message}}
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-
     <!-- TITULO-->
-
     <fieldset class="form-group">
         <form class="col-lg-10 mt-2" action="/edit_titulo/{{id}}" method="POST">
             <div class="input-group" style="background-color:#D9E3F1; box-shadow: none;">

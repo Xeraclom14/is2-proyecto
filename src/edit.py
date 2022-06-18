@@ -18,7 +18,7 @@ def verificar(id):
 @app.route('/required/<id>/<id_pregunta>/<bool_pregunta>')
 def required(id, id_pregunta, bool_pregunta):
     if not verificar(id):
-        flash("Usted no puede editar esta encuesta.")
+        flash("warning","Usted no puede editar esta encuesta.")
         return redirect(url_for("forms"))
     cur = mysql.connection.cursor()
     print(bool_pregunta)
@@ -27,14 +27,14 @@ def required(id, id_pregunta, bool_pregunta):
     else:
         cur.execute("UPDATE pregunta SET obligatoria = %s WHERE id_pregunta = %s;", (1, id_pregunta,))
     mysql.connection.commit()
-    flash("Pregunta actualizada.")
+    flash("success","Pregunta actualizada.")
     return redirect("/edit/" + id)
 
 @app.route('/edit_respuesta/<id>/<id_pregunta>/<id_respuesta>', methods=['GET','POST'])
 def edit_respuesta(id,id_pregunta,id_respuesta):
     # verificar
     if not verificar(id):
-        flash("Usted no puede editar esta encuesta.")
+        flash("warning","Usted no puede editar esta encuesta.")
         return redirect(url_for("forms"))
     # editar respuesta
     if request.method == 'POST':
@@ -42,10 +42,10 @@ def edit_respuesta(id,id_pregunta,id_respuesta):
             cur = mysql.connection.cursor()
             cur.execute("UPDATE respuesta SET texto_respuesta = %s WHERE respuesta.id_respuesta = %s;", (request.form['respuesta'],id_respuesta,))
             mysql.connection.commit()
-            flash("Pregunta actualizada.")
+            flash("success","Pregunta actualizada.")
             return redirect("/edit/" + id)
         else:
-            flash("Ingerese un valor valido.")
+            flash("warning","Ingerese un valor valido.")
             return redirect("/edit/" + id)
     return redirect("/edit/" + id)
 
@@ -53,7 +53,7 @@ def edit_respuesta(id,id_pregunta,id_respuesta):
 def edit_pregunta(id,id_pregunta):
     # verificar
     if not verificar(id):
-        flash("Usted no puede editar esta encuesta.")
+        flash("warning","Usted no puede editar esta encuesta.")
         return redirect(url_for("forms"))
     #editar pregunta
     if request.method == 'POST':
@@ -61,10 +61,10 @@ def edit_pregunta(id,id_pregunta):
             cur = mysql.connection.cursor()
             cur.execute("UPDATE pregunta SET texto_pregunta = %s WHERE pregunta.id_pregunta = %s;", (request.form['pregunta'],id_pregunta,))
             mysql.connection.commit()
-            flash("Pregunta actualizada.")
+            flash("success","Pregunta actualizada.")
             return redirect("/edit/" + id)
         else:
-            flash("Ingerese un valor valido.")
+            flash("warning","Ingerese un valor valido.")
             return redirect("/edit/" + id)
     return redirect("/edit/" + id)
 
@@ -72,7 +72,7 @@ def edit_pregunta(id,id_pregunta):
 def edit_titulo(id):
     # verificar
     if not verificar(id):
-        flash("Usted no puede editar esta encuesta.")
+        flash("warning","Usted no puede editar esta encuesta.")
         return redirect(url_for("forms"))
     # editar titulo
     if request.method == 'POST':
@@ -80,10 +80,10 @@ def edit_titulo(id):
             cur = mysql.connection.cursor()
             cur.execute("UPDATE encuesta SET titulo = %s WHERE encuesta.id_encuesta = %s;", (request.form['titulo'],id,))
             mysql.connection.commit()
-            flash("Título actualizado.")
+            flash("success","Título actualizado.")
             return redirect("/edit/" + id)
         else:
-            flash("Ingerese un valor valido.")
+            flash("warning","Ingerese un valor valido.")
             return redirect("/edit/" + id)
     return redirect("/edit/" + id)
 
@@ -92,7 +92,7 @@ def edit_titulo(id):
 def new_alternativa(id,id_pregunta):
     # verificar
     if not verificar(id):
-        flash("Usted no puede editar esta encuesta.")
+        flash("warning","Usted no puede editar esta encuesta.")
         return redirect(url_for("forms"))
 
     #agregar alternativa
@@ -103,7 +103,7 @@ def new_alternativa(id,id_pregunta):
             mysql.connection.commit()
             return redirect(request.referrer)
         else:
-            flash("Ingerese un valor valido.")
+            flash("warning","Ingerese un valor valido.")
             return redirect("/edit/" + id)
     return redirect("/edit/" + id)
 
@@ -111,21 +111,21 @@ def new_alternativa(id,id_pregunta):
 def delete_alternativa(id,id_alternativa):
     # verificar
     if not verificar(id):
-        flash("Usted no puede editar esta encuesta.")
+        flash("warning","Usted no puede editar esta encuesta.")
         return redirect(url_for("forms"))
 
     #borrar la respuesta
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM respuesta WHERE id_respuesta = %s;", (id_alternativa,))
     mysql.connection.commit()
-    flash("Respuesta eliminada.")
+    flash("success","Respuesta eliminada.")
     return redirect("/edit/" + id)
 
 @app.route('/delete_pregunta/<id>/<id_pregunta>')
 def delete_pregunta(id,id_pregunta):
     # verificar
     if not verificar(id):
-        flash("Usted no puede editar esta encuesta.")
+        flash("warning","Usted no puede editar esta encuesta.")
         return redirect(url_for("forms"))
 
     #borrar todas las respuestas vinculados a la pregunta
@@ -136,7 +136,7 @@ def delete_pregunta(id,id_pregunta):
     #eliminar la pregunta
     cur.execute("DELETE FROM pregunta WHERE id_pregunta = %s;", (id_pregunta,))
     mysql.connection.commit()
-    flash("Pregunta eliminada.")
+    flash("success","Pregunta eliminada.")
     return redirect("/edit/" + id)
 
 @app.route('/edit/<id>', methods=['GET','POST'])
@@ -164,7 +164,7 @@ def edit(id):
     
     # verificar
     if not verificar(id):
-        flash("Usted no puede editar esta encuesta.")
+        flash("warning","Usted no puede editar esta encuesta.")
         return redirect(url_for("forms"))
 
     #edit
@@ -180,9 +180,9 @@ def edit(id):
             cur = mysql.connection.cursor()
             cur.execute("INSERT INTO pregunta (id_encuesta, tipo_pregunta ,texto_pregunta) VALUES (%s , %s, %s);", (id , tipo_pregunta ,request.form['pregunta'],))
             mysql.connection.commit()
-            flash("Pregunta ingresada correctamente.")
+            flash("success","Pregunta ingresada correctamente.")
         else:
-            flash("Ingerese un valor valido.")
+            flash("warning","Ingerese un valor valido.")
         return redirect(request.referrer) #refresh
 
     #Visualización
@@ -216,7 +216,7 @@ def edit(id):
 def cerrar_encuesta(id):
     # verificar
     if not verificar(id):
-        flash("Usted no puede Cerrar esta encuesta.")
+        flash("warning","Usted no puede Cerrar esta encuesta.")
         return redirect(url_for("forms"))
 
     # Nombre de la encuesta
@@ -231,7 +231,7 @@ def cerrar_encuesta(id):
 
     #Checkear si la encuesta contiene preguntas
     if len(datos) == 0:
-        flash("Error: La encuesta no contiene preguntas.")
+        flash("danger","Error: La encuesta no contiene preguntas.")
         mysql.connection.commit()
         return redirect(request.referrer) #refresh
 
@@ -242,7 +242,7 @@ def cerrar_encuesta(id):
 
         #Para preguntas de alternativas o s.multiple, se necesitan almenos 2 respuestas
         if pregunta[2] != 0 and len(respuestas) < 2:
-            flash("Error: La pregunta '" + pregunta[4] + "' debe contener almenos 2 respuestas.")
+            flash("warning","Error: La pregunta '" + pregunta[4] + "' debe contener almenos 2 respuestas.")
             mysql.connection.commit()
             return redirect(request.referrer) #refresh
 
@@ -250,6 +250,6 @@ def cerrar_encuesta(id):
     cur.execute("UPDATE encuesta SET cerrada = '1' WHERE encuesta.id_encuesta = " + id)
     mysql.connection.commit()
 
-    flash("Se ha cerrado la encuesta '" + nombre_encuesta[0][0] + "'.")
+    flash("success","Se ha cerrado la encuesta '" + nombre_encuesta[0][0] + "'.")
 
     return redirect("/forms")

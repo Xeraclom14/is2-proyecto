@@ -36,15 +36,15 @@ def register():
                ,(nombre,nombre2,apellido,apellido2,email,password))   
                mysql.connection.commit()
 
-               flash("Registrado exitosamente")
+               flash("success","Registrado exitosamente")
                return redirect(url_for("register"))
 
             #Si el correo ya existe te manda error y te regresa a la de registro. 
             else:
-                 flash("El correo ya existe")
+                 flash("warning","El correo ya existe")
                  return redirect(url_for("register"))
        else:
-            flash("Por favor, ingrese sus datos")
+            flash("warning","Por favor, ingrese sus datos")
             return redirect(url_for("register")) 
     else: 
         return render_template('register.html')

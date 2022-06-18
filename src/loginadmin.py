@@ -29,7 +29,7 @@ def loginadmin():
 
             #Si algún dato es incorrecto, sea nombre o contraseña.
             if account is None:
-                flash("Datos Incorrectos")
+                flash("warning","Datos Incorrectos")
                 return redirect(url_for("loginadmin"))
 
             #No sirve.
@@ -38,7 +38,7 @@ def loginadmin():
 
             #Si fue exitoso...
             if account:
-                flash("Bienvenido, " + account[3])
+                flash("primary","Bienvenido, " + account[3])
                 
                 #cosas de flask
                 session['loggedin'] = True
@@ -52,7 +52,7 @@ def loginadmin():
         
         #Si no ingresaste nada.
         else:
-            flash("Por favor, rellene los campos")
+            flash("warning","Por favor, rellene los campos")
             return redirect(url_for("loginadmin"))
     else:
         return render_template('loginadmin.html')

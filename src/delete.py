@@ -17,7 +17,7 @@ def delete(id):
     cur.execute("SELECT * FROM encuesta WHERE id_encuesta = %s AND id_encuestador = %s;",(id, session['id'],))
     validar = cur.fetchall()
     if validar == ():
-        flash("Se ha producido un error al intentar eliminar la encusta.")
+        flash("danger","Se ha producido un error al intentar eliminar la encusta.")
         return redirect(url_for("forms"))
 
     # almacenar nombre
@@ -52,6 +52,6 @@ def delete(id):
     #eliminar la encuesta
     cur.execute("DELETE FROM encuesta WHERE id_encuesta = %s;", (id,))
     mysql.connection.commit()
-    flash("Encuesta \"" + nombre[0][0] +"\" eliminada exitosamente.")
+    flash("success","Encuesta \"" + nombre[0][0] +"\" eliminada exitosamente.")
 
     return redirect(url_for("forms"))
