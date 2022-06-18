@@ -18,28 +18,24 @@
     {% endwith %}
 
     <!-- TITULO-->
+
     <fieldset class="form-group">
-        <form class="col-lg-11 mt-2" action="/edit_titulo/{{id}}" method="POST">
-            <div class="input-group">
+        <form class="col-lg-10 mt-2" action="/edit_titulo/{{id}}" method="POST">
+            <div class="input-group" style="background-color:#D9E3F1; box-shadow: none;">
                 <input type="text" class="form-control form-control-lg" name="titulo" value="{{titulo}}"
-                    style="text-align: center; font-size:44px; border: 0; font-weight: bold;">
-                <input type="submit" class="btn btn-sm  btn-success" value="+">
+                    style="text-align: center; font-size:44px; font-weight: bold; background-color:#D9E3F1;">
+                <input type="submit" class="btn btn-success" value="+">
             </div>
         </form>
     </fieldset>
-
     <!-- Agregar nueva pregunta-->
     <p></p>
     <fieldset class="form-group">
         <form class="col-lg-6" action="/edit/{{id}}" method="POST">
-            <div class="input-group">
-                <input type="text" class="form-control form-control-sm" name="pregunta" placeholder="Nueva pregunta">
-                <input type="submit" name="S" value="Alternativa" class="btn btn-primary">
-                <input type="submit" name="A" value="S.Multiple" class="btn btn-primary">
-                <!-- Pregunta de desarrollo
-                <input type="submit" name="D" value="Desarrollo" class=" btn btn-primary disabled">
-                -->
-            </div>
+            <input class="form-control" type="text" name="pregunta" placeholder="Nueva pregunta">
+            <p></p>
+            <input type="submit" name="S" value="Alternativa" class="btn btn-primary">
+            <input type="submit" name="A" value="S.Multiple" class="btn btn-primary">
         </form>
     </fieldset>
     <p></p>
@@ -53,7 +49,7 @@
         <fieldset class="form-group">
             <div class="card-header" style="text-align: left;">
                 <form action="/edit_pregunta/{{id}}/{{question.0}}" method="POST">
-                    <div class="input-group">
+                    <div class="input-group" style="background-color:#F0F5FA; box-shadow: none;">
                         {% if question.5 == 0 %}
                         <a href="/required/{{id}}/{{question.0}}/{{question.5}}" class="btn btn-outline-success btn-sm"
                             data-bs-toggle="tooltip" title="No obligatoria">-</a>
@@ -62,10 +58,11 @@
                         <a type="" href="/required/{{id}}/{{question.0}}/{{question.5}}"
                             class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip" title="Obligatoria">*</a>
                         {% endif %}
-                        <input type="text" style="border: 0; background-color:transparent"
+                        <input type="text" style="margin-left: 10px; background-color:transparent"
                             class="form-control form-control-sm" name="pregunta" value="{{question.4}}">
                         <button type="submit" class="btn btn-sm  btn-success" data-bs-toggle="tooltip"
                             title="Cambiar titulo">+</button>
+
                         <a href="/delete_pregunta/{{id}}/{{question.0}}" class="btn btn-danger btn-sm"
                             data-bs-toggle="tooltip" title="Eliminar">x</a>
                     </div>
@@ -91,7 +88,7 @@
                 <input class="form-check-input" type="checkbox" disabled="">
                 <form action="/edit_respuesta/{{id}}/{{question.0}}/{{respuesta.0}}" method="POST">
                     <div class="input-group mb-3">
-                        <input type="text" style="border: 0; background-color:transparent"
+                        <input type="text" style="box-shadow: none; background-color:#F0F5FA"
                             class="form-control form-control-sm" name="respuesta" value="{{respuesta.2}}">
                         <input type="submit" class="btn btn-success btn-sm  " value="+">
                         <a href="/delete_alternativa/{{id}}/{{respuesta.0}}" class="btn btn-danger btn-sm">x</a>
@@ -103,7 +100,7 @@
             <form action="/new_alternativa/{{id}}/{{question.0}}" method="POST">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control form-control-sm" name="alternativa"
-                        placeholder="Nueva selección">
+                        placeholder="Nueva selección" style="margin-left: 10px;">
                     <input type="submit" class="btn btn-sm btn-primary" type="button" value="+">
                 </div>
             </form>
@@ -118,7 +115,7 @@
                 <input type="radio" class="form-check-input" disabled="">
                 <form action="/edit_respuesta/{{id}}/{{question.0}}/{{respuesta.0}}" method="POST">
                     <div class="input-group mb-3">
-                        <input type="text" style="border: 0; background-color:transparent"
+                        <input type="text" style=" box-shadow: none; background-color:#F0F5FA"
                             class="form-control form-control-sm" name="respuesta" value="{{respuesta.2}}">
                         <input type="submit" class="btn btn-sm  btn-success" value="+">
                         <a href="/delete_alternativa/{{id}}/{{respuesta.0}}" class="btn btn-danger btn-sm">x</a>
@@ -130,7 +127,7 @@
             <form action="/new_alternativa/{{id}}/{{question.0}}" method="POST">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control form-control-sm" name="alternativa"
-                        placeholder="Nueva alternativa">
+                        placeholder="Nueva alternativa" style="margin-left: 10px;">
                     <input type="submit" class="btn btn-sm btn-primary" type="button" value="+">
                 </div>
             </form>
