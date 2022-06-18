@@ -1,13 +1,23 @@
 {% extends './navbars/baseencuestador.html' %}
 
-{% block title %}Pagina Principal{% endblock %}
+{% block title %}
+Pagina Principal
+{% endblock %}
 
 {% block body %}
 {% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-dismissible alert-primary col-lg-4">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      {{message}}.
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div>
+      Bienvenido, estás conectado como un encuestador.<br>
+      <img src="/static/images/thumbs-up-192.png" width="auto" height="auto">
+</div>
 
-      <div>
-            Bienvenido, estás conectado como un encuestador.<br>
-            <img src="/static/images/thumbs-up-192.png" width="auto" height="auto">
-      </div>
-      
-      {% endblock %}
+{% endblock %}
