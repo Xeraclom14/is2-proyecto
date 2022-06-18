@@ -3,46 +3,30 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-<center> 
-
-{% with messages = get_flashed_messages() %}
-{%  if messages %}
-{%      for message in messages %}
-    <div class="alert alert-dismissible alert-info col-lg-6">
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        {{message}}.
-    </div>
-{%      endfor %}
-{%  endif %}
-{% endwith %}
-
-
-
-<form class="col-lg-6" action="/register" method ="POST">
-    <h1 class="form-label mt-4">Registrarse</h1>
-    <p></p>
-    <div class="card bg-light mb-3">
-        <div class="card-body">
-            <div style="text-align: left;">Nombre:</div>
-            <input type="text" class="form-control" name="prim_nom" placeholder="Nombre">
-            <div style="text-align: left;">Segundo Nombre:</div>
-            <input type="text" class="form-control" name="seg_nom" placeholder="Segundo Nombre">
-            <div style="text-align: left;">Apellido:</div>
-            <input type="text" class="form-control" name="ap_pat" placeholder="Apellido">
-            <div style="text-align: left;">Segundo Apellido:</div>
-            <input type="text" class="form-control" name="ap_mat" placeholder="Segundo Apellido">            
-            <p></p>            
-            <div style="text-align: left;">Correo Electrónico:</div>
-            <input type="email" class="form-control" name="email" placeholder="Correo Electrónico">
-            <div style="text-align: left;">Contraseña:</div>
-            <input type="password" class="form-control" name="password" placeholder="Contraseña">
-            <p></p>
-            <button type="submit" class="mt-4 btn btn-primary">Registrarse</button>
-            <a href="/" class="mt-4 btn btn-outline-info">Regresar</a>
+<center>
+    <form class="col-lg-6" action="/register" method="POST">
+        <h1 class="form-label mt-4">Registrarse</h1>
+        <p></p>
+        <div class="card bg-light mb-3">
+            <div class="card-body">
+                <div style="text-align: left;">Nombre:</div>
+                <input type="text" class="form-control" name="prim_nom" placeholder="Nombre">
+                <div style="text-align: left;">Segundo Nombre:</div>
+                <input type="text" class="form-control" name="seg_nom" placeholder="Segundo Nombre">
+                <div style="text-align: left;">Apellido:</div>
+                <input type="text" class="form-control" name="ap_pat" placeholder="Apellido">
+                <div style="text-align: left;">Segundo Apellido:</div>
+                <input type="text" class="form-control" name="ap_mat" placeholder="Segundo Apellido">
+                <p></p>
+                <div style="text-align: left;">Correo Electrónico:</div>
+                <input type="email" class="form-control" name="email" placeholder="Correo Electrónico">
+                <div style="text-align: left;">Contraseña:</div>
+                <input type="password" class="form-control" name="password" placeholder="Contraseña">
+                <p></p>
+                <button type="submit" class="mt-4 btn btn-primary">Registrarse</button>
+                <a href="/" class="mt-4 btn btn-outline-info">Regresar</a>
+            </div>
         </div>
-    </div>
-</form>
-
-
+    </form>
 </center>
 {% endblock %}

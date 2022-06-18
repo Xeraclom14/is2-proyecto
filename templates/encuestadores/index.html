@@ -5,17 +5,6 @@ Pagina Principal
 {% endblock %}
 
 {% block body %}
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<div class="alert alert-dismissible alert-primary col-lg-4">
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-      {{message}}.
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
-
 <center>
       <div>
             <h1>
