@@ -9,9 +9,9 @@
     <!-- TITULO-->
     <fieldset class="form-group">
         <form class="col-lg-10 mt-2" action="/edit_titulo/{{id}}" method="POST">
-            <div class="input-group" style="background-color:#D9E3F1; box-shadow: none;">
+            <div class="input-group" style="background-color:transparent; box-shadow: none;">
                 <input type="text" class="form-control form-control-lg" name="titulo" value="{{titulo}}"
-                    style="text-align: center; font-size:44px; font-weight: bold; background-color:#D9E3F1;">
+                    style="text-align: center; font-size:44px; font-weight: bold; background-color:transparent;">
                 <input type="submit" class="btn btn-success" value="+">
             </div>
         </form>
@@ -37,7 +37,7 @@
         <fieldset class="form-group">
             <div class="card-header" style="text-align: left;">
                 <form action="/edit_pregunta/{{id}}/{{question.0}}" method="POST">
-                    <div class="input-group" style="background-color:#F0F5FA; box-shadow: none;">
+                    <div class="input-group" style="background-color:transparent; box-shadow: none;">
                         {% if question.5 == 0 %}
                         <a href="/required/{{id}}/{{question.0}}/{{question.5}}" class="btn btn-outline-success btn-sm"
                             data-bs-toggle="tooltip" title="No obligatoria">-</a>
@@ -75,8 +75,8 @@
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" disabled="">
                 <form action="/edit_respuesta/{{id}}/{{question.0}}/{{respuesta.0}}" method="POST">
-                    <div class="input-group mb-3" style="background-color:#F0F5FA; box-shadow: none;">
-                        <input type="text" style="box-shadow: none; background-color:#F0F5FA"
+                    <div class="input-group mb-3" style="background-color:transparent; box-shadow: none;">
+                        <input type="text" style="box-shadow: none; background-color:transparent"
                             class="form-control form-control-sm" name="respuesta" value="{{respuesta.2}}">
                         <input type="submit" class="btn btn-success btn-sm  " value="+">
                         <a href="/delete_alternativa/{{id}}/{{respuesta.0}}" class="btn btn-danger btn-sm">x</a>
@@ -102,8 +102,8 @@
             <div class="form-check">
                 <input type="radio" class="form-check-input" disabled="">
                 <form action="/edit_respuesta/{{id}}/{{question.0}}/{{respuesta.0}}" method="POST">
-                    <div class="input-group mb-3" style="background-color:#F0F5FA; box-shadow: none;">
-                        <input type="text" style=" box-shadow: none; background-color:#F0F5FA"
+                    <div class="input-group mb-3" style="background-color:transparent; box-shadow: none;">
+                        <input type="text" style=" box-shadow: none; background-color:transparent"
                             class="form-control form-control-sm" name="respuesta" value="{{respuesta.2}}">
                         <input type="submit" class="btn btn-sm  btn-success" value="+">
                         <a href="/delete_alternativa/{{id}}/{{respuesta.0}}" class="btn btn-danger btn-sm">x</a>
