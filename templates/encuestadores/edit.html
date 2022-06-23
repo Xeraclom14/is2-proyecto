@@ -1,5 +1,13 @@
 {% extends './navbars/baseencuestador.html' %}
 
+{%
+set icon_size = '28px'
+%}
+
+{%
+set icon_size_titulo = '50px'
+%}
+
 <!-- nombre de la encuesta en el title -->
 {% block title %}{{titulo}}{% endblock %}
 
@@ -12,7 +20,9 @@
             <div class="input-group" style="background-color:transparent; box-shadow: none;">
                 <input type="text" class="form-control form-control-lg" name="titulo" value="{{titulo}}"
                     style="text-align: center; font-size:44px; font-weight: bold; background-color:transparent;">
-                <input type="submit" class="btn btn-success" value="+">
+                <button type="submit" style="border: none;background-color: transparent;">
+                    <img src="/static/images/save.png" style="width: {{icon_size_titulo}};;height: auto;">
+                </button>
             </div>
         </form>
     </fieldset>
@@ -39,20 +49,27 @@
                 <form action="/edit_pregunta/{{id}}/{{question.0}}" method="POST">
                     <div class="input-group" style="background-color:transparent; box-shadow: none;">
                         {% if question.5 == 0 %}
-                        <a href="/required/{{id}}/{{question.0}}/{{question.5}}" class="btn btn-outline-success btn-sm"
-                            data-bs-toggle="tooltip" title="No obligatoria">-</a>
+                        <a href="/required/{{id}}/{{question.0}}/{{question.5}}" data-bs-toggle="tooltip"
+                            title="No obligatoria">
+                            <img src="/static/images/toggle_off.png" style="width: {{icon_size}};;height: auto;">
+                        </a>
                         {% endif %}
                         {% if question.5 == 1 %}
-                        <a type="" href="/required/{{id}}/{{question.0}}/{{question.5}}"
-                            class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip" title="Obligatoria">*</a>
+                        <a href="/required/{{id}}/{{question.0}}/{{question.5}}" data-bs-toggle="tooltip"
+                            title="Obligatoria">
+                            <img src="/static/images/toggle_on.png" style="width: {{icon_size}};;height: auto;">
+                        </a>
                         {% endif %}
                         <input type="text" style="margin-left: 10px; background-color:transparent"
                             class="form-control form-control-sm" name="pregunta" value="{{question.4}}">
-                        <button type="submit" class="btn btn-sm  btn-success" data-bs-toggle="tooltip"
-                            title="Cambiar titulo">+</button>
+                        <button type="submit" data-bs-toggle="tooltip" title="Cambiar titulo"
+                            style="border: none;background-color: transparent;">
+                            <img src="/static/images/save.png" style="width: {{icon_size}};;height: auto;">
+                        </button>
 
-                        <a href="/delete_pregunta/{{id}}/{{question.0}}" class="btn btn-danger btn-sm"
-                            data-bs-toggle="tooltip" title="Eliminar">x</a>
+                        <a href="/delete_pregunta/{{id}}/{{question.0}}" data-bs-toggle="tooltip" title="Eliminar">
+                            <img src="/static/images/delete.png" style="width: {{icon_size}};;height: auto;">
+                        </a>
                     </div>
                 </form>
             </div>
@@ -78,8 +95,12 @@
                     <div class="input-group mb-3" style="background-color:transparent; box-shadow: none;">
                         <input type="text" style="box-shadow: none; background-color:transparent"
                             class="form-control form-control-sm" name="respuesta" value="{{respuesta.2}}">
-                        <input type="submit" class="btn btn-success btn-sm  " value="+">
-                        <a href="/delete_alternativa/{{id}}/{{respuesta.0}}" class="btn btn-danger btn-sm">x</a>
+                        <button type="submit" style="border: none;background-color: transparent;">
+                            <img src="/static/images/save.png" style="width: {{icon_size}};;height: auto;">
+                        </button>
+                        <a href="/delete_alternativa/{{id}}/{{respuesta.0}}">
+                            <img src="/static/images/delete.png" style="width: {{icon_size}};;height: auto;">
+                        </a>
                     </div>
                 </form>
             </div>
@@ -89,7 +110,9 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control form-control-sm" name="alternativa"
                         placeholder="Nueva selección" style="margin-left: 10px;">
-                    <input type="submit" class="btn btn-sm btn-primary" type="button" value="+">
+                    <button type="submit" style="border: none;background-color: transparent;">
+                        <img src="/static/images/add.png" style="width: {{icon_size}};;height: auto;">
+                    </button>
                 </div>
             </form>
             {% endif %}
@@ -105,8 +128,12 @@
                     <div class="input-group mb-3" style="background-color:transparent; box-shadow: none;">
                         <input type="text" style=" box-shadow: none; background-color:transparent"
                             class="form-control form-control-sm" name="respuesta" value="{{respuesta.2}}">
-                        <input type="submit" class="btn btn-sm  btn-success" value="+">
-                        <a href="/delete_alternativa/{{id}}/{{respuesta.0}}" class="btn btn-danger btn-sm">x</a>
+                        <button type="submit" style="border: none;background-color: transparent;">
+                            <img src="/static/images/save.png" style="width: {{icon_size}};;height: auto;">
+                        </button>
+                        <a href="/delete_alternativa/{{id}}/{{respuesta.0}}">
+                            <img src="/static/images/delete.png" style="width: {{icon_size}};;height: auto;">
+                        </a>
                     </div>
                 </form>
             </div>
@@ -116,7 +143,9 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control form-control-sm" name="alternativa"
                         placeholder="Nueva alternativa" style="margin-left: 10px;">
-                    <input type="submit" class="btn btn-sm btn-primary" type="button" value="+" >
+                    <button type="submit" style="border: none;background-color: transparent;">
+                        <img src="/static/images/add.png" style="width: {{icon_size}};;height: auto;">
+                    </button>
                 </div>
             </form>
 

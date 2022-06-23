@@ -138,14 +138,13 @@ def profileinicio():
 #no me está pescando id.
 def delete_cat(id,id_cat):
     tiposesion = session['type']
-    e_id = session['id']
+    e_id = str(session['id'])
 
     # verificar
     if tiposesion == 'encuestador':
         return render_template("/403.html")
 
     if tiposesion == 'encuestado':
-
         #Solamente la misma persona debe borrar.
         if id == e_id:
 
