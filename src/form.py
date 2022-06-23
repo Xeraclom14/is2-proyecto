@@ -123,7 +123,8 @@ def enviar_encuesta(id):
 
     return redirect("/forms")
     
-#Guardar respuesta subir
+# Guardar respuesta subir
+# Marcar como contestado
 @app.route('/submit_respuestas/<id>', methods=['GET','POST'])
 def submit_respuestas(id):
     cur = mysql.connection.cursor()
