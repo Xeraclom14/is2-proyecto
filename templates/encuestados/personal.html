@@ -1,5 +1,9 @@
 {% extends './navbars/baseencuestado.html' %}
 
+{%
+set icon_size = '28px'
+%}
+
 {% block title %}Página Personal{% endblock %}
 
 {% block body %}
@@ -80,29 +84,31 @@
   }
 </style>
 
-<div class="box">
-  <div class="row m-0 content">
-    <p style="font-family: var(--bs-body-font-family) ">
-      ¡Bienvenido! {{ dpers.0 }} {{ dpers.1 }} {{ dpers.2 }} {{ dpers.3 }}. Esta es tu página personal.<br>
-      Acá deberías poder cambiar tus preferencias y ver tus encuestas respondidas.<br>
-      No podrás ver tus respuestas, por motivos de seguridad.<br>
-      <br>
-      Utiliza este apartado para agregar una categoría nueva.
+<center>
 
-      <!-- Acción -->
+  <div class="box">
+    <div class="row m-0 content">
+      <p style="font-family: var(--bs-body-font-family) ">
+        ¡Bienvenido! {{ dpers.0 }} {{ dpers.1 }} {{ dpers.2 }} {{ dpers.3 }}. Esta es tu página personal.<br>
+        Acá deberías poder cambiar tus preferencias y ver tus encuestas respondidas.<br>
+        No podrás ver tus respuestas, por motivos de seguridad.<br>
+        <br>
+        Utiliza este apartado para agregar una categoría nueva.
+
+        <!-- Acción -->
       <form action="/profile" method="POST">
 
         <!-- Combobox -->
-        <select class="form-select" name="nuevapref"  style='max-width:15%;'>
+        <select class="form-select" name="nuevapref" style='max-width:15%;'>
 
           <!-- Opción Inicial-->
-          <option value = "0" selected>Seleccionar categoría</option>
-          
+          <option value="0" selected>Seleccionar categoría</option>
+
           <!--Opciones Seleccionables-->
           {% for nopref in nopreferidas %}
           <div class="card-body">
             <!-- 0.0: ID, 0.1: Etiqueta.-->
-            <option value="{{ nopref.0.0 }}" > {{nopref.0.1}} </option>
+            <option value="{{ nopref.0.0 }}"> {{nopref.0.1}} </option>
           </div>
           {% endfor %}
         </select>
@@ -111,52 +117,55 @@
         <button type="submit" class="mt-4 btn btn-primary">Agregar Preferencia</button>
       </form>
 
-    <div class="split left">
-      <div class="centered">
-        <div class="card bg-light mb-3" style="position:relative; width: 100%; height: 100%;">
-          <div class="card-body">
-            <div class="card-header">Preferencias</div>
-            <div class="card bg-light mb-3 col-lg-12">
-              {% for categoria in categorias %}
-              <div class="card-body">
-                <div class="text" style="text-align: center;">{{categoria.1}}
-                  <a href="/delete_cat/{{id}}/{{categoria.0}}" class="btn btn-danger btn-sm"
-                  data-bs-toggle="tooltip" title="Eliminar">X</a></div>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="split right">
-      <div class="centered">
-        <div class="card bg-light mb-3" style="position:relative; width: 100%; height: 100%;">
-          <div class="card-body">
-            <div class="card-header">Encuestas Contestadas</div>
-            <div class="card bg-light mb-3 col-lg-12">
-              {% for form in forms %}
-              <div class="card-body">
-                <div class="text" style="text-align: center;">{{form.0}}<br></div>
+      <div class="split left">
+        <div class="centered">
+          <div class="card bg-light mb-3" style="position:relative; width: 100%; height: 100%;">
+            <div class="card-body">
+              <div class="card-header">Preferencias</div>
+              <div class="card bg-light mb-3 col-lg-12">
+                {% for categoria in categorias %}
+                <div class="card-body">
+                  <div class="text" style="text-align: center;">{{categoria.1}}
+                    <a href="/delete_cat/{{id}}/{{categoria.0}}" data-bs-toggle="tooltip"
+                      title="Eliminar">
+                      <img src="/static/images/delete.png" style="width: {{icon_size}};;height: auto;">
+                    </a>
+                  </div>
+                </div>
+                {% endfor %}
               </div>
             </div>
           </div>
-          {% endfor %}
+
         </div>
       </div>
-    </div>
 
-    </p>
+      <div class="split right">
+        <div class="centered">
+          <div class="card bg-light mb-3" style="position:relative; width: 100%; height: 100%;">
+            <div class="card-body">
+              <div class="card-header">Encuestas Contestadas</div>
+              <div class="card bg-light mb-3 col-lg-12">
+                {% for form in forms %}
+                <div class="card-body">
+                  <div class="text" style="text-align: center;">{{form.0}}<br></div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      </p>
+
+    </div>
 
   </div>
 
-</div>
+  <div class="row footer">
 
-<div class="row footer">
-
-  <!--
+    <!--
 
   <li class="nav-item dropdown">
 
@@ -173,8 +182,8 @@
   </li>
     -->
 
-  
 
-</div>
 
+  </div>
+</center>
 {%endblock%}
