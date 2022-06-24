@@ -16,44 +16,63 @@
     <fieldset class="form-group">
         <form>
             <div class="card bg-light mb-3 col-lg-6">
-                <div class="card-header" style="text-align: left;"> {{question.4}}</div>
+                <div class="card-header" style="text-align: left;"> {{question.3}}</div>
                 <div class="card-body" style="text-align: left;">
-                    <!--  <div style="text-align: right;" class="text-muted">ID: {{question.0}}</div>-->
-                    <!-- cambia la presentacion dependiendo del tipo de pregunta -->
-                    
-                    <!-- Pregunta texto -->
-                    {% if question.3 == 0 %}
-                    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-                    {% endif %}
+                    <center>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+                        <body>
+                            <canvas id="{{question.0}}" style="width:100%;max-width:600px"></canvas>
+                            <script>
+                                function lerpColor(a, b, amount) {
 
+                                    var ah = parseInt(a.replace(/#/g, ''), 16),
+                                        ar = ah >> 16, ag = ah >> 8 & 0xff, ab = ah & 0xff,
+                                        bh = parseInt(b.replace(/#/g, ''), 16),
+                                        br = bh >> 16, bg = bh >> 8 & 0xff, bb = bh & 0xff,
+                                        rr = ar + amount * (br - ar),
+                                        rg = ag + amount * (bg - ag),
+                                        rb = ab + amount * (bb - ab);
 
-                    <!-- Pregunta alternaiva -->
-                    {% if question.3 == 1 %}
+                                    return '#' + ((1 << 24) + (rr << 16) + (rg << 8) + rb | 0).toString(16).slice(1);
+                                }
 
-                    {% for respuesta in question.2 %}
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            {{respuesta.2}}
-                        </label>
-                    </div>
-                    {% endfor %}
+                                var xValues = {{ question.4 | safe}};
+                                var yValues = {{ question.5 | safe}};
 
-                    {% endif %}
+                                var esMultiple = {{ question.2 | safe }} != 1;
 
-                    <!-- Pregunta s.multiple -->
-                    {% if question.3 == 2 %}
+                                var barColors = [xValues.length];
+                                for (var i = 0; i < xValues.length; i++) {
+                                    var percent = xValues.length > 1 ? i / (xValues.length - 1) : 0;
 
-                    {% for respuesta in question.2 %}
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1"
-                                value="option1">
-                            {{respuesta.2}}
-                        </label>
-                    </div>
-                    {% endfor %}
-                    {% endif %}
+                                    barColors[i] = lerpColor("#293D75", "#8496CE", percent);
+                                }
+
+                                new Chart("{{question.0}}", {
+                                    type: esMultiple? "bar" : "pie",
+                                    data: {
+                                        labels: xValues,
+                                        datasets: [{
+                                            backgroundColor: barColors,
+                                            data: yValues
+                                        }]
+                                    },
+                                    ...(esMultiple && {
+                                        options: {
+                                            legend: { display: false },
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true
+                                                    }
+                                                }],
+                                            }
+                                        }
+                                    })
+                                });
+                            </script>
+                        </body>
+                    </center>
                 </div>
             </div>
         </form>
