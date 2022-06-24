@@ -29,8 +29,8 @@ def profile(id):
             #Función para recibir las preferencias de una persona.
             cur.execute("SELECT DISTINCT categoria.id_categoria, categoria.nombre FROM categoria "
             + "JOIN encuestadocategoria on categoria.id_categoria = encuestadocategoria.id_categoria "
-            + "AND encuestadocategoria.id_encuestado = %s"
-            + "JOIN encuestado ON encuestado.id_encuestado = %s",(id,id))
+            + "AND encuestadocategoria.id_encuestado = %s "
+            + "JOIN encuestado ON encuestado.id_encuestado = %s;",(id,id))
             
             datardos = cur.fetchall()
             categorias = []
@@ -46,7 +46,7 @@ def profile(id):
             + "WHERE categoria.id_categoria NOT IN "
             + "(SELECT encuestadocategoria.id_categoria FROM encuestadocategoria, encuestado "
             + "WHERE encuestadocategoria.id_encuestado = encuestado.id_encuestado "
-            + "AND encuestado.id_encuestado = %s);",(id))
+            + "AND encuestado.id_encuestado = %s);",(id,))
 
             masdatardos = cur.fetchall()
             nopreferidas = []
@@ -67,7 +67,7 @@ def profile(id):
             #Puede estar mala.
             cur.execute("SELECT DISTINCT encuesta.titulo, encuestado.prim_nom FROM encuesta "
             + "JOIN encuestadoencuesta ON encuesta.id_encuesta = encuestadoencuesta.id_encuesta "
-            + "JOIN encuestado ON encuestado.id_encuestado = %s;",(id))
+            + "JOIN encuestado ON encuestado.id_encuestado = %s;",(id,))
             datos = cur.fetchall()
             encuestas = []
             for encuesta in datos:
