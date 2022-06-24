@@ -38,17 +38,16 @@ def profile(id):
                 categorias.append([categoria[0],categoria[1]])
             mysql.connection.commit()
 
-            
             #Este apartado para hacer la función de agregar una preferencia a una persona.
 
             #Pero primero que nada, debo hacer otra que me de las NO preferencias de este.
-            cur.execute("SELECT DISTINCT categoria.* FROM categoria, encuestado "
-            + "WHERE categoria.id_categoria NOT IN "
-            + "(SELECT encuestadocategoria.id_categoria FROM encuestadocategoria, encuestado "
-            + "WHERE encuestadocategoria.id_encuestado = encuestado.id_encuestado "
-            + "AND encuestado.id_encuestado = %s);",(id,))
+            cur.execute("SELECT categoria.id_categoria, categoria.nombre "
+            + "FROM categoria LEFT JOIN encuestadocategoria "
+            + "ON (categoria.id_categoria = encuestadocategoria.id_categoria "
+            + "AND encuestadocategoria.id_encuestado = %s) "
+            + "WHERE encuestadocategoria.id_categoria IS NULL;",(id,))
 
-            masdatardos = cur.fetchall()
+            masdatardos = cur.fetchall()        
             nopreferidas = []
             for nopref in masdatardos:
                 nopreferidas.append([nopref])
