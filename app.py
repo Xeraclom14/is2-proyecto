@@ -48,7 +48,6 @@ import src.forms
 import src.results
 import src.index
 import src.login
-import src.stats
 import src.logout
 import src.register
 import src.loginadmin
