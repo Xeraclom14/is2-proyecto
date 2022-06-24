@@ -44,14 +44,15 @@ def results(id):
     for pregunta in datos:
         cur.execute("SELECT * FROM respuesta WHERE id_pregunta  =%s;", (pregunta[0],))
         respuestas = cur.fetchall()
-        #Valores de Pregunta:
-        # [0] = id_pregunta
-        # [1] = id_encuesta 
-        # [2] = tipo_pregunta
-        # [3] = obligatoria
-        # [4] = texto_pregunta
-        #esto recibiría el id_pregunta, id_encuesta, respuestas, tipo y el texto.
-        preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[2], pregunta[4]])
+        nombres_respuestas = []
+        cont_respuestas = []
+
+        for respuesta in respuestas:
+            nombres_respuestas.append(respuesta[2])
+            cont_respuestas.append(respuesta[3])
+
+        #esto recibiría el id_pregunta, id_encuesta, tipo, texto y respuestas.
+        preguntas.append([pregunta[0], pregunta[1], pregunta[2], pregunta[4], nombres_respuestas, cont_respuestas])
     mysql.connection.commit()
     
     return render_template('/encuestadores/results.html', form = preguntas, titulo = nombre_encuesta[0][0], id = id)
