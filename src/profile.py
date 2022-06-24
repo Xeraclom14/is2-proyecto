@@ -14,7 +14,7 @@ def profile(id):
     #"id" es un str, e_id es un int
     idint = int(id)
 
-    #ya veremo
+    #ya veremos
     if tiposesion == 'encuestador':
         return "Ya veremos."
     
@@ -53,20 +53,12 @@ def profile(id):
                 nopreferidas.append([nopref])
             mysql.connection.commit()
 
-            #Ahora debo hacer una consulta pa sacar el resultado seleccionado.
-            #cur.execute("SELECT id_categoria FROM categoria WHERE nombre = %s",("algo"))
-
-            #cur.execute("INSERT INTO encuestadocategoria "
-            #+ "VALUES %s, %s ",(id,"numerocategoria"))
-            #mysql.connection.commit()
-            
             #Función para recibir todas las encuestas contestadas
-            #que mal.
-            #Distinct me permite evitar duplicados, pero algo está mal, porque no debería usarlo.
-            #Puede estar mala.
-            cur.execute("SELECT DISTINCT encuesta.titulo, encuestado.prim_nom FROM encuesta "
-            + "JOIN encuestadoencuesta ON encuesta.id_encuesta = encuestadoencuesta.id_encuesta "
-            + "JOIN encuestado ON encuestado.id_encuestado = %s;",(id,))
+            cur.execute("SELECT encuesta.titulo FROM encuesta "
+            + "INNER JOIN encuestadoencuesta "
+            + "ON (encuesta.id_encuesta = encuestadoencuesta.id_encuesta "
+            + "AND encuestadoencuesta.id_encuestado = %s);",(id,))
+
             datos = cur.fetchall()
             encuestas = []
             for encuesta in datos:
