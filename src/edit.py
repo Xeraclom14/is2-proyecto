@@ -13,6 +13,14 @@ def verificar(id):
     validar = cur.fetchall()
     if validar == ():
         return False
+
+    #Si la encuesta esta cerrada, no se debe poder editar.
+    cur.execute("SELECT cerrada FROM encuesta WHERE id_encuesta = " + id)
+    validar = cur.fetchall()
+    mysql.connection.commit()
+
+    if(validar[0][0] == 1):
+        return False
     return True
 
 @app.route('/required/<id>/<id_pregunta>/<bool_pregunta>')
@@ -87,6 +95,67 @@ def edit_titulo(id):
             return redirect("/edit/" + id)
     return redirect("/edit/" + id)
 
+@app.route('/add_categoria/<id>', methods=['GET', 'POST'])
+def add_categoria(id):
+    # verificar
+    if not verificar(id):
+        flash("warning","Usted no puede editar esta encuesta.")
+        return redirect(url_for("forms"))
+
+    #agregar categoria
+    if request.method == 'POST':
+        if(request.form['categoria']!=""):
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT nombre FROM categoria WHERE nombre = %s", (request.form['categoria'],))
+            existe = cur.fetchall()
+
+            if(len(existe) == 0): #en caso de que la categoria no se encuentra en la DB, se crea
+                cur.execute("INSERT INTO categoria (nombre, descripcion) VALUES (%s , %s);", (request.form['categoria'], request.form['categoria']))
+
+            #verificar si ya se agrego la categoria anteriormente
+            cur.execute("SELECT id_categoria FROM categoria WHERE nombre = %s", (request.form['categoria'],))
+            id_cat = cur.fetchall()[0][0]
+
+            cur.execute("SELECT * FROM encuestacategoria WHERE id_encuesta = %s AND id_categoria = %s", (id, id_cat))
+            existe = cur.fetchall()
+            if(len(existe) > 0): #en caso de que la categoria ya se haya agregado anteriormente
+                flash("warning","La encuesta ya tiene esta categoria.")
+                mysql.connection.commit()
+                return redirect("/edit/" + id)
+                
+            #linkear la encuesta con la categoria
+            cur.execute("INSERT INTO encuestacategoria (id_encuesta, id_categoria) VALUES (%s , %s);", (id, id_cat))
+
+            mysql.connection.commit()
+
+            flash("success","Categoria agregada.")
+
+            return redirect(request.referrer)
+        else:
+            flash("warning","Ingerese un valor valido.")
+            return redirect("/edit/" + id)
+
+    return redirect("/edit/" + id)
+
+@app.route('/remove_categoria/<id>/<id_cat>', methods=['GET', 'POST'])
+def remove_categoria(id, id_cat):
+    # verificar
+    if not verificar(id):
+        flash("warning","Usted no puede editar esta encuesta.")
+        return redirect(url_for("forms"))
+
+
+    #remover categoria
+    if request.method == 'POST':
+        
+        cur = mysql.connection.cursor()
+        cur.execute("DELETE FROM encuestacategoria WHERE id_encuesta = %s AND id_categoria = %s;", (id,id_cat))
+        mysql.connection.commit()
+
+        flash("success","Categoria removida.")
+        return redirect(request.referrer)
+
+    return redirect("/edit/" + id)
 
 @app.route('/new_alternativa/<id>/<id_pregunta>', methods=['GET','POST'])
 def new_alternativa(id,id_pregunta):
@@ -152,16 +221,6 @@ def edit(id):
     if(tiposesion == "encuestado"):
         return(render_template("403.html"))
 
-    #Si la encuesta esta cerrada, no se debe poder editar.
-    cur = mysql.connection.cursor()
-
-    cur.execute("SELECT cerrada FROM encuesta WHERE id_encuesta = " + id)
-    cerrada = cur.fetchall()
-    mysql.connection.commit()
-
-    if(cerrada[0][0] == 1):
-        return(render_template("403.html"))
-    
     # verificar
     if not verificar(id):
         flash("warning","Usted no puede editar esta encuesta.")
@@ -170,7 +229,7 @@ def edit(id):
     #edit
     if request.method == 'POST':
         if(request.form['pregunta'] != ""):
-            tipo_pregunta = -1;
+            tipo_pregunta = -1
             if request.form.get('D'):
                 tipo_pregunta = 0
             elif  request.form.get('S'):
@@ -209,8 +268,14 @@ def edit(id):
             # [4] = texto_pregunta
             #esto recibiría el id_pregunta, id_encuesta, respuestas, tipo y el texto y obligatoria
             preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[2], pregunta[4], pregunta[3]])
+
+        #retirar categorias asociadas a la encuesta
+        cur.execute("SELECT categoria.id_categoria, nombre FROM categoria, encuestacategoria "
+         + "WHERE categoria.id_categoria = encuestacategoria.id_categoria AND encuestacategoria.id_encuesta = " + id)
+        categorias = cur.fetchall()
+        
         mysql.connection.commit()
-        return render_template('/encuestadores/edit.html', form = preguntas, titulo = nombre_encuesta[0][0], id = id)
+        return render_template('/encuestadores/edit.html', form = preguntas, titulo = nombre_encuesta[0][0], id = id, categorias = categorias)
 
 @app.route('/cerrar_encuesta/<id>', methods=['GET','POST'])
 def cerrar_encuesta(id):

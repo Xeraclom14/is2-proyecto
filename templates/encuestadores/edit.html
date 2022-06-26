@@ -26,6 +26,45 @@ set icon_size_titulo = '50px'
             </div>
         </form>
     </fieldset>
+
+    <!-- Agregar nueva categoria-->
+
+    <fieldset class="form-group">
+        <div class="card bg-light mb-3 col-lg-6">
+
+            <div class="card-header" style="text-align: left;">
+                Categorías
+            </div>
+
+            <div class="card-body" style="text-align: left;">
+
+                {% for categoria in categorias %}
+                <form action="/remove_categoria/{{id}}/{{categoria.0}}" method="POST">
+                    <div class="input-group" style="background-color:transparent; box-shadow: none;">
+                        <text style="text-align: center;" class="form-control form-control-sm">
+                            {{categoria.1}}
+                        </text>
+                        <button type="submit" style="border: none;background-color: transparent;">
+                            <img src="/static/images/delete.png" style="width: {{icon_size}};;height: auto;">
+                        </button>
+                    </div>
+                </form>
+                {% endfor %}
+                
+                <p></p>
+                <form action="/add_categoria/{{id}}" method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-sm" name="categoria"
+                            placeholder="Agregar categoría" style="margin-left: 10px;">
+                        <button type="submit" style="border: none;background-color: transparent;">
+                            <img src="/static/images/add.png" style="width: {{icon_size}};;height: auto;">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </fieldset>
+
     <!-- Agregar nueva pregunta-->
     <p></p>
     <fieldset class="form-group">
