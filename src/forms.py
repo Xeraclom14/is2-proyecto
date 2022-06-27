@@ -18,7 +18,7 @@ def forms():
     #Hay que tener un forms para encuestados
     if(tiposesion == "encuestado"):
         cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM encuesta where cerrada = 1')
+        cur.execute('SELECT * FROM encuesta LEFT JOIN encuestadoencuesta ON encuesta.id_encuesta = encuestadoencuesta.id_encuesta WHERE (encuesta.cerrada = 1 AND encuestadoencuesta.id_encuestado != %s)',(e_id,)) # adfdsafdasfadsfadf
         data = cur.fetchall()
         
         return render_template("encuestados/forms.html", encuestass = data)
