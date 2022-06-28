@@ -1,0 +1,20 @@
+{% extends './navbars/baseunregistered.html' %}
+
+{% block title %}passreset1{% endblock %}
+
+{% block body %}
+<center>
+    <form class="col-lg-6" action="/passreset1" method="POST">
+        <h1 class="form-label mt-4">Reiniciar Contraseña</h1>
+        <p></p>
+        <div class="card bg-light mb-3">
+            <div class="card-body">
+                <div style="text-align: left;">Correo Electrónico:</div>
+                <input type="email" class="form-control" name="email" placeholder="Correo Electrónico">
+                <button type="submit" class="mt-4 btn btn-primary">Reiniciar Contraseña</button>
+                <a href="/" class="mt-4 btn btn-outline-info">Regresar</a>
+            </div>
+        </div>
+    </form>
+</center>
+{% endblock %}
