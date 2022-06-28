@@ -105,15 +105,18 @@ def add_categoria(id):
     #agregar categoria
     if request.method == 'POST':
         if(request.form['categoria']!=""):
+
+            cat = request.form['categoria'].capitalize()
+
             cur = mysql.connection.cursor()
-            cur.execute("SELECT nombre FROM categoria WHERE nombre = %s", (request.form['categoria'],))
+            cur.execute("SELECT nombre FROM categoria WHERE nombre = %s", (cat,))
             existe = cur.fetchall()
 
             if(len(existe) == 0): #en caso de que la categoria no se encuentra en la DB, se crea
-                cur.execute("INSERT INTO categoria (nombre, descripcion) VALUES (%s , %s);", (request.form['categoria'], request.form['categoria']))
+                cur.execute("INSERT INTO categoria (nombre, descripcion) VALUES (%s , %s);", (cat, cat))
 
             #verificar si ya se agrego la categoria anteriormente
-            cur.execute("SELECT id_categoria FROM categoria WHERE nombre = %s", (request.form['categoria'],))
+            cur.execute("SELECT id_categoria FROM categoria WHERE nombre = %s", (cat,))
             id_cat = cur.fetchall()[0][0]
 
             cur.execute("SELECT * FROM encuestacategoria WHERE id_encuesta = %s AND id_categoria = %s", (id, id_cat))
