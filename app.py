@@ -52,6 +52,8 @@ import src.logout
 import src.register
 import src.loginadmin
 import src.profile
+import src.passreset1
+import src.passreset2
 
 @app.errorhandler(404)
 def page_not_found(e):
