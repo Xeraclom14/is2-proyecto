@@ -5,19 +5,35 @@
 {% block body %}
 
 <center>
-      <h1 class="form-label mt-4">Encuestas</h1>
- 
+      <h1 class="form-label mt-4">
+            <b>
+                  Encuestas
+            </b>
+      </h1>
+
+      {% if encuestass|length == 0 %}
+      <div class="mb-3 col-lg-6">
+
+            <img style="margin-bottom: 0%; margin-top: 1%; max-width:100%;" src="/static/images/no_forms.png"
+                  width="auto" height="auto">
+            <h6>
+                  Ahora mismo no hay más encuestas disponibles :(
+            </h6>
+      </div>
+      {% endif %}
+
       {% for encuesta in encuestass %}
       <div class="card bg-light mb-3 col-lg-6">
             <div class="card-header" style="text-align: left;">
                   {{ encuesta.2 }}
             </div>
-            <div style="text-align: left;">Fecha Creación : {{ encuesta.3 }}</div>
             <div class="card-body">
-            
-            <!-- hay que cambiar la direccion de este boton -->
-            <a href="/form/{{ encuesta.0 }}" class="mt-2 btn btn btn-success">CONTESTAR</a> 
-            
+                  <div style="text-align:right;">
+                        Fecha Creación : {{ encuesta.3 }}
+                  </div>
+                  <!-- hay que cambiar la direccion de este boton -->
+                  <a href="/form/{{ encuesta.0 }}" class="mt-2 btn btn btn-success">Contestar</a>
+
             </div>
       </div>
       {% endfor %}

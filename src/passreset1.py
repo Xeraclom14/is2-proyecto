@@ -27,7 +27,7 @@ def passreset1():
 
             #Si el correo no existe se refresca la pagina.   
             if account is None: 
-               flash("warning","El correo no existe")
+               flash("warning","El correo ingresado no existe.")
                return redirect(url_for("passreset1"))
 
             #Si el correo existe manda un correo con el link para reiniciar tu cuenta.  
@@ -50,7 +50,7 @@ def passreset1():
                     print (auxEmail)
                     print (auxID2)
             
-                    message = 'Estimado usuario usted ha solicitado un cambio de contraseña, siga el siguiente link para cambiar su contraseña: http://127.0.0.1:5008/passreset2/'+auxID2
+                    message = 'Estimado usuario usted ha solicitado un cambio de contraseña, siga el siguiente link para cambiar su contraseña:\nhttps://is2-2022.inf.udec.cl:5008/passreset2/'+auxID2
                     subject = "Has solicitado cambio de contraseña en Encuestas Peepo"
                     msg = Message(recipients=[auxEmail],
                         body=message,
@@ -58,10 +58,10 @@ def passreset1():
                     conn.send(msg)
 
                 
-                flash("warning","Se ha enviado un link para cambiar su contraseña a su correo")
+                flash("primary","Por favor revise su correo, Se ha enviado un link para cambiar la contraseña de su cuenta.")
                 return redirect(url_for("login"))
        else:
-            flash("warning","Por favor, ingrese sus datos")
+            flash("warning","Por favor, ingrese su correo electrónico.")
             return redirect(url_for("passreset1")) 
     else: 
         return render_template('passreset1.html')

@@ -24,10 +24,10 @@ def passreset2(id):
             cur.execute("UPDATE encuestado SET password = %s WHERE id_encuestado = %s;", (nuevapass, id))
             mysql.connection.commit()
                 
-            flash("warning","Se ha enviado cambiado su contraseña existosamente")
+            flash("success","Se ha cambiado la contraseña existosamente.")
             return redirect(url_for("login"))
        else:
-            flash("warning","Por favor, ingrese su nueva contraseña")
+            flash("warning","Por favor, ingrese su nueva contraseña.")
             return(render_template("passreset2.html", id = id))
     else: 
         return(render_template("passreset2.html", id = id))
