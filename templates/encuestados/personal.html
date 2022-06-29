@@ -1,101 +1,102 @@
 {% extends './navbars/baseencuestado.html' %}
 
 {%
-set icon_size = '28px'
+set icon_size = '24px'
 %}
 
 {% block title %}Página Personal{% endblock %}
 
 {% block body %}
+<center>
 
-<!-- Estilos para el diseño de la página.-->
-<style>
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-  }
+  <!-- Estilos para el diseño de la página.-->
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
 
-  .box {
-    display: flex;
-    flex-flow: column;
-    height: 100%;
-    /*overflow-x: hidden;*/
-    /* No debería usar esto */
-  }
+    .box {
+      display: flex;
+      flex-flow: column;
+      height: 100%;
+      /*overflow-x: hidden;*/
+      /* No debería usar esto */
+    }
 
-  /* Esto provoca el scroll horizontal, pero está arreglado*/
-  .box .row {
-    border: 0px dotted white;
+    /* Esto provoca el scroll horizontal, pero está arreglado*/
+    .box .row {
+      border: 0px dotted white;
 
-  }
+    }
 
-  .box .row.content {
-    flex: 1 1 auto;
-  }
+    .box .row.content {
+      flex: 1 1 auto;
+    }
 
-  /* The above is shorthand for:
+    /* The above is shorthand for:
   flex-grow: 1,
   flex-shrink: 1,
   flex-basis: auto
   */
 
 
-  .box .row.footer {
-    flex: 0 1 40px;
-    text-align: center;
-    margin: auto;
-    list-style: none;
-  }
+    .box .row.footer {
+      flex: 0 1 40px;
+      text-align: center;
+      margin: auto;
+      list-style: none;
+    }
 
-  /* Para la división entre la sección de preguntas con la de preferencias. */
-  .split {
-    height: 450px;
-    width: 50%;
-    position: relative;
-    z-index: 1;
-    /*overflow-x: hidden;*/
-    /*overflow-y: scroll;*/
-  }
+    /* Para la división entre la sección de preguntas con la de preferencias. */
+    .split {
+      height: 450px;
+      width: 33%;
+      position: relative;
+      z-index: 1;
+      /*overflow-x: hidden;*/
+      /*overflow-y: scroll;*/
+    }
 
-  .left {
-    left: 0;
-    /*background-color: #111;*/
-    /* Testeo */
-    overflow: auto;
-    /*transform: translate(2%, 0%);*/
+    .left {
+      left: 17%;
+      /*background-color: #111;*/
+      /* Testeo */
+      overflow: auto;
+      /*transform: translate(2%, 0%);*/
 
-  }
+    }
 
-  .right {
-    right: 0;
-    /*background-color: red;*/
-    /* Testeo */
-    overflow: auto;
-  }
+    .right {
+      right: -17%;
+      /*background-color: red;*/
+      /* Testeo */
+      overflow: auto;
+    }
 
-  .centered {
-    position: relative;
-    top: 5px;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    text-align: center;
-    /*overflow-x: hidden;*/
-  }
-</style>
-
-<center>
+    .centered {
+      position: relative;
+      top: 5px;
+      left: 50%;
+      transform: translate(-50%, 0%);
+      text-align: center;
+      /*overflow-x: hidden;*/
+    }
+  </style>
 
   <div class="box">
     <div class="row m-0 content">
-      <p style="font-family: var(--bs-body-font-family) ">
+      <h2 style="font-family: var(--bs-body-font-family); margin-top: 1%;">
         ¡Bienvenido! {{ dpers.0 }} {{ dpers.1 }} {{ dpers.2 }} {{ dpers.3 }}. Esta es tu página personal.<br>
-        Acá deberías poder cambiar tus preferencias y ver tus encuestas respondidas.<br>
-        No podrás ver tus respuestas, por motivos de seguridad.<br>
-        <br>
+        Aquí puedes cambiar tus preferencias y ver tus encuestas respondidas.<br>
+        <!-- No podrás ver tus respuestas, por motivos de seguridad.<br>-->
+      </h2>
+      <p style="text-align: center; margin-top: 1%;">
         Utiliza este apartado para agregar una categoría nueva.
+      </p>
 
-        <!-- Acción -->
+      <!-- Acción -->
       <form action="/profile" method="POST">
 
         <!-- Combobox -->
@@ -117,7 +118,7 @@ set icon_size = '28px'
         <button type="submit" class="mt-4 btn btn-primary">Agregar Preferencia</button>
       </form>
 
-      <div class="split left">
+      <div class="split left" style="margin-top: 1%;">
         <div class="centered">
           <div class="card bg-light mb-3" style="position:relative; width: 100%; height: 100%;">
             <div class="card-body">
@@ -125,11 +126,12 @@ set icon_size = '28px'
               <div class="card bg-light mb-3 col-lg-12">
                 {% for categoria in categorias %}
                 <div class="card-body">
-                  <div class="text" style="text-align: center;">{{categoria.1}}
-                    <a href="/delete_cat/{{id}}/{{categoria.0}}" data-bs-toggle="tooltip"
+                  <div class="text" style="text-align: left;">
+                    <a href="/delete_cat/{{id}}/{{categoria.0}}" style="text-decoration:none" data-bs-toggle="tooltip"
                       title="Eliminar">
-                      <img src="/static/images/delete.png" style="width: {{icon_size}};;height: auto;">
+                      <img src="/static/images/delete.png" style="width: {{icon_size}};height: auto;">
                     </a>
+                    {{categoria.1}}
                   </div>
                 </div>
                 {% endfor %}
@@ -140,7 +142,7 @@ set icon_size = '28px'
         </div>
       </div>
 
-      <div class="split right">
+      <div class="split right" style="margin-top: 1%;">
         <div class="centered">
           <div class="card bg-light mb-3" style="position:relative; width: 100%; height: 100%;">
             <div class="card-body">
