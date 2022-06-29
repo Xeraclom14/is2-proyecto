@@ -37,7 +37,7 @@ def register():
                mysql.connection.commit()
 
                flash("success","Registrado exitosamente")
-               return redirect(url_for("register"))
+               return redirect(url_for("login"))
 
             #Si el correo ya existe te manda error y te regresa a la de registro. 
             else:
