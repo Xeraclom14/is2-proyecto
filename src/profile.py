@@ -110,7 +110,9 @@ def profileinicio():
                     idcat = request.form['nuevapref']
 
                     #regresar de inmediato si estás en "seleccionar categoria"
-                    if(idcat == 0): return redirect(url_for("profile", id=e_id ))
+                    if(idcat == "0"):
+                        print("pasa")
+                        return redirect(url_for("profile", id=e_id ))
 
                     #si no, agregar categoria.
                     cur = mysql.connection.cursor()                
