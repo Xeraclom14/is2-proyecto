@@ -127,8 +127,6 @@ def profileinicio():
 
 
 @app.route('/delete_cat/<id>/<id_cat>')
-
-#no me está pescando id.
 def delete_cat(id,id_cat):
     tiposesion = session['type']
     e_id = str(session['id'])
@@ -154,4 +152,42 @@ def delete_cat(id,id_cat):
         
 
     return render_template("/403.html")
-    
+
+#ruta para editar preferencias
+@app.route('/edit_sendmail/<id>')
+def edit_sendmail(id):
+
+    tiposesion = session['type']
+    e_id = str(session['id'])
+
+    # verificar
+    if tiposesion == 'encuestador':
+        return render_template("/403.html")
+
+    if tiposesion == 'encuestado':
+        #Solamente la misma persona debe editar.
+        if id == e_id:
+            
+            #quiero el número.
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT quierespam FROM encuestado WHERE id_encuestado = %s;",(id,))
+
+            spam = cur.fetchone()
+            mysql.connection.commit()
+
+            #si el valor es 1, significa que NO quiere tener spam.
+            if spam[0] == 1:
+                cur = mysql.connection.cursor()
+                cur.execute("UPDATE encuestado SET quierespam = 0 WHERE id_encuestado = %s;",(id,))
+                mysql.connection.commit()
+                return redirect(url_for("profile", id=id ))
+
+            if spam[0] == 0:
+                cur = mysql.connection.cursor()
+                cur.execute("UPDATE encuestado SET quierespam = 1 WHERE id_encuestado = %s;",(id,))
+                mysql.connection.commit()
+                return redirect(url_for("profile", id=id ))
+
+            return redirect(url_for("profile", id=id ))
+
+        return render_template("/403.html")
