@@ -98,7 +98,8 @@ def enviar_encuesta(id):
     encuestados = []
 
     for categoria in categorias:
-        cur.execute("SELECT email, prim_nom FROM encuestado, encuestadocategoria WHERE encuestado.id_encuestado = encuestadocategoria.id_encuestado AND encuestadocategoria.id_categoria = " + str(categoria[0]))
+        cur.execute("SELECT email, prim_nom FROM encuestado, encuestadocategoria WHERE encuestado.id_encuestado = encuestadocategoria.id_encuestado "
+        + "AND encuestado.quierespam = 1 AND encuestadocategoria.id_categoria = " + str(categoria[0]))
         resultados = cur.fetchall()
         for encuestado in resultados:
             encuestados.append(encuestado)
