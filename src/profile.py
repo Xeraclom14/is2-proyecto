@@ -77,15 +77,21 @@ def profile(id):
             #Se ha seleccionado una preferencia a agregar
             #Y se ha hecho click en el botón de enviar.
 
+            #quiero saber la preferencia de spam del encuestado.
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT quierespam FROM encuestado WHERE id_encuestado = %s;",(id,))
+            spam = cur.fetchone()
+            mysql.connection.commit()
+
             return render_template("/encuestados/personal.html",
             dpers = dpers, forms = encuestas, categorias = categorias,
-            nopreferidas = nopreferidas, id = id)
+            nopreferidas = nopreferidas, id = id, spam = spam)
 
         #es un tercero
         else:
-            return render_template("/encuestados/tercero.html")
+            return render_template("/403.html")
     
-    return render_template("/encuestados/403.html")
+    return render_template("/403.html")
 
 #Para que funcione el navbar.
 @app.route('/profile', methods=['GET','POST'])
