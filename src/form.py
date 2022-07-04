@@ -65,7 +65,7 @@ def form(id):
             # [3] = obligatoria
             # [4] = texto_pregunta
             #esto recibiría el id_pregunta, id_encuesta, respuestas, tipo y el texto.
-            preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[2], pregunta[4]])
+            preguntas.append([pregunta[0], pregunta[1], respuestas, pregunta[2], pregunta[4], pregunta[3]])
         mysql.connection.commit()
         if session['type'] == "encuestado":
             return render_template('/encuestados/form.html', form = preguntas, titulo = nombre_encuesta[0][0], id = id)
