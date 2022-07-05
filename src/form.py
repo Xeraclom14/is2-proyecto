@@ -145,7 +145,7 @@ def submit_respuestas(id):
     for dato in datos:
         alts = request.form.getlist(str(dato[0]))
         if (dato[3] == 1 and len(alts) == 0):
-            flash('Faltó una respuesta obligatoria por contestar!')
+            flash("danger",'Faltó una respuesta obligatoria por contestar!')
             return redirect(request.referrer)
 
     for dato in datos:
