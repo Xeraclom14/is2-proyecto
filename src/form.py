@@ -141,6 +141,12 @@ def submit_respuestas(id):
 
     #cur.execute("UPDATE respuesta SET contador_de_respuesta = 0")
     #mysql.connection.commit()
+    #comprobar respuestas obligatorias
+    for dato in datos:
+        alts = request.form.getlist(str(dato[0]))
+        if (dato[3] == 1 and len(alts) == 0):
+            flash('Faltó una respuesta obligatoria por contestar!')
+            return redirect(request.referrer)
 
     for dato in datos:
         alts = request.form.getlist(str(dato[0]))
