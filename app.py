@@ -10,11 +10,11 @@ app = Flask(__name__)
 
 ###BD
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_USER'] = 'equipo8'
+app.config['MYSQL_PASSWORD'] = 'hbtsqa'
 
 ###Nombre de la BD
-app.config['MYSQL_DB'] = 'is2_proyecto'
+app.config['MYSQL_DB'] = 'equipo8'
 mysql = MySQL(app)
 
 ###datos de sesión
@@ -60,5 +60,5 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 if __name__ == '__main__':
-    app.run(port = 5008, debug = True)
+    app.run(host = '0.0.0.0', port = 5008, debug = True, ssl_context = ('cert.pem','key.pem'))
 
