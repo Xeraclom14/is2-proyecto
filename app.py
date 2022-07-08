@@ -60,5 +60,5 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 if __name__ == '__main__':
-    app.run(host = '0.0.0.0', port = 5008, debug = True, ssl_context = ('cert.pem','key.pem'))
+    app.run(host = '0.0.0.0', port = 5008, debug = True)
 
