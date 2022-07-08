@@ -119,7 +119,7 @@ def enviar_encuesta(id):
         nombre_encuesta = cur.fetchall()
 
         for encuestado in encuestados:
-            message = ('Te hemos enviado un correo para contestar una encuesta: https://is2-2022.inf.udec.cl:5008/form/'+ id + " presente en nuestra plataforma. "
+            message = ('Te hemos enviado un correo para contestar una encuesta: http://is2-2022.inf.udec.cl:5008/form/'+ id + " presente en nuestra plataforma. "
             + "\nRecuerda que puedes editar en tu perfil si deseas recibir o no más correos de esta índole."
             +"\nPor parte de Encuestas Peepo agradecemos sus respuestas.") 
             subject = "Hola, %s!, te invitamos a contestar una encuesta: %s." % (encuestado[1],nombre_encuesta[0][0])

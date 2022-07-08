@@ -50,7 +50,7 @@ def passreset1():
                     print (auxEmail)
                     print (auxID2)
             
-                    message = 'Estimado usuario usted ha solicitado un cambio de contraseña, siga el siguiente link para cambiar su contraseña:\nhttps://is2-2022.inf.udec.cl:5008/passreset2/'+auxID2
+                    message = 'Estimado usuario usted ha solicitado un cambio de contraseña, siga el siguiente link para cambiar su contraseña:\nhttp://is2-2022.inf.udec.cl:5008/passreset2/'+auxID2
                     subject = "Has solicitado cambio de contraseña en Encuestas Peepo"
                     msg = Message(recipients=[auxEmail],
                         body=message,
